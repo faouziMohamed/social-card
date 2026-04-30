@@ -61,25 +61,33 @@ export function useBuilderState(): BuilderState {
   const pathname     = usePathname();
   const searchParams = useSearchParams();
 
-  // Resolve initial template: URL param wins, then persisted, then default
+  // Resolve initial template from URL only (safe for SSR — no localStorage)
   const initialTemplate = useMemo<TemplateName>(() => {
     const url = searchParams.get("template") as TemplateName | null;
-    if (url) return url;
-    return load()?.current ?? "general";
+    return url ?? "general";
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [template, setTemplateRaw] = useState<TemplateName>(initialTemplate);
+  const [params, setParams]         = useState<Record<string, string>>({});
+  const [target, setTargetRaw]      = useState<TargetKey>("og");
 
-  const [params, setParams] = useState<Record<string, string>>(() => {
+  // Restore persisted state client-side after hydration to avoid SSR mismatch.
+  // localStorage is only available in the browser, so this must run in an effect.
+  const hydratedRef = useRef(false);
+  useEffect(() => {
+    if (hydratedRef.current) return;
+    hydratedRef.current = true;
     const persisted = load();
-    return persisted?.templates[initialTemplate]?.params ?? {};
-  });
-
-  const [target, setTargetRaw] = useState<TargetKey>(() => {
-    const persisted = load();
-    return persisted?.templates[initialTemplate]?.target ?? "og";
-  });
+    if (!persisted) return;
+    // If no template was in the URL, also restore the last-used template
+    const tmpl = searchParams.get("template") as TemplateName | null ?? persisted.current ?? initialTemplate;
+    const slot = persisted.templates[tmpl];
+    setTemplateRaw(tmpl);
+    setParams(slot?.params ?? {});
+    setTargetRaw(slot?.target ?? "og");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [previewSrc, setPreviewSrc] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);

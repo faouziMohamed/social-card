@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { geistMono, geistSans, merriweather } from "@/lib/fonts";
+import { geistMono, geistSans, inter, jetbrainsMono, merriweather, playfairDisplay, spaceGrotesk } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,7 +12,11 @@ export const metadata: Metadata = {
 const allFontVars = [
   geistSans.variable,
   geistMono.variable,
+  inter.variable,
+  spaceGrotesk.variable,
   merriweather.variable,
+  playfairDisplay.variable,
+  jetbrainsMono.variable,
 ].join(' ');
 
 export default function RootLayout({

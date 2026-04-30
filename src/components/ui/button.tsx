@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import {cn} from '@/lib/utils/cn';
 import {cva, type VariantProps} from 'class-variance-authority';
 import * as React from 'react';
@@ -37,11 +36,12 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {}
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({className, variant, size, ...props}, ref) => (
+  ({className, variant, size, type = 'button', ...props}, ref) => (
     <button
       ref={ref}
-      className={cn(buttonVariants({variant, size, className}))}
+      type={type}
       {...props}
+      className={cn(buttonVariants({variant, size, className}))}
     />
   ),
 );

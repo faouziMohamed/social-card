@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="df3652d9-7f9c-4fc4-b54a-7fa2b6a25097" name="Changes" comment="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/builder/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/builder/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/builder-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/builder-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/builder-island.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/builder-island.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/template-selector.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/template-selector.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/fonts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/fonts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/client/hooks/use-builder-state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/hooks/use-builder-state.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +23,7 @@
     </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="382" />
+    <option name="cachedIndexableFilesCount" value="386" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FormatOnSaveOptions">
@@ -137,7 +138,7 @@
       <workItem from="1777392039456" duration="9213000" />
       <workItem from="1777480954512" duration="5688000" />
       <workItem from="1777488204089" duration="2360000" />
-      <workItem from="1777493447663" duration="14195000" />
+      <workItem from="1777493447663" duration="17012000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project configuration files and scripts">
       <option name="closed" value="true" />
@@ -187,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777552546459</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props">
+      <option name="closed" value="true" />
+      <created>1777555535362</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1777555535362</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
