@@ -1,5 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { CopyButton } from "@/components/shared/CopyButton";
 
 interface ParamRow {
   name: string;
@@ -20,36 +21,45 @@ interface ApiEndpointCardProps {
 
 export function ApiEndpointCard({ id, path, description, params, exampleUrl, previewAspect }: ApiEndpointCardProps) {
   return (
-    <section id={id} className="rounded-lg border border-border bg-card overflow-hidden">
-      <div className="flex items-center justify-between border-b border-border bg-muted/50 px-6 py-4">
+    <section id={id} className="experience-card mechanical-corners rounded-lg border border-border bg-card overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-border builder-panel px-6 py-4">
         <div className="flex items-center gap-3">
           <Badge variant="default" className="font-mono text-xs">GET</Badge>
           <code className="font-mono text-sm text-primary">{path}</code>
         </div>
-        <a href={exampleUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-muted-fg hover:text-primary transition-colors">
+        <a
+          href={exampleUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 text-xs text-muted-fg hover:text-primary transition-colors"
+        >
           Live example <ExternalLink className="h-3 w-3" />
         </a>
       </div>
 
+      {/* Description */}
       {description && (
         <div className="border-b border-border px-6 py-3 text-sm text-muted-fg">{description}</div>
       )}
 
-      <div className="p-4 border-b border-border bg-muted/20 flex items-center justify-center min-h-16">
+      {/* Preview */}
+      <div className="preview-canvas flex items-center justify-center p-6 border-b border-border min-h-24">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={exampleUrl}
           alt={`${id} example`}
-          className="max-w-full rounded"
-          style={previewAspect ? { aspectRatio: previewAspect.replace('/', ' / ') } : undefined}
+          className="max-w-full rounded shimmer-track"
+          style={previewAspect ? { aspectRatio: previewAspect.replace("/", " / ") } : undefined}
           loading="lazy"
         />
       </div>
 
+      {/* Params table */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-fg">
+            <tr className="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-fg bg-muted/30">
               <th className="px-6 py-3">Parameter</th>
               <th className="px-6 py-3">Type</th>
               <th className="px-6 py-3">Default</th>
@@ -60,7 +70,7 @@ export function ApiEndpointCard({ id, path, description, params, exampleUrl, pre
             {params.map((p, i) => (
               <tr key={p.name} className={i % 2 === 0 ? "bg-card" : "bg-muted/20"}>
                 <td className="px-6 py-3">
-                  <code className="font-mono text-xs text-primary">{p.name}</code>
+                  <code className="terminal-prompt text-xs">{p.name}</code>
                   {p.required && <span className="ml-1.5 text-xs text-red-400">*</span>}
                 </td>
                 <td className="px-6 py-3"><Badge variant="muted" className="text-xs font-mono">{p.type}</Badge></td>
@@ -72,9 +82,16 @@ export function ApiEndpointCard({ id, path, description, params, exampleUrl, pre
         </table>
       </div>
 
+      {/* Example URL */}
       <div className="border-t border-border px-6 py-4">
-        <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-muted-fg">Example URL</p>
-        <code className="block rounded bg-muted px-3 py-2 font-mono text-xs break-all text-terminal-green">{exampleUrl}</code>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
+          <span className="status-indicator status-success mr-2" />
+          Example URL
+        </p>
+        <div className="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-3 py-2">
+          <code className="flex-1 terminal-prompt text-xs break-all">{exampleUrl}</code>
+          <CopyButton text={exampleUrl} />
+        </div>
       </div>
     </section>
   );

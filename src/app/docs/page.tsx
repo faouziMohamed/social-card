@@ -24,14 +24,14 @@ export const metadata = {
 // ─── Badge examples ───────────────────────────────────────────────────────────
 
 const BADGE_EXAMPLES: Record<BadgeName, { qs: string; aspect?: string; description: string }> = {
-  label:        { qs: 'label=version&message=2.1.0&color=%236366f1&style=flat', aspect: '130/20', description: 'Two-segment shields.io-style label/value badge.' },
-  stat:         { qs: 'label=Stars&value=4.2k&icon=star&color=%23f59e0b', aspect: '120/48', description: 'Single-metric display card with optional icon.' },
-  status:       { qs: 'label=API&status=online', aspect: '130/24', description: 'Service health indicator with semantic colors.' },
-  progress:     { qs: 'label=Coverage&value=87&color=%2322c55e', aspect: '220/36', description: 'Progress bar for coverage, funding goals, completion.' },
-  score:        { qs: 'label=Performance&value=95&color=%236366f1', aspect: '90/90', description: 'Circular score ring — Lighthouse, ratings.' },
-  socials:      { qs: 'platform=github&handle=acme&followers=4.2k&color=%236366f1', aspect: '200/28', description: 'Social proof pill with platform icon.' },
-  'tech-stack': { qs: 'stack=React%2CTypeScript%2CGo&color=%236366f1&style=tags', aspect: '200/32', description: 'Tech tag row for README or portfolio.' },
-  availability: { qs: 'label=Jane+Doe&available=true&hireText=Open+to+work&color=%2322c55e', aspect: '200/40', description: '"Open to work" / availability status banner.' },
+  label:        { qs: 'label=version&message=2.1.0&color=%236366f1&style=flat', aspect: '137/26', description: 'Premium two-segment label/value badge.' },
+  stat:         { qs: 'label=Stars&value=4.2k&icon=star&color=%23f59e0b', aspect: '150/58', description: 'Premium single-metric display card with optional icon.' },
+  status:       { qs: 'label=API&status=online', aspect: '120/30', description: 'Glass-style service health indicator with semantic colors.' },
+  progress:     { qs: 'label=Coverage&value=87&color=%2322c55e', aspect: '220/46', description: 'Premium progress bar for coverage, funding goals, completion.' },
+  score:        { qs: 'label=Performance&value=95&color=%236366f1', aspect: '104/104', description: 'Premium circular score ring — Lighthouse, ratings.' },
+  socials:      { qs: 'platform=github&handle=acme&followers=4.2k&color=%236366f1', aspect: '185/34', description: 'Social proof pill with platform icon and glass body.' },
+  'tech-stack': { qs: 'stack=React%2CTypeScript%2CGo&color=%236366f1&style=tags', aspect: '340/36', description: 'Premium tech tag row for README or portfolio.' },
+  availability: { qs: 'label=Jane+Doe&available=true&hireText=Open+to+work&color=%2322c55e', aspect: '220/52', description: 'Premium "Open to work" / availability status banner.' },
 };
 
 // ─── SEO examples ─────────────────────────────────────────────────────────────
@@ -43,6 +43,46 @@ const SEO_EXAMPLES: Record<SeoTemplateName, { qs: string; aspect: string; descri
   'twitter-card':     { qs: 'title=Open+Graph+Generator&siteName=og-graph&accentColor=%236366f1&bgStyle=gradient%2Bgrid', aspect: '800/418', description: '800×418 PNG Twitter summary card.' },
 };
 
+// ─── Section header ───────────────────────────────────────────────────────────
+
+function SectionHeader({ icon, title, subtitle, count, id }: { icon: string; title: string; subtitle: string; count: number; id: string }) {
+  return (
+    <div id={id} className="mb-8">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="text-2xl">{icon}</span>
+        <h2 className="font-bold uppercase tracking-widest text-sm text-muted-fg">{title}</h2>
+        <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-xs font-mono text-primary">{count}</span>
+      </div>
+      <p className="text-sm text-muted-fg mb-3">{subtitle}</p>
+      <div className="section-divider" />
+    </div>
+  );
+}
+
+// ─── Sidebar nav link group ───────────────────────────────────────────────────
+
+function NavGroup({ label, items }: { label: string; items: { href: string; name: string }[] }) {
+  return (
+    <div className="mb-6">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">{label}</p>
+      <ul className="space-y-1">
+        {items.map((item) => (
+          <li key={item.href}>
+            <a
+              href={item.href}
+              className="block rounded px-2 py-1 text-xs text-muted-fg hover:bg-muted/40 hover:text-primary transition-colors font-mono truncate"
+            >
+              {item.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export default function DocsPage() {
   const base      = env.deploymentURL;
   const templates = Object.keys(OG_ROUTES) as TemplateName[];
@@ -53,50 +93,74 @@ export default function DocsPage() {
     <div className="flex min-h-full flex-col">
       <Navbar />
 
-      <main className="flex-1 py-12">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-
-          {/* ── Header ──────────────────────────────────────────────── */}
-          <div className="mb-12">
-            <h1 className="text-3xl font-bold mb-2">API Reference</h1>
-            <p className="text-muted-fg">
-              Three services: OG images (PNG), SVG badges, and SEO assets (favicon, PWA icons).
-              Base URL:{" "}
-              <code className="font-mono text-xs text-primary">{base}</code>
-            </p>
+      {/* ── Hero header ──────────────────────────────────────────────────── */}
+      <header className="circuit-pattern border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="status-indicator status-success" />
+            <span className="terminal-prompt text-xs">API REFERENCE</span>
           </div>
+          <h1 className="text-3xl font-bold mb-2 glow-primary inline-block">OG Graph API</h1>
+          <p className="text-muted-fg text-sm max-w-xl">
+            Three services: OG images (PNG), SVG badges, and SEO assets.{" "}
+            Base URL:{" "}
+            <code className="terminal-prompt text-xs">{base}</code>
+          </p>
+        </div>
+      </header>
 
-          {/* ── TOC ─────────────────────────────────────────────────── */}
-          <nav className="mb-12 rounded-lg border border-border bg-card p-4 space-y-3">
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">OG Templates</p>
-              <div className="flex flex-wrap gap-2">
-                {templates.map((t) => (
-                  <a key={t} href={`#${t}`} className="rounded border border-border px-3 py-1 text-sm hover:border-primary/50 hover:text-primary transition-colors capitalize">{t}</a>
-                ))}
-              </div>
-            </div>
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">SVG Badges</p>
-              <div className="flex flex-wrap gap-2">
-                {badges.map((b) => (
-                  <a key={b} href={`#badge-${b}`} className="rounded border border-border px-3 py-1 text-sm hover:border-primary/50 hover:text-primary transition-colors">{b}</a>
-                ))}
-              </div>
-            </div>
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">SEO Assets</p>
-              <div className="flex flex-wrap gap-2">
-                {seoAssets.map((s) => (
-                  <a key={s} href={`#seo-${s}`} className="rounded border border-border px-3 py-1 text-sm hover:border-primary/50 hover:text-primary transition-colors">{s}</a>
-                ))}
-              </div>
-            </div>
+      <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-10 flex-1">
+
+        {/* ── Sidebar ──────────────────────────────────────────────────────── */}
+        <aside className="lg:w-56 shrink-0">
+          <nav className="lg:sticky lg:top-6 builder-panel rounded-lg border border-border p-4 scrollbar-hide lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
+            <p className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-fg flex items-center gap-2">
+              <span className="status-indicator status-info" />
+              Navigation
+            </p>
+
+            <NavGroup
+              label="OG Templates"
+              items={templates.map((t) => ({ href: `#${t}`, name: t }))}
+            />
+
+            <div className="section-divider mb-4" />
+
+            <NavGroup
+              label="SVG Badges"
+              items={badges.map((b) => ({ href: `#badge-${b}`, name: b }))}
+            />
+
+            <div className="section-divider mb-4" />
+
+            <NavGroup
+              label="SEO Assets"
+              items={seoAssets.map((s) => ({ href: `#seo-${s}`, name: s }))}
+            />
+
+            <div className="section-divider my-4" />
+
+            <Link
+              href={ROUTES.builder}
+              className="block text-center rounded border border-primary/30 px-3 py-1.5 text-xs terminal-prompt hover:bg-primary/10 transition-colors"
+            >
+              → Open Builder
+            </Link>
           </nav>
+        </aside>
 
-          {/* ── OG Endpoints ────────────────────────────────────────── */}
-          <h2 className="text-xl font-bold mb-6" id="og">OG Image Templates</h2>
-          <div className="flex flex-col gap-12 mb-20">
+        {/* ── Main content ─────────────────────────────────────────────────── */}
+        <main className="flex-1 min-w-0">
+
+          {/* OG Templates */}
+          <SectionHeader
+            id="og"
+            icon="🖼️"
+            title="OG Image Templates"
+            subtitle="Returns PNG images sized 1200×630. Cache: max-age=3600."
+            count={templates.length}
+          />
+          <div className="flex flex-col gap-10 mb-16">
             {templates.map((template) => {
               const params = getParamDescriptors(template);
               const exampleUrl = `${base}${OG_ROUTES[template]}?${EXAMPLE_PARAMS[template]}`;
@@ -106,14 +170,15 @@ export default function DocsPage() {
             })}
           </div>
 
-          {/* ── Badge Endpoints ─────────────────────────────────────── */}
-          <h2 className="text-xl font-bold mb-2" id="badges">SVG Badges</h2>
-          <p className="text-sm text-muted-fg mb-6">
-            Returns <code className="font-mono text-xs">image/svg+xml</code>.
-            Embed with <code className="font-mono text-xs">&lt;img&gt;</code> or directly in Markdown.
-            Cache: <code className="font-mono text-xs">max-age=3600</code>.
-          </p>
-          <div className="flex flex-col gap-12 mb-20">
+          {/* SVG Badges */}
+          <SectionHeader
+            id="badges"
+            icon="🏷️"
+            title="SVG Badges"
+            subtitle="Returns image/svg+xml. Embed with <img> or Markdown. Cache: max-age=3600."
+            count={badges.length}
+          />
+          <div className="flex flex-col gap-10 mb-16">
             {badges.map((badge) => {
               const ex = BADGE_EXAMPLES[badge];
               return (
@@ -130,13 +195,15 @@ export default function DocsPage() {
             })}
           </div>
 
-          {/* ── SEO Endpoints ───────────────────────────────────────── */}
-          <h2 className="text-xl font-bold mb-2" id="seo">SEO Assets</h2>
-          <p className="text-sm text-muted-fg mb-6">
-            Returns PNG images sized to platform spec.
-            Cache: <code className="font-mono text-xs">max-age=86400</code>.
-          </p>
-          <div className="flex flex-col gap-12 mb-20">
+          {/* SEO Assets */}
+          <SectionHeader
+            id="seo"
+            icon="🔍"
+            title="SEO Assets"
+            subtitle="Returns PNG images sized to platform spec. Cache: max-age=86400."
+            count={seoAssets.length}
+          />
+          <div className="flex flex-col gap-10 mb-16">
             {seoAssets.map((asset) => {
               const ex = SEO_EXAMPLES[asset];
               return (
@@ -153,23 +220,30 @@ export default function DocsPage() {
             })}
           </div>
 
-          {/* ── Footer note ─────────────────────────────────────────── */}
-          <div className="mt-4 rounded-lg border border-border bg-muted/30 p-6 text-sm text-muted-fg">
-            <p className="font-semibold mb-1">Responses</p>
-            <ul className="space-y-1 list-disc list-inside">
-              <li><code className="font-mono text-xs">200</code> — Image (PNG or SVG)</li>
-              <li><code className="font-mono text-xs">400</code> — JSON with Zod validation errors</li>
-              <li><code className="font-mono text-xs">500</code> — JSON with error message</li>
-            </ul>
-            <p className="mt-4">
-              <Link href={ROUTES.builder} className="text-primary hover:underline">
-                Try the OG Builder →
-              </Link>
+          {/* Response codes */}
+          <div className="mechanical-corners rounded-lg border border-border builder-panel p-6 text-sm text-muted-fg">
+            <p className="font-semibold mb-3 uppercase tracking-widest text-xs flex items-center gap-2">
+              <span className="status-indicator status-info" />
+              Response Codes
             </p>
+            <ul className="space-y-2">
+              <li className="flex items-center gap-3">
+                <code className="terminal-prompt text-xs w-8">200</code>
+                <span>Image (PNG or SVG)</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <code className="font-mono text-xs w-8 text-terminal-amber">400</code>
+                <span>JSON with Zod validation errors</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <code className="terminal-error text-xs w-8">500</code>
+                <span>JSON with error message</span>
+              </li>
+            </ul>
           </div>
 
-        </div>
-      </main>
+        </main>
+      </div>
 
       <Footer />
     </div>

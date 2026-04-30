@@ -1,84 +1,89 @@
 import { createBadgeHandler } from '@/modules/badge/server/badge-handler.server';
 import {
-  estimateTextWidth, getContrastColor, hexToRgba,
-  rect, svgRoot, text,
+  estimateTextWidth,
+  hexToRgba,
+  premiumChip,
+  premiumDefs,
+  premiumPanel,
+  resolvePalette,
+  svgRoot,
+  text,
 } from '@/modules/badge/server/badge-render.server';
 import { techStackSchema, type TechStackParams } from '@/modules/badge/shared/badge-schemas';
 
 export function techStackRenderer(p: TechStackParams): string {
   const accent = p.color ?? '#6366f1';
-  const fg     = getContrastColor(accent);
-  const tags   = p.stack.split(',').map((s) => s.trim()).filter(Boolean).slice(0, 8);
-  const isRow  = p.style === 'row';
-
-  const fs     = 11;
-  const tagH   = 20;
-  const tagRx  = isRow ? 2 : 10;
-  const tagPad = isRow ? 6 : 8;
-  const gap    = 4;
-  const padV   = 6;
-  const padH   = 4;
-
-  // Measure each tag
-  const widths = tags.map((t) => estimateTextWidth(t, fs) + tagPad * 2);
+  const palette = resolvePalette(p.theme);
+  const tags = p.stack
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 8);
+  const safeTags = tags.length > 0 ? tags : ['Stack'];
+  const isRow = p.style === 'row';
+  const fontSize = 11;
+  const tagHeight = 22;
+  const tagPadding = isRow ? 9 : 10;
+  const gap = 6;
+  const outerPad = 7;
+  const widths = safeTags.map((tag) => estimateTextWidth(tag, fontSize) + tagPadding * 2);
 
   if (isRow) {
-    // Single row, all tags side by side
-    const totalTagsW = widths.reduce((a, b) => a + b, 0) + gap * (tags.length - 1);
-    const w = totalTagsW + padH * 2;
-    const h = tagH + padV * 2;
+    const tagsWidth = widths.reduce((sum, current) => sum + current, 0) + gap * Math.max(safeTags.length - 1, 0);
+    const width = tagsWidth + outerPad * 2;
+    const height = 36;
+    const defs = premiumDefs(p.theme, accent, 'stack');
+    let cursorX = outerPad;
 
-    let x = padH;
-    const tagEls = tags.map((tag, i) => {
-      const tw = widths[i];
-      const el = [
-        rect(x, padV, tw, tagH, hexToRgba(accent, 0.15), tagRx),
-        text(tag, x + tagPad, padV + tagH / 2, hexToRgba(accent, 0.95), fs),
+    const tagElements = safeTags.map((tag, index) => {
+      const tagWidth = widths[index];
+      const x = cursorX;
+      cursorX += tagWidth + gap;
+      return [
+        premiumChip(x, outerPad, tagWidth, tagHeight, 11, accent, 0.14),
+        text(tag, x + tagPadding, height / 2, palette.fg, fontSize, 'bold'),
       ].join('');
-      x += tw + gap;
-      return el;
     });
 
-    const content = [
-      rect(0, 0, w, h, '#1a1a1a', 4),
-      rect(0, 0, w, h, 'none', 4, `stroke="${hexToRgba(accent, 0.2)}" stroke-width="1" fill="none"`),
-      ...tagEls,
-    ].join('');
-    return svgRoot(w, h, content);
+    return svgRoot(width, height, [
+      premiumPanel(width, height, 12, p.theme, accent, 'stack'),
+      ...tagElements,
+    ].join(''), defs);
   }
 
-  // Pill / wrap layout — fixed max width, wrap onto multiple rows
-  const maxW   = 320;
-  const usableW = maxW - padH * 2;
-  const rows: { tag: string; w: number; x: number; row: number }[] = [];
+  const maxWidth = 340;
+  const usableWidth = maxWidth - outerPad * 2;
+  const rows: { tag: string; width: number; x: number; row: number }[] = [];
   let rowX = 0;
-  let rowNum = 0;
+  let rowIndex = 0;
 
-  tags.forEach((tag, i) => {
-    const tw = widths[i];
-    if (rowX > 0 && rowX + tw > usableW) {
+  safeTags.forEach((tag, index) => {
+    const tagWidth = widths[index];
+    if (rowX > 0 && rowX + tagWidth > usableWidth) {
       rowX = 0;
-      rowNum++;
+      rowIndex += 1;
     }
-    rows.push({ tag, w: tw, x: rowX, row: rowNum });
-    rowX += tw + gap;
+
+    rows.push({ tag, width: tagWidth, x: rowX, row: rowIndex });
+    rowX += tagWidth + gap;
   });
 
-  const numRows = rowNum + 1;
-  const h = numRows * (tagH + gap) - gap + padV * 2;
-  const w = maxW;
+  const rowCount = rowIndex + 1;
+  const height = rowCount * (tagHeight + gap) - gap + outerPad * 2;
+  const defs = premiumDefs(p.theme, accent, 'stack');
+  const tagElements = rows.map(({ tag, width, x, row }, index) => {
+    const y = outerPad + row * (tagHeight + gap);
+    const opacity = 0.15 + (index % 3) * 0.04;
+    return [
+      premiumChip(outerPad + x, y, width, tagHeight, 11, accent, opacity),
+      text(tag, outerPad + x + tagPadding, y + tagHeight / 2, hexToRgba(accent, p.theme === 'dark' ? 0.96 : 0.9), fontSize, 'bold'),
+    ].join('');
+  });
 
-  const tagEls = rows.map(({ tag, w: tw, x, row }) => [
-    rect(padH + x, padV + row * (tagH + gap), tw, tagH, accent, tagRx),
-    text(tag, padH + x + tagPad, padV + row * (tagH + gap) + tagH / 2, fg, fs, 'bold'),
-  ].join(''));
-
-  const content = [
-    rect(0, 0, w, h, '#1a1a1a', 6),
-    ...tagEls,
-  ].join('');
-
-  return svgRoot(w, h, content);
+  return svgRoot(maxWidth, height, [
+    premiumPanel(maxWidth, height, 12, p.theme, accent, 'stack'),
+    ...tagElements,
+  ].join(''), defs);
 }
 
 export const GET = createBadgeHandler(techStackSchema, techStackRenderer);

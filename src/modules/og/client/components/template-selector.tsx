@@ -4,15 +4,22 @@ import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/components/ui/button";
-import { TEMPLATE_META } from "@/modules/og/shared/og-template-registry";
-import type { TemplateName } from "@/modules/og/shared/og.types";
 
-interface TemplateSelectorProps {
-  value:    TemplateName;
-  onChange: (t: TemplateName) => void;
+export interface TemplateSelectorMeta {
+  name:  string;
+  label: string;
+  desc:  string;
+  color: string;
+  icon:  string;
 }
 
-export function TemplateSelector({ value, onChange }: TemplateSelectorProps) {
+interface TemplateSelectorProps {
+  meta:     TemplateSelectorMeta[];
+  value:    string;
+  onChange: (t: string) => void;
+}
+
+export function TemplateSelector({ meta, value, onChange }: TemplateSelectorProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -71,7 +78,7 @@ export function TemplateSelector({ value, onChange }: TemplateSelectorProps) {
         ref={scrollRef}
         className="flex gap-3 overflow-x-auto scroll-smooth px-2 py-3 scrollbar-hide snap-x snap-mandatory"
       >
-        {TEMPLATE_META.map(({ name, label, desc, color, icon }) => {
+        {meta.map(({ name, label, desc, color, icon }) => {
           const active = value === name;
           return (
             <button
@@ -159,7 +166,7 @@ export function TemplateSelector({ value, onChange }: TemplateSelectorProps) {
 
       {/* Pagination dots */}
       <div className="flex items-center justify-center gap-1 pb-1">
-        {TEMPLATE_META.map(({ name, color }) => (
+        {meta.map(({ name, color }) => (
           <button
             key={name}
             type="button"

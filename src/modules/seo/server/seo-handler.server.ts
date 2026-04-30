@@ -42,10 +42,8 @@ export function createSeoHandler<TParams>(
 
       const element = renderer(resolved as TParams, { theme, width, height } satisfies OgRendererContext);
 
-      // Favicon uses a tiny default font — skip font loading for small icons
-      const fonts = width >= 64
-        ? await resolveOgFonts('geist').catch(() => [])
-        : [];
+      // Always load at least one font — ImageResponse requires it even for tiny icons
+      const fonts = await resolveOgFonts('geist').catch(() => []);
 
       return new ImageResponse(element, {
         width,

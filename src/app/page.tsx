@@ -1,13 +1,12 @@
 import Link from "next/link";
-import { ArrowRight, Zap, Layers, Code2, Globe } from "lucide-react";
+import { ArrowRight, Zap, Layers, Code2, Globe, Image, Tag, Search } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ROUTES } from "@/lib/utils/routes";
 import { env } from "@/lib/env";
-import { TEMPLATE_META, DEMO_PARAMS } from "@/modules/og/shared/og-template-registry";
-import { OG_ROUTES } from "@/modules/og/shared/og-routes";
+import { HomepageTabs } from "@/modules/og/client/components/HomepageTabs";
 
 const QUICK_START = [
   {
@@ -43,20 +42,21 @@ export default function HomePage() {
           <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
             <Badge variant="outline" className="mb-6 border-primary/40 text-primary">
               <span className="status-indicator status-success mr-1.5" />
-              API-first · Edge Runtime · 7 Templates
+              API-first · 11 OG · 8 Badges · 4 SEO
             </Badge>
 
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-              Open Graph Images,{" "}
+              Social assets,{" "}
               <span className="text-primary">on demand</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-fg">
-              Self-hostable social meta image generator. Drop a URL into your{" "}
+              Self-hostable image generator for OG cards, SVG badges, and SEO icons.
+              Drop a URL into your{" "}
               <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-primary">
-                &lt;meta og:image&gt;
+                &lt;meta&gt;
               </code>{" "}
-              tag and get a beautiful PNG at 1200×630, 800×800, or LinkedIn size.
+              tags and get beautiful, on-demand assets — no signup, no SDK.
             </p>
 
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -70,57 +70,41 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Demo strip */}
-        <section className="py-16 bg-muted/30">
+        {/* Three-tab feature showcase */}
+        <section className="py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <p className="mb-8 text-center text-sm font-mono text-muted-fg uppercase tracking-widest">
-              Live previews — actual API output
-            </p>
-            <div className="grid gap-6 sm:grid-cols-3">
-              {DEMO_PARAMS.map(({ template, params }) => (
-                <div key={template} className="experience-card rounded-lg overflow-hidden bg-card border border-border">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`${base}${OG_ROUTES[template as keyof typeof OG_ROUTES]}?${params}`}
-                    alt={`${template} template preview`}
-                    className="w-full aspect-[1200/630] object-cover"
-                    loading="lazy"
-                  />
-                  <p className="px-3 py-2 text-xs font-mono text-muted-fg capitalize">{template}</p>
-                </div>
-              ))}
-            </div>
+            <h2 className="mb-10 text-center text-3xl font-bold">23 Ready-Made Assets</h2>
           </div>
+          <HomepageTabs base={base} />
         </section>
 
         {/* Feature grid */}
-        <section className="py-20">
+        <section className="py-20 bg-muted/30">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-12 text-center text-3xl font-bold">7 Ready-Made Templates</h2>
+            <h2 className="mb-12 text-center text-3xl font-bold">Everything you need</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {TEMPLATE_META.map(({ name, label, color, desc }) => (
-                <Link
-                  key={name}
-                  href={`${ROUTES.builder}?template=${name}`}
-                  className="mechanical-corners group rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/50"
-                >
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: color }} />
-                    <span className="status-indicator status-success opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <p className="font-semibold">{label}</p>
-                  <p className="mt-1 text-sm text-muted-fg">{desc}</p>
-                  <p className="mt-3 font-mono text-xs text-primary">/api/og/{name}</p>
-                </Link>
-              ))}
-
+              <div className="mechanical-corners rounded-lg border border-border bg-card p-5">
+                <Image className="mb-3 h-5 w-5 text-primary" />
+                <p className="font-semibold">11 OG Templates</p>
+                <p className="mt-1 text-sm text-muted-fg">Blog, product, portfolio, event, launch and more at 1200×630.</p>
+              </div>
+              <div className="mechanical-corners rounded-lg border border-border bg-card p-5">
+                <Tag className="mb-3 h-5 w-5 text-primary" />
+                <p className="font-semibold">8 SVG Badges</p>
+                <p className="mt-1 text-sm text-muted-fg">Label, stat, status, progress, score, socials, tech-stack, availability.</p>
+              </div>
+              <div className="mechanical-corners rounded-lg border border-border bg-card p-5">
+                <Search className="mb-3 h-5 w-5 text-primary" />
+                <p className="font-semibold">4 SEO Assets</p>
+                <p className="mt-1 text-sm text-muted-fg">Favicon, Apple touch icon, PWA manifest icon, Twitter card.</p>
+              </div>
               <div className="rounded-lg border border-border bg-card p-5">
                 <div className="flex flex-col gap-3 h-full justify-center">
                   {[
-                    { Icon: Zap,    text: "Edge Runtime"  },
-                    { Icon: Layers, text: "4 size presets" },
-                    { Icon: Code2,  text: "Zod validation" },
-                    { Icon: Globe,  text: "CORS-enabled"   },
+                    { Icon: Zap,    text: "Zero signup"    },
+                    { Icon: Layers, text: "4 size presets"  },
+                    { Icon: Code2,  text: "Zod validation"  },
+                    { Icon: Globe,  text: "CORS-enabled"    },
                   ].map(({ Icon, text }) => (
                     <div key={text} className="flex items-center gap-2 text-sm text-muted-fg">
                       <Icon className="h-4 w-4 text-primary" />
@@ -134,7 +118,7 @@ export default function HomePage() {
         </section>
 
         {/* Quick-start */}
-        <section className="py-20 bg-muted/30">
+        <section className="py-20">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="mb-4 text-center text-3xl font-bold">Quick Start</h2>
             <p className="mb-10 text-center text-muted-fg">

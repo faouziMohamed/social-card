@@ -1,65 +1,65 @@
 import { createBadgeHandler } from '@/modules/badge/server/badge-handler.server';
 import {
-  estimateTextWidth, getContrastColor, hexToRgba,
-  rect, svgRoot, text, PLATFORM_META,
+  PLATFORM_META,
+  estimateTextWidth,
+  getContrastColor,
+  hexToRgba,
+  premiumDefs,
+  premiumPanel,
+  rect,
+  resolvePalette,
+  svgRoot,
+  text,
 } from '@/modules/badge/server/badge-render.server';
 import { socialsSchema, type SocialsParams } from '@/modules/badge/shared/badge-schemas';
 
 export function socialsRenderer(p: SocialsParams): string {
-  const meta    = PLATFORM_META[p.platform];
-  const accent  = p.color ?? meta?.color ?? '#6366f1';
-  const fg      = getContrastColor(accent);
-
+  const meta = PLATFORM_META[p.platform];
+  const accent = p.color ?? meta?.color ?? '#6366f1';
+  const palette = resolvePalette(p.theme);
   const platformLabel = meta?.label ?? p.platform;
-  const handleTxt     = `@${p.handle}`;
-  const followerTxt   = p.followers ?? '';
-
-  const h   = 28;
+  const handle = `@${p.handle}`;
+  const followers = p.followers ?? '';
+  const height = 34;
   const pad = 10;
-  const fs  = 11;
-  const iconSize = 16;
-
-  // icon (16px) + gap + platform + separator + handle + optional followers
-  const iconGap   = 6;
-  const sepW      = 1;
-  const sepPad    = 8;
-  const platformW = estimateTextWidth(platformLabel, fs);
-  const handleW   = estimateTextWidth(handleTxt, fs);
-  const followW   = followerTxt ? estimateTextWidth(followerTxt, fs) + sepPad * 2 + sepW : 0;
-
-  const leftW = pad + iconSize + iconGap + platformW + pad;
-  const midW  = pad + handleW + pad;
-  const w     = leftW + sepW + midW + followW;
-
+  const iconSize = 15;
+  const fontSize = 11;
+  const iconGap = 7;
+  const platformWidth = estimateTextWidth(platformLabel, fontSize);
+  const handleWidth = estimateTextWidth(handle, fontSize);
+  const followersWidth = followers ? estimateTextWidth(followers, fontSize) + 18 : 0;
+  const leftWidth = pad + iconSize + iconGap + platformWidth + pad;
+  const bodyWidth = pad + handleWidth + followersWidth + pad;
+  const width = leftWidth + bodyWidth + 2;
   const iconPath = meta?.iconPath ?? '';
-
-  const defs = `
-    <clipPath id="clip"><rect width="${w}" height="${h}" rx="14"/></clipPath>`;
-
   const iconScale = iconSize / 24;
 
+  const defs = [
+    premiumDefs(p.theme, accent, 'social'),
+    `<clipPath id="social-clip"><rect x="3" y="3" width="${width - 6}" height="${height - 6}" rx="14"/></clipPath>`,
+  ].join('');
+
   const content = [
-    `<g clip-path="url(#clip)">`,
-    rect(0,     0, leftW, h, accent, 0),
-    rect(leftW, 0, midW + followW + sepW, h, '#1a1a1a', 0),
-    `</g>`,
-    // Platform icon (inline path)
+    premiumPanel(width, height, 17, p.theme, accent, 'social'),
+    `<g clip-path="url(#social-clip)">`,
+    rect(3, 3, leftWidth, height - 6, 'url(#social-accent)', 0),
+    rect(3 + leftWidth, 3, bodyWidth, height - 6, hexToRgba(palette.bg, p.theme === 'dark' ? 0.28 : 0.18), 0),
+    '</g>',
     iconPath
-      ? `<g transform="translate(${pad},${(h - iconSize) / 2}) scale(${iconScale})"><path d="${iconPath}" fill="${fg}"/></g>`
+      ? `<g transform="translate(${pad + 1},${(height - iconSize) / 2}) scale(${iconScale})"><path d="${iconPath}" fill="${getContrastColor(accent)}"/></g>`
       : '',
-    text(platformLabel, pad + iconSize + iconGap, h / 2, fg, fs, 'bold'),
-    // separator
-    `<line x1="${leftW}" y1="4" x2="${leftW}" y2="${h - 4}" stroke="${hexToRgba('#ffffff', 0.15)}" stroke-width="1"/>`,
-    text(handleTxt, leftW + pad, h / 2, '#e4e4e7', fs),
-    followerTxt
+    text(platformLabel, pad + iconSize + iconGap + 1, height / 2, getContrastColor(accent), fontSize, 'bold'),
+    `<line x1="${leftWidth + 3}" y1="8" x2="${leftWidth + 3}" y2="${height - 8}" stroke="${hexToRgba('#ffffff', 0.22)}"/>`,
+    text(handle, leftWidth + pad + 3, height / 2, palette.fg, fontSize, 'bold'),
+    followers
       ? [
-          `<line x1="${leftW + midW}" y1="4" x2="${leftW + midW}" y2="${h - 4}" stroke="${hexToRgba('#ffffff', 0.1)}" stroke-width="1"/>`,
-          text(followerTxt, leftW + midW + sepPad, h / 2, hexToRgba(accent, 0.9), fs, 'bold'),
+          `<line x1="${leftWidth + pad + handleWidth + 12}" y1="10" x2="${leftWidth + pad + handleWidth + 12}" y2="${height - 10}" stroke="${hexToRgba(palette.fg, 0.12)}"/>`,
+          text(followers, leftWidth + pad + handleWidth + 20, height / 2, hexToRgba(accent, 0.96), fontSize, 'bold'),
         ].join('')
       : '',
   ].join('');
 
-  return svgRoot(w, h, content, defs);
+  return svgRoot(width, height, content, defs);
 }
 
 export const GET = createBadgeHandler(socialsSchema, socialsRenderer);

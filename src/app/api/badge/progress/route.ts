@@ -1,47 +1,46 @@
 import { createBadgeHandler } from '@/modules/badge/server/badge-handler.server';
 import {
-  estimateTextWidth, hexToRgba, rect, svgRoot, text,
+  clamp,
+  hexToRgba,
+  premiumDefs,
+  premiumPanel,
+  rect,
+  resolvePalette,
+  svgRoot,
+  text,
 } from '@/modules/badge/server/badge-render.server';
 import { progressSchema, type ProgressParams } from '@/modules/badge/shared/badge-schemas';
 
 export function progressRenderer(p: ProgressParams): string {
   const accent = p.color ?? '#22c55e';
-  const w      = p.width ?? 220;
-  const h      = 36;
-  const barH   = 6;
-  const pad    = 10;
-  const fs     = 10;
+  const palette = resolvePalette(p.theme);
+  const width = p.width ?? 220;
+  const height = 46;
+  const pad = 12;
+  const barHeight = 8;
+  const barY = 30;
+  const pct = Math.round(clamp(p.value, 0, 100));
+  const trackWidth = width - pad * 2;
+  const fillWidth = Math.round((trackWidth * pct) / 100);
 
-  const pct    = Math.min(100, Math.max(0, p.value));
-  const label  = p.label;
-  const valTxt = `${pct}%`;
-
-  // Gradient from accent to lighter
-  const defs = `
-    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="${accent}"/>
-      <stop offset="100%" stop-color="${hexToRgba(accent, 0.7)}"/>
-    </linearGradient>
-    <clipPath id="barclip"><rect x="${pad}" y="${h - barH - 4}" width="${w - pad * 2}" height="${barH}" rx="3"/></clipPath>`;
-
-  const barW   = w - pad * 2;
-  const fillW  = Math.round((barW * pct) / 100);
-  const labelFg = '#e4e4e7';
-  const mutedFg = '#71717a';
-
-  const content = [
-    rect(0, 0, w, h, '#1a1a1a', 6),
-    rect(0, 0, w, h, 'none', 6, `stroke="#333333" stroke-width="1" fill="none"`),
-    text(label,  pad, 12, labelFg, fs),
-    text(valTxt, w - pad, 12, hexToRgba(accent, 0.9), fs, 'bold', 'end'),
-    // track
-    `<g clip-path="url(#barclip)">`,
-    rect(pad, h - barH - 4, barW, barH, '#333333', 0),
-    fillW > 0 ? rect(pad, h - barH - 4, fillW, barH, `url(#bar)`, 0) : '',
-    `</g>`,
+  const defs = [
+    premiumDefs(p.theme, accent, 'progress'),
+    `<clipPath id="barclip"><rect x="${pad}" y="${barY}" width="${trackWidth}" height="${barHeight}" rx="4"/></clipPath>`,
   ].join('');
 
-  return svgRoot(w, h, content, defs);
+  const content = [
+    premiumPanel(width, height, 12, p.theme, accent, 'progress'),
+    text(p.label, pad, 16, palette.fg, 11, 'bold'),
+    text(`${pct}%`, width - pad, 16, hexToRgba(accent, 0.96), 11, 'bold', 'end'),
+    `<g clip-path="url(#barclip)">`,
+    rect(pad, barY, trackWidth, barHeight, hexToRgba(palette.fg, p.theme === 'dark' ? 0.12 : 0.1), 0),
+    fillWidth > 0 ? rect(pad, barY, fillWidth, barHeight, 'url(#progress-accent)', 0) : '',
+    fillWidth > 8 ? `<path d="M${pad + 2} ${barY + 2}H${pad + fillWidth - 2}" stroke="${hexToRgba('#ffffff', 0.45)}" stroke-linecap="round"/>` : '',
+    '</g>',
+    `<circle cx="${pad + fillWidth}" cy="${barY + barHeight / 2}" r="${fillWidth > 0 ? 5 : 0}" fill="${hexToRgba(accent, 0.38)}"/>`,
+  ].join('');
+
+  return svgRoot(width, height, content, defs);
 }
 
 export const GET = createBadgeHandler(progressSchema, progressRenderer);

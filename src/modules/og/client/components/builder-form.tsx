@@ -14,12 +14,10 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils/cn";
-import { TEMPLATE_SECTIONS } from "@/modules/og/shared/og-template-registry";
-import type { TemplateName } from "@/modules/og/shared/og.types";
-import type { FieldDef } from "@/modules/og/shared/og-template-registry";
+import type { FieldDef, FormSection } from "@/modules/og/shared/og-template-registry";
 
-interface BuilderFormProps {
-  template:      TemplateName;
+export interface BuilderFormProps {
+  sections:      FormSection[];
   params:        Record<string, string>;
   onParamChange: (key: string, value: string) => void;
 }
@@ -36,31 +34,24 @@ function isBgOverlays(field: FieldDef): boolean {
 
 /**
  * Given a list of visible fields, compute which half-width fields need
- * col-span-2 because they'd be alone on their row. Strategy:
- * walk through fields in order, tracking the current column (0 or 1).
- * Full-width fields always sit on column 0 and advance to 0.
- * Half-width fields alternate 0→1→0. If a half-width field is at col 0
- * and the *next rendered* field is full-width (or doesn't exist), it's alone.
+ * col-span-2 because they'd be alone on their row.
  */
 function computeFullWidthSet(fields: FieldDef[]): Set<string> {
   const result = new Set<string>();
-  let col = 0; // 0 = left, 1 = right
+  let col = 0;
 
   for (let i = 0; i < fields.length; i++) {
     const field = fields[i];
     if (isFullWidth(field) || isBgOverlays(field)) {
-      col = 0; // full-width always resets to column 0
+      col = 0;
       continue;
     }
     if (col === 0) {
-      // Check whether there's a half-width partner coming next
-      const nextHalf = fields.slice(i + 1).find((f) => !isFullWidth(f) && !isBgOverlays(f));
-      // If no next half-width field exists, or the immediate next field is full-width → alone
       const immediateNext = fields[i + 1];
       const partnerExists = immediateNext && !isFullWidth(immediateNext) && !isBgOverlays(immediateNext);
       if (!partnerExists) {
         result.add(field.key);
-        col = 0; // spans full row, stays at 0
+        col = 0;
       } else {
         col = 1;
       }
@@ -73,9 +64,7 @@ function computeFullWidthSet(fields: FieldDef[]): Set<string> {
 }
 
 // key={template} from parent — remounts on template switch to reset scroll position
-export function BuilderForm({ template, params, onParamChange }: BuilderFormProps) {
-  const sections = TEMPLATE_SECTIONS[template];
-
+export function BuilderForm({ sections, params, onParamChange }: BuilderFormProps) {
   return (
     <div className="flex flex-col divide-y divide-border/20">
       {sections.map((section) => {
@@ -92,14 +81,12 @@ export function BuilderForm({ template, params, onParamChange }: BuilderFormProp
 
         return (
           <div key={section.title}>
-            {/* Section header */}
             <div className="sticky top-0 z-10 border-b border-border/20 bg-card/90 px-4 py-2 backdrop-blur-sm">
               <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-muted-fg/40">
                 {section.title}
               </span>
             </div>
 
-            {/* Fields grid */}
             <div className="grid grid-cols-2 gap-x-3 gap-y-3 px-4 py-3">
               {visibleFields.map((field) => (
                 <FieldCell
@@ -138,7 +125,6 @@ function FieldCell({
 }) {
   const value = params[field.key] ?? "";
 
-  // ── BG base (writes to bgStyle) ──────────────────────────────────────────
   if (field.key === "bgBase" && field.type === "select") {
     const { base, overlays } = parseBgStyle(params.bgStyle ?? "gradient+grid");
     return (
@@ -162,7 +148,6 @@ function FieldCell({
     );
   }
 
-  // ── BG overlays (multi-toggle, always full width) ────────────────────────
   if (field.key === "bgOverlays" && field.type === "multi-select") {
     const { base, overlays } = parseBgStyle(params.bgStyle ?? "gradient+grid");
     return (
@@ -197,7 +182,6 @@ function FieldCell({
     );
   }
 
-  // ── Color picker (always full width) ────────────────────────────────────
   if (field.type === "color") {
     const displayColor = value || "#6366f1";
     return (
@@ -231,16 +215,24 @@ function FieldCell({
     );
   }
 
-  // ── Generic multi-select (unhandled → skip) ──────────────────────────────
   if (field.type === "multi-select") return null;
 
-  // ── Select ───────────────────────────────────────────────────────────────
   if (field.type === "select") {
     const first = field.options[0];
     const defaultValue = typeof first === "string" ? first : first.value;
+    const selectedValue = field.key === "icon" && value === "" ? "__none__" : (value || defaultValue);
+
+    const handleSelectValueChange = (nextValue: string) => {
+      if (field.key === "icon" && nextValue === "__none__") {
+        onChange("");
+        return;
+      }
+      onChange(nextValue);
+    };
+
     return (
       <FieldShell label={field.label} fullWidth={forceFullWidth}>
-        <Select value={value || defaultValue} onValueChange={onChange}>
+        <Select value={selectedValue} onValueChange={handleSelectValueChange}>
           <SelectTrigger className="h-8 w-full text-xs">
             <SelectValue />
           </SelectTrigger>
@@ -256,7 +248,6 @@ function FieldCell({
     );
   }
 
-  // ── Date picker (always full width) ─────────────────────────────────────
   if (field.type === "date") {
     const parsed = value ? parseISO(value) : undefined;
     return (
@@ -288,7 +279,6 @@ function FieldCell({
     );
   }
 
-  // ── Text / URL ────────────────────────────────────────────────────────────
   return (
     <FieldShell label={field.label} fullWidth={forceFullWidth}>
       <Input
@@ -324,10 +314,10 @@ function FieldShell({
 // ─── BG style helpers ────────────────────────────────────────────────────────
 
 function parseBgStyle(value: string): { base: string; overlays: string[] } {
-  const tokens    = value.split("+").map((v) => v.trim()).filter(Boolean);
-  const bases     = new Set(["solid", "gradient", "aurora", "mesh"]);
+  const tokens     = value.split("+").map((v) => v.trim()).filter(Boolean);
+  const bases      = new Set(["solid", "gradient", "aurora", "mesh"]);
   const overlaySet = new Set(["grid", "dots", "diagonal", "noise", "spotlight", "vignette"]);
-  const base      = tokens.find((t) => bases.has(t)) ?? "gradient";
+  const base       = tokens.find((t) => bases.has(t)) ?? "gradient";
   return { base, overlays: tokens.filter((t) => overlaySet.has(t)) };
 }
 
