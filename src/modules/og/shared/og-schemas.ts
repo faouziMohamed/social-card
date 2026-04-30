@@ -70,6 +70,7 @@ export const blogSchema = z.object({
   authorHandle: z.string().optional().describe('Social handle e.g. @johndoe'),
   readingTime:  z.string().optional().describe('e.g. "5 min read"'),
   publishDate:  z.string().optional().describe('ISO 8601 date e.g. 2026-04-28'),
+  dateLocale:   z.string().optional().describe('BCP 47 locale for date formatting e.g. fr-FR (defaults to en-US)'),
   siteDomain:   z.string().optional().describe('Breadcrumb domain shown above date'),
   accentColor:  z.string().regex(/^#([\dA-Fa-f]{3}|[\dA-Fa-f]{6})$/).default('#6366f1').describe('Accent bar color'),
 }).merge(baseSchema);
@@ -91,7 +92,8 @@ export const articleSchema = z.object({
   publicationName: z.string().optional().describe('Newsletter / publication brand name'),
   publicationLogo: imageUrl,
   readingTime:     z.string().optional().describe('e.g. "8 min read"'),
-  publishDate:     z.string().optional().describe('Human-readable date'),
+  publishDate:     z.string().optional().describe('ISO 8601 date e.g. 2026-04-28'),
+  dateLocale:      z.string().optional().describe('BCP 47 locale for date formatting e.g. fr-FR (defaults to en-US)'),
   accentColor:     z.string().default('#f59e0b').describe('Left edge accent bar + publication name color'),
 }).merge(baseSchema);
 

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Check, Copy, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { Button } from "@/components/ui/button";
 
 interface CopyButtonProps {
   url: string;
@@ -31,33 +33,33 @@ export function CopyButton({ url }: CopyButtonProps) {
       </div>
 
       <div className="grid grid-cols-2">
-        <button
-          type="button"
+        <Button
+          variant="ghost"
           onClick={handleCopy}
           disabled={!url}
           className={cn(
-            "flex h-10 items-center justify-center gap-2 border-r border-border/40 text-xs font-medium transition-all duration-200 focus:outline-none",
-            state === "copied" ? "text-terminal-green" : "text-muted-fg hover:bg-white/[0.04] hover:text-foreground",
-            !url && "cursor-not-allowed opacity-30",
+            "h-10 gap-2 rounded-none border-r border-border/40 text-xs font-medium",
+            state === "copied" ? "text-terminal-green hover:text-terminal-green" : "text-muted-fg",
           )}
         >
-          {state === "copied"
-            ? <><span className="text-sm">✓</span><span>Copied!</span></>
-            : <><span className="text-sm opacity-60">⎘</span><span>Copy URL</span></>
-          }
-        </button>
+          {state === "copied" ? (
+            <><Check className="h-3.5 w-3.5" /><span>Copied!</span></>
+          ) : (
+            <><Copy className="h-3.5 w-3.5 opacity-60" /><span>Copy URL</span></>
+          )}
+        </Button>
 
         <a
           href={url || "#"}
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            "flex h-10 items-center justify-center gap-1.5 text-xs font-medium text-muted-fg transition-all hover:bg-white/[0.04] hover:text-foreground",
+            "flex h-10 items-center justify-center gap-1.5 rounded-none text-xs font-medium text-muted-fg transition-colors hover:bg-accent hover:text-foreground",
             !url && "pointer-events-none opacity-30",
           )}
         >
           <span>Open Preview</span>
-          <span className="text-[10px] opacity-60">↗</span>
+          <ExternalLink className="h-3 w-3 opacity-60" />
         </a>
       </div>
     </div>

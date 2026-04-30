@@ -4,6 +4,11 @@ import type { OgRendererContext } from '../og-handler.server';
 import { clampStyle, hexToRgba } from '../og-render.server';
 import { composeBackgroundStyleWithTone, resolveTypographyStyle } from '../og-visuals.server';
 
+function formatDate(iso: string, locale = 'en-US'): string {
+  try { return new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(new Date(iso)); }
+  catch { return iso; }
+}
+
 export function articleRenderer(
   p:   ArticleParams,
   ctx: OgRendererContext,
@@ -18,6 +23,7 @@ export function articleRenderer(
     p.bgTone,
     p.bgCustomColor,
   );
+  const formattedDate = p.publishDate ? formatDate(p.publishDate, p.dateLocale) : null;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%', position: 'relative', ...bgStyle }}>
@@ -35,7 +41,7 @@ export function articleRenderer(
               </div>
             )}
             <span style={{ ...typography, fontSize: 22, fontWeight: 500, color: accentColor }}>{p.publicationName}</span>
-            {p.publishDate && <span style={{ ...typography, fontSize: 20, fontWeight: 400, color: theme.textMuted }}>· {p.publishDate}</span>}
+            {p.publishDate && <span style={{ ...typography, fontSize: 20, fontWeight: 400, color: theme.textMuted }}>· {formattedDate}</span>}
             {p.readingTime && <span style={{ ...typography, fontSize: 20, fontWeight: 400, color: theme.textMuted }}>· {p.readingTime}</span>}
           </div>
         )}

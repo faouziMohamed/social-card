@@ -225,4 +225,45 @@ Node.js runtime. Edge strips Node.js APIs (`Buffer`, `fs`, crypto, etc.) which
 breaks image processing, font loading, and any server utility. The performance
 gains are marginal and the compatibility cost is high.
 
+### 10. Never Use Native HTML Interactive Elements
+
+**All interactive UI must use library components — never raw HTML elements.**
+
+| Element | Use instead |
+|---|---|
+| `<input>`, `<textarea>` | `Input`, `Textarea` from `src/components/ui/` |
+| `<select>`, `<option>` | `Select` / `SelectContent` / `SelectItem` from shadcn/ui |
+| `<input type="date">` | `Calendar` + `Popover` from shadcn/ui (`react-day-picker`) |
+| `<button>` | `Button` from `src/components/ui/button.tsx` |
+| `<dialog>`, `window.alert`, `window.confirm` | `Dialog`, `AlertDialog`, `Sheet` from shadcn/ui |
+| `<label>` | `Label` from `src/components/ui/label.tsx` |
+
+**Icons:** use `lucide-react` (already installed) or `react-icons` — never inline SVG or emoji substitutes for interactive icons.
+
+**When a needed component does not exist** in `src/components/ui/`, scaffold it from [@radix-ui](https://www.radix-ui.com/) primitives or react-day-picker following the existing shadcn pattern, then import it.
+
+**Good:**
+
+```typescript jsx
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="outline"><CalendarIcon className="h-4 w-4" /> Pick date</Button>
+  </PopoverTrigger>
+  <PopoverContent><Calendar mode="single" /></PopoverContent>
+</Popover>
+```
+
+**Bad:**
+
+```typescript jsx
+<input type="date" onChange={...} />
+<select onChange={...}><option>...</option></select>
+<button onClick={...}>Click</button>
+```
+
 <!-- END:nextjs-agent-rules -->

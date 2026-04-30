@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { Button } from "@/components/ui/button";
 
 interface QueryBreakdownProps {
   url: string;
@@ -13,10 +15,10 @@ export function QueryBreakdown({ url }: QueryBreakdownProps) {
 
   return (
     <section className="overflow-hidden rounded-xl border border-border/50 bg-card/40">
-      <button
-        type="button"
+      <Button
+        variant="ghost"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between gap-3 border-b border-border/30 px-4 py-3 text-left transition-colors hover:bg-white/[0.02]"
+        className="flex h-auto w-full items-center justify-between gap-3 rounded-none border-b border-border/30 px-4 py-3 text-left"
       >
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-fg/70">Query Breakdown</p>
@@ -24,8 +26,8 @@ export function QueryBreakdown({ url }: QueryBreakdownProps) {
             {entries.length} active {entries.length === 1 ? "query" : "queries"}
           </p>
         </div>
-        <span className={cn("text-xs text-muted-fg/60 transition-transform", open ? "rotate-0" : "-rotate-90")}>▾</span>
-      </button>
+        <ChevronDown className={cn("h-4 w-4 text-muted-fg/60 transition-transform duration-200 shrink-0", open ? "rotate-0" : "-rotate-90")} />
+      </Button>
 
       {open && (
         <div className="grid gap-2 p-3 sm:p-4">

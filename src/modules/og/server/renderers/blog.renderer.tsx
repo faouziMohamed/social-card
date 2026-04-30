@@ -4,8 +4,8 @@ import type { OgRendererContext } from '../og-handler.server';
 import { clampStyle } from '../og-render.server';
 import { composeBackgroundStyleWithTone, resolveTypographyStyle } from '../og-visuals.server';
 
-function formatDate(iso: string): string {
-  try { return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(iso)); }
+function formatDate(iso: string, locale = 'en-US'): string {
+  try { return new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(new Date(iso)); }
   catch { return iso; }
 }
 
@@ -27,7 +27,7 @@ export function blogRenderer(
   const leftWidth      = hasBanner ? Math.round(width * 0.58) : width;
   const rightWidth     = hasBanner ? width - leftWidth : 0;
   const tags           = p.tags ? p.tags.split(',').map((t) => t.trim()).filter(Boolean).slice(0, 4) : [];
-  const formattedDate  = p.publishDate ? formatDate(p.publishDate) : null;
+  const formattedDate  = p.publishDate ? formatDate(p.publishDate, p.dateLocale) : null;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%', ...bgStyle }}>

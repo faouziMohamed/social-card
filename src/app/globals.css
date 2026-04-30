@@ -15,6 +15,10 @@
   --border:            oklch(0.88 0.005 250);
   --card:              oklch(0.96 0.005 250);
   --card-fg:           oklch(0.09 0.015 250);
+  --popover:           oklch(0.99 0.003 250);
+  --popover-fg:        oklch(0.09 0.015 250);
+  --accent:            oklch(0.91 0.005 250);
+  --accent-fg:         oklch(0.09 0.015 250);
   --terminal-green:    oklch(0.72 0.22 145);
   --terminal-amber:    oklch(0.78 0.18 80);
 }
@@ -31,6 +35,10 @@
   --border:            oklch(0.22 0.015 250);
   --card:              oklch(0.12 0.015 250);
   --card-fg:           oklch(0.96 0.005 250);
+  --popover:           oklch(0.13 0.015 250);
+  --popover-fg:        oklch(0.96 0.005 250);
+  --accent:            oklch(0.18 0.015 250);
+  --accent-fg:         oklch(0.96 0.005 250);
   --terminal-green:    oklch(0.72 0.22 145);
   --terminal-amber:    oklch(0.78 0.18 80);
 }
@@ -47,6 +55,10 @@
   --color-border:         var(--border);
   --color-card:           var(--card);
   --color-card-fg:        var(--card-fg);
+  --color-popover:        var(--popover);
+  --color-popover-foreground: var(--popover-fg);
+  --color-accent:         var(--accent);
+  --color-accent-foreground: var(--accent-fg);
   --color-terminal-green: var(--terminal-green);
   --color-terminal-amber: var(--terminal-amber);
   --font-sans:            var(--font-geist-sans);
