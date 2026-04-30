@@ -17,6 +17,12 @@ export function Navbar() {
           <Link href={ROUTES.builder} className={buttonVariants({ variant: "ghost", size: "sm" })}>
             Builder
           </Link>
+          <Link href={`${ROUTES.docs}#badges`} className={buttonVariants({ variant: "ghost", size: "sm" })}>
+            Badges
+          </Link>
+          <Link href={`${ROUTES.docs}#seo`} className={buttonVariants({ variant: "ghost", size: "sm" })}>
+            SEO
+          </Link>
           <Link href={ROUTES.docs} className={buttonVariants({ variant: "ghost", size: "sm" })}>
             Docs
           </Link>

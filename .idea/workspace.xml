@@ -4,18 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df3652d9-7f9c-4fc4-b54a-7fa2b6a25097" name="Changes" comment="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props">
+    <list default="true" id="df3652d9-7f9c-4fc4-b54a-7fa2b6a25097" name="Changes" comment="Add additional font families, improve font variable support, and enhance builder state hydration&#10;&#10;- Add Inter, Space Grotesk, Playfair Display, and JetBrains Mono fonts with CSS variables&#10;- Update globals.css and layout to support new font variables&#10;- Refine use-builder-state to restore persisted state after hydration for SSR compatibility&#10;- Set default button type and clean up button props">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/fonts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/fonts.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/hooks/use-builder-state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/hooks/use-builder-state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/utils/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/utils/routes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
   </component>
   <component name="CopilotPersistence">
     <persistenceIdMap>
@@ -55,48 +58,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;24.13.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;24.12.2&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/mfaouzi/projects/mfaouzi/og-graph&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;/home/mfaouzi/.local/share/mise/installs/node/24.13.0/bin/node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/mfaouzi/projects/mfaouzi/og-graph/node_modules/prettier&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMThirdPartyAiProvidersConfigurable&quot;,
-    &quot;settings.editor.splitter.proportion&quot;: &quot;1.0233333&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/mfaouzi/projects/mfaouzi/og-graph/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "code.cleanup.on.save": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "javascript.nodejs.core.library.configured.version": "24.13.1",
+    "javascript.nodejs.core.library.typings.version": "24.12.2",
+    "javascript.preferred.runtime.type.id": "node",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/home/mfaouzi/projects/mfaouzi/og-graph",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "/home/mfaouzi/.local/share/mise/installs/node/24.13.0/bin/node",
+    "nodejs_package_manager_path": "pnpm",
+    "npm.Next.js: server-side.executor": "Run",
+    "prettierjs.PrettierConfiguration.Package": "/home/mfaouzi/projects/mfaouzi/og-graph/node_modules/prettier",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "ml.llm.LLMThirdPartyAiProvidersConfigurable",
+    "settings.editor.splitter.proportion": "0.6673307",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/home/mfaouzi/projects/mfaouzi/og-graph/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -138,7 +141,7 @@
       <workItem from="1777392039456" duration="9213000" />
       <workItem from="1777480954512" duration="5688000" />
       <workItem from="1777488204089" duration="2360000" />
-      <workItem from="1777493447663" duration="17012000" />
+      <workItem from="1777493447663" duration="19163000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project configuration files and scripts">
       <option name="closed" value="true" />
@@ -196,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777555535362</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add additional font families, improve font variable support, and enhance builder state hydration&#10;&#10;- Add Inter, Space Grotesk, Playfair Display, and JetBrains Mono fonts with CSS variables&#10;- Update globals.css and layout to support new font variables&#10;- Refine use-builder-state to restore persisted state after hydration for SSR compatibility&#10;- Set default button type and clean up button props">
+      <option name="closed" value="true" />
+      <created>1777556634282</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1777556634283</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,7 +218,8 @@
     <MESSAGE value="Add initial configuration files for project setup" />
     <MESSAGE value="Add initial project files and configurations for OG Graph" />
     <MESSAGE value="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props" />
+    <MESSAGE value="Add additional font families, improve font variable support, and enhance builder state hydration&#10;&#10;- Add Inter, Space Grotesk, Playfair Display, and JetBrains Mono fonts with CSS variables&#10;- Update globals.css and layout to support new font variables&#10;- Refine use-builder-state to restore persisted state after hydration for SSR compatibility&#10;- Set default button type and clean up button props" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add additional font families, improve font variable support, and enhance builder state hydration&#10;&#10;- Add Inter, Space Grotesk, Playfair Display, and JetBrains Mono fonts with CSS variables&#10;- Update globals.css and layout to support new font variables&#10;- Refine use-builder-state to restore persisted state after hydration for SSR compatibility&#10;- Set default button type and clean up button props" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
