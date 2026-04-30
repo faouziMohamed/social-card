@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { format, parseISO } from "date-fns";
-import { CalendarIcon, ChevronDown } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -25,150 +24,172 @@ interface BuilderFormProps {
   onParamChange: (key: string, value: string) => void;
 }
 
-// Receives key={template} from parent — remounts on template switch, resetting section state.
+// Returns true for fields that always occupy the full row (2 columns)
+function isFullWidth(field: FieldDef): boolean {
+  return field.type === "color" || field.type === "date" || field.type === "multi-select";
+}
+
+// Returns true for the bgOverlays multi-toggle (always full width)
+function isBgOverlays(field: FieldDef): boolean {
+  return field.key === "bgOverlays";
+}
+
+/**
+ * Given a list of visible fields, compute which half-width fields need
+ * col-span-2 because they'd be alone on their row. Strategy:
+ * walk through fields in order, tracking the current column (0 or 1).
+ * Full-width fields always sit on column 0 and advance to 0.
+ * Half-width fields alternate 0→1→0. If a half-width field is at col 0
+ * and the *next rendered* field is full-width (or doesn't exist), it's alone.
+ */
+function computeFullWidthSet(fields: FieldDef[]): Set<string> {
+  const result = new Set<string>();
+  let col = 0; // 0 = left, 1 = right
+
+  for (let i = 0; i < fields.length; i++) {
+    const field = fields[i];
+    if (isFullWidth(field) || isBgOverlays(field)) {
+      col = 0; // full-width always resets to column 0
+      continue;
+    }
+    if (col === 0) {
+      // Check whether there's a half-width partner coming next
+      const nextHalf = fields.slice(i + 1).find((f) => !isFullWidth(f) && !isBgOverlays(f));
+      // If no next half-width field exists, or the immediate next field is full-width → alone
+      const immediateNext = fields[i + 1];
+      const partnerExists = immediateNext && !isFullWidth(immediateNext) && !isBgOverlays(immediateNext);
+      if (!partnerExists) {
+        result.add(field.key);
+        col = 0; // spans full row, stays at 0
+      } else {
+        col = 1;
+      }
+    } else {
+      col = 0;
+    }
+  }
+
+  return result;
+}
+
+// key={template} from parent — remounts on template switch to reset scroll position
 export function BuilderForm({ template, params, onParamChange }: BuilderFormProps) {
   const sections = TEMPLATE_SECTIONS[template];
-
-  const [openSections, setOpenSections] = useState<Set<string>>(
-    () => new Set(sections.map((s) => s.title)),
-  );
-
-  const toggleSection = (title: string) => {
-    setOpenSections((prev) => {
-      const next = new Set(prev);
-      if (next.has(title)) { next.delete(title); } else { next.add(title); }
-      return next;
-    });
-  };
 
   return (
     <div className="flex flex-col divide-y divide-border/20">
       {sections.map((section) => {
-        const open = openSections.has(section.title);
-        // Count filled fields for badge
-        const filled = section.fields.filter((f) => params[f.key]?.trim()).length;
+        const visibleFields = section.fields.filter((f) => {
+          if (f.key === "bgCustomColor" && params.bgTone !== "custom") return false;
+          const { base } = parseBgStyle(params.bgStyle ?? "gradient+grid");
+          if ((f.key === "bgGradientFrom" || f.key === "bgGradientTo") && base !== "gradient") return false;
+          return true;
+        });
+
+        if (visibleFields.length === 0) return null;
+
+        const forceFullWidth = computeFullWidthSet(visibleFields);
 
         return (
-          <div key={section.title} className="flex flex-col">
+          <div key={section.title}>
             {/* Section header */}
-            <Button
-              variant="ghost"
-              onClick={() => toggleSection(section.title)}
-              className="flex h-auto w-full items-center justify-between rounded-none px-5 py-3.5 text-left hover:bg-white/[0.025]"
-            >
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-fg/55">
-                  {section.title}
-                </span>
-                {filled > 0 && (
-                  <span className="rounded-full bg-primary/15 px-1.5 py-px text-[9px] font-bold tabular-nums text-primary/80">
-                    {filled}
-                  </span>
-                )}
-              </div>
-              <ChevronDown
-                className={cn(
-                  "h-3.5 w-3.5 text-muted-fg/35 transition-transform duration-200",
-                  open ? "rotate-0" : "-rotate-90",
-                )}
-              />
-            </Button>
+            <div className="sticky top-0 z-10 border-b border-border/20 bg-card/90 px-4 py-2 backdrop-blur-sm">
+              <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-muted-fg/40">
+                {section.title}
+              </span>
+            </div>
 
-            {/* Fields */}
-            {open && (
-              <div className="grid grid-cols-2 gap-x-4 gap-y-1 px-5 pb-5 pt-2">
-                {section.fields.map((field) => (
-                  <FieldRow
-                    key={field.key}
-                    field={field}
-                    params={params}
-                    onChange={(val) => onParamChange(field.key, val)}
-                    onParamChange={onParamChange}
-                  />
-                ))}
-              </div>
-            )}
+            {/* Fields grid */}
+            <div className="grid grid-cols-2 gap-x-3 gap-y-3 px-4 py-3">
+              {visibleFields.map((field) => (
+                <FieldCell
+                  key={field.key}
+                  field={field}
+                  params={params}
+                  forceFullWidth={forceFullWidth.has(field.key)}
+                  onChange={(val) => onParamChange(field.key, val)}
+                  onParamChange={onParamChange}
+                />
+              ))}
+            </div>
           </div>
         );
       })}
+
+      <div className="h-2" />
     </div>
   );
 }
 
-// ─── Field renderer ─────────────────────────────────────────────────────────
+// ─── Field cell ──────────────────────────────────────────────────────────────
 
-function FieldRow({
+function FieldCell({
   field,
   params,
+  forceFullWidth,
   onChange,
   onParamChange,
 }: {
   field: FieldDef;
   params: Record<string, string>;
+  forceFullWidth: boolean;
   onChange: (v: string) => void;
   onParamChange: (key: string, value: string) => void;
 }) {
   const value = params[field.key] ?? "";
 
-  if (field.key === "bgCustomColor" && params.bgTone !== "custom") return null;
-
-  const { base: currentBase } = parseBgStyle(params.bgStyle ?? "gradient+grid");
-  if ((field.key === "bgGradientFrom" || field.key === "bgGradientTo") && currentBase !== "gradient") return null;
-
-  // ── BG base select (special: writes to bgStyle) ──────────────────────────
+  // ── BG base (writes to bgStyle) ──────────────────────────────────────────
   if (field.key === "bgBase" && field.type === "select") {
     const { base, overlays } = parseBgStyle(params.bgStyle ?? "gradient+grid");
     return (
-      <FieldWrap label={field.label}>
+      <FieldShell label={field.label} fullWidth={forceFullWidth}>
         <Select
           value={base}
           onValueChange={(v) => onParamChange("bgStyle", serializeBgStyle(v, overlays))}
         >
-          <SelectTrigger className="h-9 w-full text-xs">
+          <SelectTrigger className="h-8 w-full text-xs">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             {field.options.map((opt) => {
               const v = typeof opt === "string" ? opt : opt.value;
               const l = typeof opt === "string" ? opt : opt.label;
-              return <SelectItem key={v} value={v}>{l}</SelectItem>;
+              return <SelectItem key={v} value={v} className="text-xs">{l}</SelectItem>;
             })}
           </SelectContent>
         </Select>
-      </FieldWrap>
+      </FieldShell>
     );
   }
 
-  // ── BG overlays multi-toggle (full width) ────────────────────────────────
+  // ── BG overlays (multi-toggle, always full width) ────────────────────────
   if (field.key === "bgOverlays" && field.type === "multi-select") {
     const { base, overlays } = parseBgStyle(params.bgStyle ?? "gradient+grid");
     return (
-      <div className="col-span-2 flex flex-col gap-2 py-1">
-        <span className="text-[11px] font-medium text-muted-fg/65">{field.label}</span>
+      <div className="col-span-2 flex flex-col gap-2">
+        <span className="text-[10px] font-medium text-muted-fg/50">{field.label}</span>
         <div className="flex flex-wrap gap-1.5">
           {field.options.map((opt) => {
-            const optValue = typeof opt === "string" ? opt : opt.value;
-            const optLabel = typeof opt === "string" ? opt : opt.label;
-            const active = overlays.includes(optValue);
+            const v = typeof opt === "string" ? opt : opt.value;
+            const l = typeof opt === "string" ? opt : opt.label;
+            const active = overlays.includes(v);
             return (
-              <Button
-                key={optValue}
-                variant="outline"
+              <button
+                key={v}
+                type="button"
                 onClick={() => {
-                  const next = active
-                    ? overlays.filter((v) => v !== optValue)
-                    : [...overlays, optValue];
+                  const next = active ? overlays.filter((x) => x !== v) : [...overlays, v];
                   onParamChange("bgStyle", serializeBgStyle(base, next));
                 }}
                 className={cn(
-                  "h-7 rounded-full px-3 text-[11px] font-mono transition-all duration-150",
+                  "rounded-md border px-2.5 py-1 font-mono text-[10px] font-medium transition-all duration-100",
                   active
-                    ? "border-primary/60 bg-primary/10 text-primary hover:bg-primary/15"
-                    : "border-border/50 text-muted-fg/70 hover:border-border hover:text-foreground",
+                    ? "border-primary/40 bg-primary/10 text-primary"
+                    : "border-border/40 bg-card/30 text-muted-fg/60 hover:border-border/70 hover:text-foreground",
                 )}
               >
-                {optLabel}
-              </Button>
+                {l}
+              </button>
             );
           })}
         </div>
@@ -176,76 +197,81 @@ function FieldRow({
     );
   }
 
-  // ── Color picker (full width — swatch + hex input need horizontal space) ─
+  // ── Color picker (always full width) ────────────────────────────────────
   if (field.type === "color") {
+    const displayColor = value || "#6366f1";
     return (
-      <div className="col-span-2 flex flex-col gap-1.5 py-1">
-        <span className="text-[11px] font-medium text-muted-fg/65">{field.label}</span>
-        <div className="flex items-center gap-2.5">
+      <div className="col-span-2 flex flex-col gap-1.5">
+        <span className="text-[10px] font-medium text-muted-fg/50">{field.label}</span>
+        <div className="flex h-8 items-center overflow-hidden rounded-lg border border-border/50 bg-card/40 pr-2.5 transition-colors focus-within:border-border/70">
           <label
-            className="group relative h-9 w-9 shrink-0 cursor-pointer overflow-hidden rounded-lg border border-border/50 shadow-sm transition-all hover:scale-105 hover:shadow-md active:scale-95"
-            style={{ backgroundColor: value || "#6366f1" }}
+            className="relative h-8 w-10 shrink-0 cursor-pointer transition-opacity hover:opacity-90"
+            title="Pick color"
+            style={{ backgroundColor: displayColor }}
           >
             <input
               type="color"
-              value={value || "#6366f1"}
+              value={displayColor}
               onChange={(e) => onChange(e.target.value)}
               className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
             />
-            <div className="absolute inset-0 bg-white/0 transition-colors group-hover:bg-white/10" />
           </label>
-          <Input
+          <div className="mx-2 h-4 w-px shrink-0 bg-border/40" />
+          <input
             type="text"
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="#6366f1"
-            className="h-9 flex-1 font-mono text-xs tracking-wide"
+            maxLength={7}
+            spellCheck={false}
+            className="min-w-0 flex-1 bg-transparent font-mono text-[11px] text-foreground outline-none placeholder:text-muted-fg/30"
           />
         </div>
       </div>
     );
   }
 
+  // ── Generic multi-select (unhandled → skip) ──────────────────────────────
   if (field.type === "multi-select") return null;
 
-  // ── Radix Select ─────────────────────────────────────────────────────────
+  // ── Select ───────────────────────────────────────────────────────────────
   if (field.type === "select") {
-    const firstOption = field.options[0];
-    const defaultValue = typeof firstOption === "string" ? firstOption : firstOption.value;
+    const first = field.options[0];
+    const defaultValue = typeof first === "string" ? first : first.value;
     return (
-      <FieldWrap label={field.label}>
+      <FieldShell label={field.label} fullWidth={forceFullWidth}>
         <Select value={value || defaultValue} onValueChange={onChange}>
-          <SelectTrigger className="h-9 w-full text-xs">
+          <SelectTrigger className="h-8 w-full text-xs">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             {field.options.map((opt) => {
               const v = typeof opt === "string" ? opt : opt.value;
               const l = typeof opt === "string" ? opt : opt.label;
-              return <SelectItem key={v} value={v}>{l}</SelectItem>;
+              return <SelectItem key={v} value={v} className="text-xs">{l}</SelectItem>;
             })}
           </SelectContent>
         </Select>
-      </FieldWrap>
+      </FieldShell>
     );
   }
 
-  // ── Date picker (full width — formatted date needs space) ────────────────
+  // ── Date picker (always full width) ─────────────────────────────────────
   if (field.type === "date") {
     const parsed = value ? parseISO(value) : undefined;
     return (
-      <div className="col-span-2 flex flex-col gap-1.5 py-1">
-        <span className="text-[11px] font-medium text-muted-fg/65">{field.label}</span>
+      <div className="col-span-2 flex flex-col gap-1.5">
+        <span className="text-[10px] font-medium text-muted-fg/50">{field.label}</span>
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               className={cn(
-                "h-9 w-full justify-start gap-2 px-3 text-xs font-normal",
-                !value && "text-muted-fg/50",
+                "h-8 w-full justify-start gap-2 px-3 text-xs font-normal",
+                !value && "text-muted-fg/40",
               )}
             >
-              <CalendarIcon className="h-3.5 w-3.5 shrink-0 text-muted-fg/60" />
+              <CalendarIcon className="h-3 w-3 shrink-0 opacity-50" />
               {parsed ? format(parsed, "PPP") : "Pick a date…"}
             </Button>
           </PopoverTrigger>
@@ -262,28 +288,34 @@ function FieldRow({
     );
   }
 
-  // ── Text / URL input ─────────────────────────────────────────────────────
+  // ── Text / URL ────────────────────────────────────────────────────────────
   return (
-    <FieldWrap label={field.label}>
+    <FieldShell label={field.label} fullWidth={forceFullWidth}>
       <Input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={"placeholder" in field ? field.placeholder : ""}
-        className="h-9 w-full text-xs"
+        className="h-8 w-full text-xs"
       />
-    </FieldWrap>
+    </FieldShell>
   );
 }
 
-// ─── Shared field wrapper — stacked label above input ───────────────────────
+// ─── Shared label+input wrapper ──────────────────────────────────────────────
 
-function FieldWrap({ label, children }: { label: string; children: React.ReactNode }) {
+function FieldShell({
+  label,
+  fullWidth,
+  children,
+}: {
+  label: string;
+  fullWidth?: boolean;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex flex-col gap-1.5 py-1">
-      <span className="text-[11px] font-medium leading-tight text-muted-fg/65">
-        {label}
-      </span>
+    <div className={cn("flex flex-col gap-1.5", fullWidth && "col-span-2")}>
+      <span className="text-[10px] font-medium leading-tight text-muted-fg/50">{label}</span>
       {children}
     </div>
   );
@@ -292,11 +324,11 @@ function FieldWrap({ label, children }: { label: string; children: React.ReactNo
 // ─── BG style helpers ────────────────────────────────────────────────────────
 
 function parseBgStyle(value: string): { base: string; overlays: string[] } {
-  const tokens  = value.split("+").map((v) => v.trim()).filter(Boolean);
-  const bases   = new Set(["solid", "gradient", "aurora", "mesh"]);
-  const overlays = new Set(["grid", "dots", "diagonal", "noise", "spotlight", "vignette"]);
-  const base    = tokens.find((t) => bases.has(t)) ?? "gradient";
-  return { base, overlays: tokens.filter((t) => overlays.has(t)) };
+  const tokens    = value.split("+").map((v) => v.trim()).filter(Boolean);
+  const bases     = new Set(["solid", "gradient", "aurora", "mesh"]);
+  const overlaySet = new Set(["grid", "dots", "diagonal", "noise", "spotlight", "vignette"]);
+  const base      = tokens.find((t) => bases.has(t)) ?? "gradient";
+  return { base, overlays: tokens.filter((t) => overlaySet.has(t)) };
 }
 
 function serializeBgStyle(base: string, overlays: string[]): string {

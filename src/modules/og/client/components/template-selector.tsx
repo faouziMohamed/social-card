@@ -34,7 +34,6 @@ export function TemplateSelector({ value, onChange }: TemplateSelectorProps) {
     return () => { el.removeEventListener("scroll", checkScroll); ro.disconnect(); };
   }, []);
 
-  // Scroll active card into view on mount / value change
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -101,21 +100,18 @@ export function TemplateSelector({ value, onChange }: TemplateSelectorProps) {
                     : `linear-gradient(135deg, ${color}18 0%, ${color}04 100%)`,
                 }}
               >
-                {/* Decorative lines mimicking an OG card layout */}
                 <div className="absolute inset-0 flex flex-col justify-center gap-1.5 px-3 py-2">
                   <div className="h-[3px] w-1/3 rounded-full opacity-60" style={{ background: color }} />
                   <div className="h-[6px] w-3/4 rounded-sm opacity-40" style={{ background: color }} />
                   <div className="h-[4px] w-1/2 rounded-sm opacity-25" style={{ background: color }} />
                   <div className="mt-1 h-[3px] w-1/4 rounded-full opacity-20" style={{ background: color }} />
                 </div>
-                {/* Icon watermark */}
                 <span
                   className="absolute right-2.5 bottom-1.5 text-[22px] leading-none opacity-30 transition-opacity duration-200 group-hover:opacity-50"
                   style={{ color }}
                 >
                   {icon}
                 </span>
-                {/* Active top bar */}
                 <div
                   className="absolute inset-x-0 top-0 h-[3px] rounded-t-lg transition-opacity duration-300"
                   style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)`, opacity: active ? 1 : 0 }}
@@ -133,7 +129,6 @@ export function TemplateSelector({ value, onChange }: TemplateSelectorProps) {
                 <p className="line-clamp-2 text-[10px] leading-snug text-muted-fg/55">{desc}</p>
               </div>
 
-              {/* Active dot */}
               {active && (
                 <span
                   className="absolute bottom-3 right-3 h-1.5 w-1.5 rounded-full"

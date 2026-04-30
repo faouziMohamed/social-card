@@ -4,24 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df3652d9-7f9c-4fc4-b54a-7fa2b6a25097" name="Changes" comment="Add initial project files and configurations for OG Graph">
+    <list default="true" id="df3652d9-7f9c-4fc4-b54a-7fa2b6a25097" name="Changes" comment="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/builder/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/builder/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/builder-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/builder-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/og-render.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/og-render.server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/og-visuals.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/og-visuals.server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/article.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/article.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/blog.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/blog.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/changelog.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/changelog.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/general.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/general.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/gradient.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/gradient.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/minimal.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/minimal.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/portfolio.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/portfolio.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/product.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/product.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/quote.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/quote.renderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/shared/og-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/shared/og-routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/shared/og-schemas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/shared/og-schemas.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/shared/og-template-registry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/shared/og-template-registry.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/shared/og.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/shared/og.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/builder-island.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/builder-island.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/template-selector.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/template-selector.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +137,7 @@
       <workItem from="1777392039456" duration="9213000" />
       <workItem from="1777480954512" duration="5688000" />
       <workItem from="1777488204089" duration="2360000" />
-      <workItem from="1777493447663" duration="12514000" />
+      <workItem from="1777493447663" duration="14195000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project configuration files and scripts">
       <option name="closed" value="true" />
@@ -183,7 +171,23 @@
       <option name="project" value="LOCAL" />
       <updated>1777551338376</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props">
+      <option name="closed" value="true" />
+      <created>1777552532769</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1777552532769</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props">
+      <option name="closed" value="true" />
+      <created>1777552546459</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1777552546459</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,7 +197,8 @@
     <MESSAGE value="Add initial project configuration files and scripts" />
     <MESSAGE value="Add initial configuration files for project setup" />
     <MESSAGE value="Add initial project files and configurations for OG Graph" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add initial project files and configurations for OG Graph" />
+    <MESSAGE value="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add event and launch templates, gradient color controls, and adaptive overlay visuals&#10;&#10;- Add &quot;event&quot; and &quot;launch&quot; templates with schemas, registry entries, and routes&#10;- Add bgGradientFrom and bgGradientTo color controls for gradient backgrounds&#10;- Update background visuals to support adaptive overlay colors and sizes&#10;- Expose getContrastColor utility for improved contrast handling&#10;- Update form logic to show gradient color fields only for gradient base&#10;- Update all renderers to support new gradient color props" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
