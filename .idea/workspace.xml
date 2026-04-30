@@ -4,17 +4,233 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df3652d9-7f9c-4fc4-b54a-7fa2b6a25097" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AGENT_PROMPT.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/bootstrap.sh" afterDir="false" />
+    <list default="true" id="df3652d9-7f9c-4fc4-b54a-7fa2b6a25097" name="Changes" comment="Add initial configuration files for project setup">
+      <change afterPath="$PROJECT_DIR$/.codebuddy/settings.local.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/f056e72c-4c86-4c22-8ebc-61e3ad36b111.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/f056e72c-4c86-4c22-8ebc-61e3ad36b111/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/og-graph.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PRODUCT.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/superpowers/specs/2026-04-28-og-architecture-reset-design.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/superpowers/specs/2026-04-28-og-image-generator-design.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ops/scripts/download-fonts.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/article/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/blog/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/changelog/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/general/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/gradient/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/minimal/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/portfolio/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/product/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/og/quote/route.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/builder/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/docs/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/abril-fatface-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/albert-sans-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/albert-sans-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/anton-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/architects-daughter-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/azeret-mono-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/azeret-mono-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/barlow-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/barlow-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/bebas-neue-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/bitter-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/bitter-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/bricolage-grotesque-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/bricolage-grotesque-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/bungee-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/cascadia-code-400-italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/cascadia-code-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/caveat-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/caveat-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/chivo-mono-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/chivo-mono-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/commit-mono-400.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/commit-mono-700.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/cormorant-garamond-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/cormorant-garamond-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/courier-prime-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/courier-prime-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/crimson-pro-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/crimson-pro-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/dancing-script-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/dancing-script-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/dela-gothic-one-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/dm-mono-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/dm-mono-500.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/dm-sans-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/dm-sans-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/dm-serif-display-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/eb-garamond-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/eb-garamond-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/exo2-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/exo2-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/figtree-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/figtree-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/fira-code-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/fira-code-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/fraunces-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/fraunces-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/fraunces-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/geist-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/geist-700.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/gloria-hallelujah-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/great-vibes-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/inconsolata-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/inconsolata-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/indie-flower-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/instrument-serif-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/inter-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/inter-700.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/jetbrains-mono-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/jetbrains-mono-700.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/jost-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/jost-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/kaushan-script-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/lexend-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/lexend-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/libre-baskerville-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/libre-baskerville-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/lobster-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/lora-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/lora-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/manrope-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/manrope-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/manrope-800.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/maple-mono-400-italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/maple-mono-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/maple-mono-700.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/merriweather-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/merriweather-700.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/monaspace-argon-400.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/monaspace-krypton-400.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/monaspace-neon-400.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/monaspace-neon-700.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/monaspace-radon-400.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/monaspace-xenon-400.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/montserrat-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/montserrat-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/montserrat-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/nanum-gothic-coding-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/nunito-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/nunito-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/nunito-800.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/onest-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/onest-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/oswald-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/oswald-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/overpass-mono-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/overpass-mono-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/pacifico-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/permanent-marker-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/playfair-display-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/playfair-display-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/playfair-display-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/plus-jakarta-sans-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/plus-jakarta-sans-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/plus-jakarta-sans-800.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/poppins-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/poppins-600.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/poppins-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/raleway-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/raleway-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/raleway-800.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/righteous-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/roboto-300.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/roboto-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/roboto-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/roboto-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/roboto-mono-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/roboto-mono-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/sacramento-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/satisfy-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/share-tech-mono-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/source-code-pro-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/source-code-pro-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/source-serif4-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/source-serif4-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/space-grotesk-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/space-grotesk-700.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/space-mono-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/space-mono-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/syne-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/syne-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/syne-800.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/ubuntu-300.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/ubuntu-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/ubuntu-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/ubuntu-mono-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/ubuntu-mono-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/victor-mono-400-italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/victor-mono-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/victor-mono-700.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/work-sans-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/work-sans-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/Footer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/Navbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/shared/ThemeToggle.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/badge.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/input.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/label.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/select.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/tabs.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/env.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/fonts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/logger/client-logger.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/logger/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/logger/logger.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/utils/cn.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/utils/routes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/http/client/api-client.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/http/server/backend-client.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/client/components/builder-form.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/client/components/builder-island.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/client/components/copy-button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/client/components/endpoint-card.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/client/components/preview-panel.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/client/components/query-breakdown.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/client/components/template-selector.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/client/hooks/use-builder-state.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/og-fonts.server.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/og-handler.server.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/og-render.server.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/og-themes.server.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/og-visuals.server.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/article.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/blog.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/changelog.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/general.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/gradient.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/minimal.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/portfolio.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/product.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/quote.renderer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/shared/og-docs.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/shared/og-query.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/shared/og-routes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/shared/og-schemas.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/shared/og-template-registry.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modules/og/shared/og.types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eslint.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.mts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +243,7 @@
     </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="4" />
+    <option name="cachedIndexableFilesCount" value="380" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FormatOnSaveOptions">
@@ -46,10 +262,10 @@
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7,
-  "fromUser": false
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3Cz6oXzByS3acEWnNZY11PYcqrB" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -59,42 +275,67 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "code.cleanup.on.save": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "javascript.nodejs.core.library.configured.version": "24.13.1",
-    "javascript.nodejs.core.library.typings.version": "24.12.2",
-    "javascript.preferred.runtime.type.id": "node",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/home/mfaouzi/projects/mfaouzi/og-graph",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "/home/mfaouzi/.local/share/mise/installs/node/24/bin/node",
-    "nodejs_package_manager_path": "pnpm",
-    "rearrange.code.on.save": "true",
-    "settings.editor.selected.configurable": "settings.javascript.runtime",
-    "settings.editor.splitter.proportion": "0.46232438",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "/home/mfaouzi/projects/mfaouzi/og-graph/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;24.13.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;24.12.2&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mfaouzi/projects/mfaouzi/og-graph&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;/home/mfaouzi/.local/share/mise/installs/node/24.13.0/bin/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;npm.Next.js: server-side.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/mfaouzi/projects/mfaouzi/og-graph/node_modules/prettier&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMThirdPartyAiProvidersConfigurable&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;1.0233333&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/mfaouzi/projects/mfaouzi/og-graph/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
+  </component>
+  <component name="RunManager" selected="npm.Next.js: server-side">
+    <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
+      <method v="2" />
+    </configuration>
+    <configuration name="Next.js: server-side" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -110,12 +351,41 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1777376226437</updated>
-      <workItem from="1777376228272" duration="5155000" />
+      <workItem from="1777376228272" duration="7742000" />
+      <workItem from="1777384800164" duration="3070000" />
+      <workItem from="1777389894497" duration="2002000" />
+      <workItem from="1777391927264" duration="51000" />
+      <workItem from="1777392039456" duration="9213000" />
+      <workItem from="1777480954512" duration="5688000" />
+      <workItem from="1777488204089" duration="2360000" />
+      <workItem from="1777493447663" duration="7608000" />
     </task>
+    <task id="LOCAL-00001" summary="Add initial project configuration files and scripts">
+      <option name="closed" value="true" />
+      <created>1777382190417</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1777382190417</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add initial configuration files for project setup">
+      <option name="closed" value="true" />
+      <created>1777382401153</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1777382401153</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add initial project configuration files and scripts" />
+    <MESSAGE value="Add initial configuration files for project setup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add initial configuration files for project setup" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

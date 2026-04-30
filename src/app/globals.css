@@ -1,26 +1,200 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ */
+/* Design tokens — Night Vision (dark) + High Visibility (light)       */
+/* ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background:        oklch(0.98 0.005 250);
+  --foreground:        oklch(0.09 0.015 250);
+  --primary:           oklch(0.55 0.15 200);
+  --primary-fg:        oklch(0.98 0.005 250);
+  --secondary:         oklch(0.60 0.18 35);
+  --secondary-fg:      oklch(0.98 0.005 250);
+  --muted:             oklch(0.93 0.005 250);
+  --muted-fg:          oklch(0.52 0.02 250);
+  --border:            oklch(0.88 0.005 250);
+  --card:              oklch(0.96 0.005 250);
+  --card-fg:           oklch(0.09 0.015 250);
+  --terminal-green:    oklch(0.72 0.22 145);
+  --terminal-amber:    oklch(0.78 0.18 80);
+}
+
+.dark {
+  --background:        oklch(0.09 0.015 250);
+  --foreground:        oklch(0.96 0.005 250);
+  --primary:           oklch(0.75 0.15 195);
+  --primary-fg:        oklch(0.09 0.015 250);
+  --secondary:         oklch(0.70 0.18 35);
+  --secondary-fg:      oklch(0.09 0.015 250);
+  --muted:             oklch(0.15 0.015 250);
+  --muted-fg:          oklch(0.60 0.02 250);
+  --border:            oklch(0.22 0.015 250);
+  --card:              oklch(0.12 0.015 250);
+  --card-fg:           oklch(0.96 0.005 250);
+  --terminal-green:    oklch(0.72 0.22 145);
+  --terminal-amber:    oklch(0.78 0.18 80);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background:     var(--background);
+  --color-foreground:     var(--foreground);
+  --color-primary:        var(--primary);
+  --color-primary-fg:     var(--primary-fg);
+  --color-secondary:      var(--secondary);
+  --color-secondary-fg:   var(--secondary-fg);
+  --color-muted:          var(--muted);
+  --color-muted-fg:       var(--muted-fg);
+  --color-border:         var(--border);
+  --color-card:           var(--card);
+  --color-card-fg:        var(--card-fg);
+  --color-terminal-green: var(--terminal-green);
+  --color-terminal-amber: var(--terminal-amber);
+  --font-sans:            var(--font-geist-sans);
+  --font-mono:            var(--font-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ------------------------------------------------------------------ */
+/* Custom utilities                                                     */
+/* ------------------------------------------------------------------ */
+
+/* Circuit-board corner accents */
+.mechanical-corners {
+  position: relative;
+}
+.mechanical-corners::before,
+.mechanical-corners::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--primary);
+  border-style: solid;
+}
+.mechanical-corners::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.mechanical-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Hover-lift card with left accent bar */
+.experience-card {
+  border-left: 3px solid var(--primary);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.experience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.3);
+}
+
+/* Animated status indicator dot */
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  animation: pulse-dot 2s infinite;
+}
+.status-success { background: var(--terminal-green); }
+.status-warning { background: var(--terminal-amber); }
+.status-error   { background: oklch(0.65 0.25 25); }
+.status-info    { background: var(--primary); }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.4); }
+}
+
+/* Circuit dot-grid hero background overlay */
+.circuit-pattern {
+  background-image:
+    radial-gradient(circle, oklch(0.75 0.15 195 / 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Terminal text styles */
+.terminal-prompt {
+  font-family: var(--font-mono), monospace;
+  color: var(--terminal-green);
+}
+.terminal-error {
+  font-family: var(--font-mono), monospace;
+  color: oklch(0.65 0.25 25);
+}
+
+/* Glow effects */
+.glow-primary {
+  box-shadow: 0 0 20px oklch(0.75 0.15 195 / 0.35);
+}
+.glow-secondary {
+  box-shadow: 0 0 20px oklch(0.70 0.18 35 / 0.35);
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* Checkerboard background for OG preview canvas */
+.preview-canvas {
+  background-color: oklch(0.11 0.015 250);
+  background-image:
+    linear-gradient(45deg, oklch(0.16 0.012 250) 25%, transparent 25%),
+    linear-gradient(-45deg, oklch(0.16 0.012 250) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, oklch(0.16 0.012 250) 75%),
+    linear-gradient(-45deg, transparent 75%, oklch(0.16 0.012 250) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+/* Shimmer skeleton */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+.shimmer-track {
+  position: relative;
+  overflow: hidden;
+  background: oklch(0.15 0.012 250);
+}
+.shimmer-track::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    oklch(0.22 0.01 250 / 0.6) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.6s infinite;
+}
+
+/* Builder panel glass surfaces */
+.builder-panel {
+  background: oklch(0.115 0.015 250 / 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid oklch(0.25 0.015 250 / 0.5);
+}
+
+/* Section divider */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    oklch(0.28 0.015 250 / 0.8) 30%,
+    oklch(0.28 0.015 250 / 0.8) 70%,
+    transparent
+  );
 }

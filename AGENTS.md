@@ -191,5 +191,38 @@ or save to git. This includes partial commits, "quick saves", or staging
 files as part of a task. Read-only git commands (`git log`, `git diff`,
 `git status`) are fine at any time.
 
+### 7. Announce Skills Before Using Them on Long-Running Tasks
+
+Before invoking any skill for a long-running or multi-step task, explicitly
+tell the user which skill you are about to use and why. Do not silently invoke
+skills. This allows the user to intervene before a skill takes over.
+
+**Good:**
+> "I'm going to use the `writing-plans` skill to turn the approved spec into
+> a detailed implementation plan."
+
+**Bad:** Invoking a skill without any prior announcement.
+
+This rule applies to: `writing-plans`, `executing-plans`, `subagent-driven-development`,
+`dispatching-parallel-agents`, `test-driven-development`, and any other skill that
+drives implementation work.
+
+
+### 8. Skip Heavy Plan Docs — Code Directly
+
+Do **not** write full implementation code inside markdown plan files. Plans
+should be brief outlines (approach + file list), then code immediately.
+Put details in code comments, not in plan files. Writing code twice
+(once in a plan, once in the codebase) wastes tokens and introduces drift.
+
+**Good:** Brief plan outline → code with inline comments
+**Bad:** Full code blocks in a `.md` plan file → copy-paste into source
+
+### 9. Never Use Edge Runtime
+
+Do **not** add `export const runtime = 'edge'` to any route. Use the default
+Node.js runtime. Edge strips Node.js APIs (`Buffer`, `fs`, crypto, etc.) which
+breaks image processing, font loading, and any server utility. The performance
+gains are marginal and the compatibility cost is high.
 
 <!-- END:nextjs-agent-rules -->
