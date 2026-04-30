@@ -22,6 +22,8 @@ export function articleRenderer(
     theme.bg,
     p.bgTone,
     p.bgCustomColor,
+    p.bgGradientFrom,
+    p.bgGradientTo,
   );
   const formattedDate = p.publishDate ? formatDate(p.publishDate, p.dateLocale) : null;
 

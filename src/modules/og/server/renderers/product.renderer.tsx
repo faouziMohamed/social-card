@@ -17,6 +17,8 @@ export function productRenderer(
     theme.bg,
     p.bgTone,
     p.bgCustomColor,
+    p.bgGradientFrom,
+    p.bgGradientTo,
   );
   const hasScreenshot = !!p.screenshot;
   const leftWidth    = hasScreenshot ? Math.round(width * 0.52) : width;

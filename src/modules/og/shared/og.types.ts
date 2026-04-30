@@ -13,6 +13,8 @@ export type {
   PortfolioParams,
   QuoteParams,
   ChangelogParams,
+  EventParams,
+  LaunchParams,
 } from './og-schemas';
 export type { OgFontKey } from './og-font-catalog';
 
@@ -28,4 +30,6 @@ export type TemplateName =
   | 'product'
   | 'portfolio'
   | 'quote'
-  | 'changelog';
+  | 'changelog'
+  | 'event'
+  | 'launch';

@@ -73,6 +73,20 @@ export const TEMPLATE_META: TemplateMeta[] = [
     color: '#38bdf8',
     icon: '☰',
   },
+  {
+    name: 'event',
+    label: 'Event',
+    desc: 'Conference / meetup card',
+    color: '#f97316',
+    icon: '◷',
+  },
+  {
+    name: 'launch',
+    label: 'Launch',
+    desc: 'Product launch announcement',
+    color: '#ec4899',
+    icon: '◈',
+  },
 ];
 
 export interface SelectOption {
@@ -124,6 +138,8 @@ const SHARED_STYLE: FormSection = {
       type: 'select',
       options: ['solid', 'gradient', 'aurora', 'mesh'],
     },
+    {key: 'bgGradientFrom', label: 'Gradient from', type: 'color'},
+    {key: 'bgGradientTo', label: 'Gradient to', type: 'color'},
     {
       key: 'bgOverlays',
       label: 'BG fx',
@@ -573,6 +589,50 @@ export const TEMPLATE_SECTIONS: Record<TemplateName, FormSection[]> = {
     },
     SHARED_STYLE,
   ],
+  event: [
+    {
+      title: 'Event',
+      fields: [
+        {key: 'eventName',  label: 'Event name', type: 'text', placeholder: 'DesignConf 2026'},
+        {key: 'tagline',    label: 'Tagline',    type: 'text', placeholder: 'The future of design'},
+        {key: 'eventDate',  label: 'Date',       type: 'date'},
+        {key: 'dateLocale', label: 'Locale',     type: 'text', placeholder: 'en-US'},
+        {key: 'location',   label: 'Location',   type: 'text', placeholder: 'Paris, France'},
+        {key: 'host',       label: 'Host',       type: 'text', placeholder: 'Acme Events'},
+      ],
+    },
+    {
+      title: 'Style',
+      fields: [{key: 'accentColor', label: 'Accent', type: 'color'}],
+    },
+    SHARED_MEDIA,
+    SHARED_STYLE,
+  ],
+  launch: [
+    {
+      title: 'Launch',
+      fields: [
+        {key: 'productName', label: 'Product',   type: 'text', placeholder: 'SuperApp'},
+        {key: 'punchline',   label: 'Punchline',  type: 'text', placeholder: 'The tool you wished existed'},
+        {key: 'launchDate',  label: 'Launch date', type: 'text', placeholder: 'March 2026'},
+        {key: 'badge',       label: 'Badge',      type: 'text', placeholder: 'Now live'},
+      ],
+    },
+    {
+      title: 'Highlights',
+      fields: [
+        {key: 'highlight1', label: 'Highlight 1', type: 'text', placeholder: '10× faster'},
+        {key: 'highlight2', label: 'Highlight 2', type: 'text', placeholder: 'Open source'},
+        {key: 'highlight3', label: 'Highlight 3', type: 'text', placeholder: 'Zero config'},
+      ],
+    },
+    {
+      title: 'Style',
+      fields: [{key: 'accentColor', label: 'Accent', type: 'color'}],
+    },
+    SHARED_MEDIA,
+    SHARED_STYLE,
+  ],
 };
 
 export const EXAMPLE_PARAMS: Record<TemplateName, string> = {
@@ -593,6 +653,10 @@ export const EXAMPLE_PARAMS: Record<TemplateName, string> = {
     'quote=Build+fast.+Ship+often.&author=Mohamed+Faouzi&kicker=Engineering&theme=dark&accentColor=%2314b8a6&fontFamily=serif&bgStyle=mesh%2Bvignette',
   changelog:
     'productName=OG+Graph&version=v2.1.0&headline=Performance+and+UX+upgrade&change1=New+style+system&change2=Font+controls+for+all+templates&change3=New+endpoint+variants&theme=dark&accentColor=%2338bdf8&fontFamily=inter&bgStyle=gradient%2Bgrid',
+  event:
+    'eventName=DesignConf+2026&tagline=The+future+of+design&location=Paris%2C+France&host=Acme+Events&theme=dark&accentColor=%23f97316&fontFamily=space&bgStyle=gradient%2Bgrid',
+  launch:
+    'productName=SuperApp&punchline=The+tool+you+wished+existed&badge=Now+live&highlight1=10%C3%97+faster&highlight2=Open+source&highlight3=Zero+config&theme=dark&accentColor=%23ec4899&fontFamily=geist&bgStyle=aurora%2Bdots',
 };
 
 export const DEMO_PARAMS: {template: TemplateName; params: string}[] = [

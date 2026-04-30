@@ -22,6 +22,8 @@ export function blogRenderer(
     theme.bg,
     p.bgTone,
     p.bgCustomColor,
+    p.bgGradientFrom,
+    p.bgGradientTo,
   );
   const hasBanner      = !!p.banner;
   const leftWidth      = hasBanner ? Math.round(width * 0.58) : width;

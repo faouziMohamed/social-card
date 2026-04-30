@@ -16,6 +16,8 @@ export function quoteRenderer(
     theme.bg,
     p.bgTone,
     p.bgCustomColor,
+    p.bgGradientFrom,
+    p.bgGradientTo,
   );
 
   return (

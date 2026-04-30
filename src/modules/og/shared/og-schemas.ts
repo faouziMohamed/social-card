@@ -31,7 +31,9 @@ export const baseSchema = z.object({
   target:     z.enum(['og', 'twitter-large', 'twitter-small', 'linkedin']).default('og').describe('Platform preset — sets output dimensions'),
   fontFamily: z.enum(FONT_FAMILIES).default('geist').describe('Typography preset'),
   bgTone:     z.enum(['dark', 'light', 'custom']).default('dark').describe('Background tone preset'),
-  bgCustomColor: z.string().regex(/^#([\dA-Fa-f]{3}|[\dA-Fa-f]{6})$/).optional().describe('Custom background base color'),
+  bgCustomColor:    z.string().regex(/^#([\dA-Fa-f]{3}|[\dA-Fa-f]{6})$/).optional().describe('Custom background base color'),
+  bgGradientFrom:   z.string().regex(/^#([\dA-Fa-f]{3}|[\dA-Fa-f]{6})$/).optional().describe('Gradient start color override (for gradient base)'),
+  bgGradientTo:     z.string().regex(/^#([\dA-Fa-f]{3}|[\dA-Fa-f]{6})$/).optional().describe('Gradient end color override (for gradient base)'),
   bgStyle:    z
     .string()
     .default('gradient+grid')
@@ -140,6 +142,27 @@ export const changelogSchema = z.object({
   accentColor: z.string().default('#38bdf8').describe('Accent color'),
 }).merge(baseSchema);
 
+export const eventSchema = z.object({
+  eventName:   z.string().default('Event Name').describe('Conference or event name'),
+  tagline:     z.string().optional().describe('Short event tagline or theme'),
+  eventDate:   z.string().optional().describe('ISO 8601 date e.g. 2026-09-15'),
+  dateLocale:  z.string().optional().describe('BCP 47 locale for date formatting e.g. fr-FR'),
+  location:    z.string().optional().describe('City and country or venue name'),
+  host:        z.string().optional().describe('Organizer or host name'),
+  accentColor: z.string().default('#f97316').describe('Accent color for date, dividers'),
+}).merge(baseSchema);
+
+export const launchSchema = z.object({
+  productName: z.string().default('My Product').describe('Product or project name'),
+  punchline:   z.string().optional().describe('One-line bold value proposition'),
+  launchDate:  z.string().optional().describe('ISO 8601 date or freeform text e.g. "Coming soon"'),
+  highlight1:  z.string().optional().describe('First key highlight'),
+  highlight2:  z.string().optional().describe('Second key highlight'),
+  highlight3:  z.string().optional().describe('Third key highlight'),
+  badge:       z.string().optional().describe('Pill badge text e.g. "Now live"'),
+  accentColor: z.string().default('#ec4899').describe('Accent color for highlights and badge'),
+}).merge(baseSchema);
+
 export const TEMPLATE_SCHEMAS = {
   general:   generalSchema,
   gradient:  gradientSchema,
@@ -150,6 +173,8 @@ export const TEMPLATE_SCHEMAS = {
   portfolio: portfolioSchema,
   quote:     quoteSchema,
   changelog: changelogSchema,
+  event:     eventSchema,
+  launch:    launchSchema,
 } as const;
 
 export type GeneralParams   = z.infer<typeof generalSchema>;
@@ -159,5 +184,7 @@ export type MinimalParams   = z.infer<typeof minimalSchema>;
 export type ArticleParams   = z.infer<typeof articleSchema>;
 export type ProductParams   = z.infer<typeof productSchema>;
 export type PortfolioParams = z.infer<typeof portfolioSchema>;
-export type QuoteParams = z.infer<typeof quoteSchema>;
+export type QuoteParams     = z.infer<typeof quoteSchema>;
 export type ChangelogParams = z.infer<typeof changelogSchema>;
+export type EventParams     = z.infer<typeof eventSchema>;
+export type LaunchParams    = z.infer<typeof launchSchema>;

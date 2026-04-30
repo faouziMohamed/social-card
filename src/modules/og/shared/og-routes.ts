@@ -11,4 +11,6 @@ export const OG_ROUTES: Record<TemplateName, string> = {
   portfolio: '/api/og/portfolio',
   quote:     '/api/og/quote',
   changelog: '/api/og/changelog',
+  event:     '/api/og/event',
+  launch:    '/api/og/launch',
 };

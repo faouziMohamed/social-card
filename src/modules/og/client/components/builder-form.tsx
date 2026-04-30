@@ -112,6 +112,9 @@ function FieldRow({
 
   if (field.key === "bgCustomColor" && params.bgTone !== "custom") return null;
 
+  const { base: currentBase } = parseBgStyle(params.bgStyle ?? "gradient+grid");
+  if ((field.key === "bgGradientFrom" || field.key === "bgGradientTo") && currentBase !== "gradient") return null;
+
   // ── BG base select (special: writes to bgStyle) ──────────────────────────
   if (field.key === "bgBase" && field.type === "select") {
     const { base, overlays } = parseBgStyle(params.bgStyle ?? "gradient+grid");

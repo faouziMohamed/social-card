@@ -6,21 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="df3652d9-7f9c-4fc4-b54a-7fa2b6a25097" name="Changes" comment="Add initial project files and configurations for OG Graph">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/select.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/builder-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/builder-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/builder-island.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/builder-island.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/copy-button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/copy-button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/query-breakdown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/query-breakdown.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/components/template-selector.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/components/template-selector.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/og/client/hooks/use-builder-state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/client/hooks/use-builder-state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/og-render.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/og-render.server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/og-visuals.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/og-visuals.server.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/article.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/article.renderer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/blog.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/blog.renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/changelog.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/changelog.renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/general.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/general.renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/gradient.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/gradient.renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/minimal.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/minimal.renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/portfolio.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/portfolio.renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/product.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/product.renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/server/renderers/quote.renderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/server/renderers/quote.renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/shared/og-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/shared/og-routes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/og/shared/og-schemas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/shared/og-schemas.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/og/shared/og-template-registry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/shared/og-template-registry.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/og/shared/og.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/og/shared/og.types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +149,7 @@
       <workItem from="1777392039456" duration="9213000" />
       <workItem from="1777480954512" duration="5688000" />
       <workItem from="1777488204089" duration="2360000" />
-      <workItem from="1777493447663" duration="11723000" />
+      <workItem from="1777493447663" duration="12514000" />
     </task>
     <task id="LOCAL-00001" summary="Add initial project configuration files and scripts">
       <option name="closed" value="true" />
@@ -174,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777540387179</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add initial project files and configurations for OG Graph">
+      <option name="closed" value="true" />
+      <created>1777551338376</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1777551338376</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

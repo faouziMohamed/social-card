@@ -17,6 +17,8 @@ export function portfolioRenderer(
     theme.bg,
     p.bgTone,
     p.bgCustomColor,
+    p.bgGradientFrom,
+    p.bgGradientTo,
   );
 
   const skills = p.skills ? p.skills.split(',').map((s) => s.trim()).filter(Boolean).slice(0, 6) : [];

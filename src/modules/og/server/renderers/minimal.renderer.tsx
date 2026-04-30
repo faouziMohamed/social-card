@@ -17,6 +17,8 @@ export function minimalRenderer(
     theme.bg,
     p.bgTone,
     p.bgCustomColor,
+    p.bgGradientFrom,
+    p.bgGradientTo,
   );
   const bgColor     = p.bgColor  ?? bgBase.backgroundColor;
   const textColor   = p.textColor ?? theme.text;

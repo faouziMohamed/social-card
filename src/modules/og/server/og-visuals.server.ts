@@ -4,7 +4,7 @@ import {
   resolveFontFamilyName,
   supportsOgLigatures,
 } from '../shared/og-font-catalog';
-import { hexToRgba } from './og-render.server';
+import { getContrastColor, hexToRgba } from './og-render.server';
 
 export const BG_BASE_OPTIONS = ['solid', 'gradient', 'aurora', 'mesh'] as const;
 export const BG_OVERLAY_OPTIONS = ['grid', 'dots', 'diagonal', 'noise', 'spotlight', 'vignette'] as const;
@@ -15,6 +15,7 @@ export type BgOverlay = (typeof BG_OVERLAY_OPTIONS)[number];
 type BgVisualResult = {
   backgroundColor: string;
   backgroundImage: string;
+  backgroundSize?: string;
 };
 
 type BgTone = 'dark' | 'light' | 'custom';
@@ -50,10 +51,19 @@ export function composeBackgroundStyleWithTone(
   fallbackBg: string,
   bgTone: BgTone,
   bgCustomColor?: string,
+  bgGradientFrom?: string,
+  bgGradientTo?: string,
 ): BgVisualResult {
   const { base, overlays } = parseBgStyleTokens(style);
   const layers: string[] = [];
+  const sizes: string[] = [];
   let backgroundColor = resolveToneBaseColor(bgTone, fallbackBg, bgCustomColor);
+
+  // Determine foreground color for overlays — adaptive when custom bg is set
+  const fgColor = bgTone === 'custom' && bgCustomColor
+    ? getContrastColor(bgCustomColor)
+    : bgTone === 'light' ? '#111111' : '#ffffff';
+  const fgOpacityBase = fgColor === '#111111' ? 0.07 : 0.09;
 
   switch (base) {
     case 'aurora': {
@@ -66,6 +76,7 @@ export function composeBackgroundStyleWithTone(
         `radial-gradient(80% 100% at 10% 15%, ${hexToRgba('#22d3ee', bgTone === 'light' ? 0.14 : 0.2)} 0%, transparent 60%)`,
         `radial-gradient(70% 90% at 90% 85%, ${hexToRgba('#a855f7', bgTone === 'light' ? 0.14 : 0.2)} 0%, transparent 65%)`,
       );
+      sizes.push('100% 100%', '100% 100%');
       break;
     }
     case 'mesh': {
@@ -73,14 +84,18 @@ export function composeBackgroundStyleWithTone(
         `radial-gradient(ellipse at 0% 0%, ${hexToRgba(accentColor, 0.16)} 0%, transparent 55%)`,
         `radial-gradient(ellipse at 100% 100%, ${hexToRgba(accentColor, 0.14)} 0%, transparent 55%)`,
       );
+      sizes.push('100% 100%', '100% 100%');
       break;
     }
     case 'gradient': {
-      layers.push(
-        bgTone === 'light'
-          ? `linear-gradient(135deg, ${hexToRgba(accentColor, 0.16)} 0%, ${hexToRgba('#ffffff', 0.3)} 100%)`
-          : `linear-gradient(135deg, ${hexToRgba(accentColor, 0.22)} 0%, ${hexToRgba('#0f172a', 0.2)} 100%)`,
+      const gradFrom = bgGradientFrom ?? accentColor;
+      const gradTo = bgGradientTo ?? (
+        bgTone === 'light' ? '#ffffff' : bgTone === 'custom' && bgCustomColor ? bgCustomColor : '#0f172a'
       );
+      layers.push(
+        `linear-gradient(135deg, ${hexToRgba(gradFrom, bgTone === 'light' ? 0.2 : 0.28)} 0%, ${hexToRgba(gradTo, bgTone === 'light' ? 0.35 : 0.25)} 100%)`,
+      );
+      sizes.push('100% 100%');
       break;
     }
     default: {
@@ -90,21 +105,26 @@ export function composeBackgroundStyleWithTone(
 
   if (overlays.includes('grid')) {
     layers.push(
-      `linear-gradient(${hexToRgba(bgTone === 'light' ? '#111111' : '#ffffff', bgTone === 'light' ? 0.06 : 0.08)} 1px, transparent 1px)`,
-      `linear-gradient(90deg, ${hexToRgba(bgTone === 'light' ? '#111111' : '#ffffff', bgTone === 'light' ? 0.06 : 0.08)} 1px, transparent 1px)`,
+      `linear-gradient(${hexToRgba(fgColor, fgOpacityBase)} 1px, transparent 1px)`,
+      `linear-gradient(90deg, ${hexToRgba(fgColor, fgOpacityBase)} 1px, transparent 1px)`,
     );
+    sizes.push('40px 40px', '40px 40px');
   }
   if (overlays.includes('dots')) {
-    layers.push(`radial-gradient(circle, ${hexToRgba(bgTone === 'light' ? '#111111' : '#ffffff', bgTone === 'light' ? 0.08 : 0.1)} 1px, transparent 1px)`);
+    layers.push(`radial-gradient(circle, ${hexToRgba(fgColor, fgOpacityBase + 0.02)} 1.5px, transparent 1.5px)`);
+    sizes.push('20px 20px');
   }
   if (overlays.includes('diagonal')) {
-    layers.push(`repeating-linear-gradient(135deg, ${hexToRgba(bgTone === 'light' ? '#111111' : '#ffffff', bgTone === 'light' ? 0.04 : 0.05)} 0px, ${hexToRgba(bgTone === 'light' ? '#111111' : '#ffffff', bgTone === 'light' ? 0.04 : 0.05)} 10px, transparent 10px, transparent 24px)`);
+    layers.push(`repeating-linear-gradient(135deg, ${hexToRgba(fgColor, fgOpacityBase - 0.02)} 0px, ${hexToRgba(fgColor, fgOpacityBase - 0.02)} 1px, transparent 1px, transparent 14px)`);
+    sizes.push('20px 20px');
   }
   if (overlays.includes('noise')) {
-    layers.push(`repeating-radial-gradient(circle at 0 0, ${hexToRgba(bgTone === 'light' ? '#111111' : '#ffffff', bgTone === 'light' ? 0.02 : 0.03)} 0 1px, transparent 1px 3px)`);
+    layers.push(`repeating-radial-gradient(circle at 0 0, ${hexToRgba(fgColor, fgOpacityBase - 0.04)} 0 1px, transparent 1px 3px)`);
+    sizes.push('3px 3px');
   }
   if (overlays.includes('spotlight')) {
-    layers.push(`radial-gradient(70% 60% at 50% 20%, ${hexToRgba(accentColor, 0.15)} 0%, transparent 70%)`);
+    layers.push(`radial-gradient(70% 60% at 50% 20%, ${hexToRgba(accentColor, 0.18)} 0%, transparent 70%)`);
+    sizes.push('100% 100%');
   }
   if (overlays.includes('vignette')) {
     layers.push(
@@ -112,12 +132,19 @@ export function composeBackgroundStyleWithTone(
         ? `radial-gradient(120% 120% at 50% 50%, transparent 55%, ${hexToRgba('#111111', 0.12)} 100%)`
         : `radial-gradient(120% 120% at 50% 50%, transparent 55%, ${hexToRgba('#000000', 0.45)} 100%)`,
     );
+    sizes.push('100% 100%');
   }
 
-  return {
+  const result: BgVisualResult = {
     backgroundColor,
     backgroundImage: layers.length > 0 ? layers.join(', ') : 'none',
   };
+
+  if (sizes.length > 0) {
+    result.backgroundSize = sizes.join(', ');
+  }
+
+  return result;
 }
 
 function resolveToneBaseColor(bgTone: BgTone, fallbackBg: string, bgCustomColor?: string): string {

@@ -15,6 +15,8 @@ export function changelogRenderer(
     theme.bg,
     p.bgTone,
     p.bgCustomColor,
+    p.bgGradientFrom,
+    p.bgGradientTo,
   );
   const items = [p.change1, p.change2, p.change3].filter(Boolean) as string[];
 

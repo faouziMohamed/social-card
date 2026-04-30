@@ -19,6 +19,8 @@ export function gradientRenderer(
     theme.bg,
     p.bgTone,
     p.bgCustomColor,
+    p.bgGradientFrom,
+    p.bgGradientTo,
   );
 
   return (
