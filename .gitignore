@@ -44,3 +44,5 @@ skills-lock.json
 
 # Stakpak session files
 .stakpak/session*
+/.codebuddy/
+/.idea/workspace.xml
