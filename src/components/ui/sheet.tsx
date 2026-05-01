@@ -48,10 +48,12 @@ export function SheetTrigger({ asChild, children }: SheetTriggerProps) {
   const context = useSheetContext();
 
   if (asChild) {
-    return React.cloneElement(children, {
-      ...children.props,
+    type P = Record<string, unknown> & { onClick?: (e: React.MouseEvent) => void };
+    const el = children as React.ReactElement<P>;
+    return React.cloneElement(el, {
+      ...el.props,
       onClick: (event: React.MouseEvent) => {
-        children.props.onClick?.(event);
+        el.props.onClick?.(event);
         if (!event.defaultPrevented) {
           context.setOpen(true);
         }
@@ -71,10 +73,12 @@ export function SheetClose({ asChild, children }: SheetCloseProps) {
   const context = useSheetContext();
 
   if (asChild) {
-    return React.cloneElement(children, {
-      ...children.props,
+    type P = Record<string, unknown> & { onClick?: (e: React.MouseEvent) => void };
+    const el = children as React.ReactElement<P>;
+    return React.cloneElement(el, {
+      ...el.props,
       onClick: (event: React.MouseEvent) => {
-        children.props.onClick?.(event);
+        el.props.onClick?.(event);
         if (!event.defaultPrevented) {
           context.setOpen(false);
         }
