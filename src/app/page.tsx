@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Zap, Layers, Code2, Globe, Image, Tag, Search } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { JsonLd } from "@/components/shared/JsonLd";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ROUTES } from "@/lib/utils/routes";
@@ -31,8 +32,36 @@ const QUICK_START = [
 export default function HomePage() {
   const base = env.deploymentURL;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "OG Graph",
+    url: base,
+    description:
+      "Self-hostable, API-first Open Graph image generator. 11 templates, 8 SVG badges, 4 SEO assets. Drop a URL, get a social card.",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Any",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    featureList: [
+      "11 Open Graph image templates",
+      "8 SVG badge types",
+      "4 SEO asset types (favicon, apple-touch-icon, manifest icon, twitter card)",
+      "No signup required",
+      "Self-hostable",
+      "Zod-validated query parameters",
+      "4 target size presets (OG, Twitter, LinkedIn)",
+    ],
+    screenshot: `${base}/api/og/general?siteName=OG+Graph&title=Open+Graph+Image+Generator&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid`,
+    sameAs: [],
+  };
+
   return (
     <div className="flex min-h-full flex-col">
+      <JsonLd data={jsonLd} />
       <Navbar />
 
       <main className="flex-1">

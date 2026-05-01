@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { BuilderIsland } from "@/modules/og/client/components/builder-island";
 
 export const metadata = {
-  title: "Builder — OG Graph",
+  title: "Builder",
   description: "Interactive Open Graph image builder with live preview and shareable URLs.",
 };
 

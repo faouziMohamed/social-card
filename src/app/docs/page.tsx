@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { JsonLd } from "@/components/shared/JsonLd";
 import { EndpointCard } from "@/modules/og/client/components/endpoint-card";
 import { ApiEndpointCard } from "@/components/shared/ApiEndpointCard";
 import { getParamDescriptors } from "@/modules/og/shared/og-docs";
@@ -17,8 +18,9 @@ import type { BadgeName } from "@/modules/badge/shared/badge-schemas";
 import type { SeoTemplateName } from "@/modules/seo/shared/seo-schemas";
 
 export const metadata = {
-  title: "Docs — OG Graph",
-  description: "API documentation for OG images, SVG badges, and SEO assets.",
+  title: "API Docs",
+  description:
+    "Full API reference for OG Graph: 11 Open Graph image templates, 8 SVG badges, and 4 SEO asset endpoints. Query parameters, examples, and live previews.",
 };
 
 // ─── Badge examples ───────────────────────────────────────────────────────────
@@ -89,8 +91,27 @@ export default function DocsPage() {
   const badges    = Object.keys(BADGE_ROUTES) as BadgeName[];
   const seoAssets = Object.keys(SEO_ROUTES) as SeoTemplateName[];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "OG Graph API Reference",
+    description:
+      "Full API reference for OG Graph: 11 Open Graph image templates, 8 SVG badges, and 4 SEO asset endpoints.",
+    url: `${base}/docs`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${base}/docs`,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "OG Graph",
+      url: base,
+    },
+  };
+
   return (
     <div className="flex min-h-full flex-col">
+      <JsonLd data={jsonLd} />
       <Navbar />
 
       {/* ── Hero header ──────────────────────────────────────────────────── */}
