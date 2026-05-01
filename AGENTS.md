@@ -10,53 +10,55 @@ the relevant guide in `node_modules/next/dist/docs/` before writing any code. He
 | Path                      | What it is                                                                                          |
 |---------------------------|-----------------------------------------------------------------------------------------------------|
 | `src/app/`                | App Router entry points and global UI shell: `layout.tsx`, `page.tsx`, `globals.css`, `favicon.ico` |
-| `src/app/api/`            | API route handlers                                                                                  |
+| `src/app/api/`            | API route handlers (`og/`, `badge/`, `seo/`)                                                        |
+| `src/app/builder/`        | Interactive OG/badge/SEO builder UI (`/builder` page)                                               |
+| `src/app/docs/`           | API reference docs page (`/docs`)                                                                    |
+| `src/assets/fonts/`       | Local font files (`.woff2`, `.ttf`, `.otf`) loaded by `og-fonts.server.ts` for Satori rendering     |
 | `src/proxy.ts`            | Request-path header shim that sets `x-current-path`                                                 |
-| `src/lib/env.ts`          | Environment validation with `@t3-oss/env-nextjs`                                                    |
+| `src/lib/env.ts`          | Deployment URL resolution (`NEXT_PUBLIC_DEPLOYMENT_URL` → Vercel → `localhost:3000`)                |
 | `src/lib/logger/`         | Server logger, client logger, and client-log server action forwarding                               |
 | `src/lib/utils/routes.ts` | `ROUTES` (raw paths) — always use these, never hardcode paths                                       |
-| `src/modules/`            | Feature modules; each follows `client/` · `server/` · `server-actions/` · `shared/` layout          |
+| `src/modules/`            | Feature modules; each follows `client/` · `server/` · `shared/` layout                              |
 | `src/components/ui/`      | shadcn/ui component library — add/modify components here                                            |
 | `src/components/shared/`  | Cross-module reusable React components                                                              |
-| `src/config/`             | Axios client (`axios.config.ts`) and server (`axios-server.config.ts`) instance factories           |
 | `public/`                 | Static assets used by the app                                                                       |
-| `ops/scripts/`            | Repo automation scripts, including `bootstrap.sh`                                                   |
+| `ops/scripts/`            | Repo automation scripts (`bootstrap.sh`, `download-fonts.py`)                                       |
 | `package.json`            | Project scripts and dependency manifest                                                             |
 | `next.config.ts`          | Next.js config; currently only `reactCompiler: true`                                                |
 | `eslint.config.mts`       | Flat ESLint config for Next.js, TypeScript, and repo rules                                          |
-| `Makefile`                | Convenience targets like `help` and `bootstrap`                                                     |
+| `Makefile`                | Convenience targets like `help`, `bootstrap`, `test`, `typecheck`                                   |
 
 - Use the App Router files in `src/app/`: `layout.tsx` owns the root `Metadata`
   and `next/font/google` setup, and `page.tsx` is the current landing page.
 - The request-path header shim lives in `src/proxy.ts` (not `middleware.ts`); it
   sets `x-current-path` and excludes `/api`, `/_next/static`, `/_next/image`,
   and `favicon.ico`.
-- Environment variables are validated in `src/lib/env.ts` with
-  `@t3-oss/env-nextjs`; keep server-only values separate from `NEXT_PUBLIC_*`
-  values. Required env vars: `NEXTAUTH_SECRET`, `NEXTAUTH_URL`,
-  `NEXT_PUBLIC_API_BASE_URL`. Copy `.env.example` → `.env` to get started.
+- `src/lib/env.ts` resolves the deployment base URL: `NEXT_PUBLIC_DEPLOYMENT_URL`
+  (explicit) → `NEXT_PUBLIC_VERCEL_URL` (auto-set by Vercel) → `http://localhost:3000`.
+  Import `env.deploymentURL` or `getDeploymentUrl()` — never hardcode domains.
+  There are no other required env vars; the app runs without a `.env` file locally.
 - Logging is split between `src/lib/logger/logger.ts` for server code and
   `src/lib/logger/client-logger.ts` for client code; do not import the server
   logger into client components.
-- Use the repo scripts from `package.json`: `npm run dev`, `npm run build`,
-  `npm run start`, `npm run lint`, `npm run lint:fix`, and `npm run format`.
+- This project uses **pnpm**. Use `pnpm run dev`, `pnpm run build`,
+  `pnpm run start`, `pnpm run lint`, `pnpm run lint:fix`, `pnpm run format`,
+  and `pnpm run test` (runs `node --test --import tsx`).
   `make bootstrap` runs `ops/scripts/bootstrap.sh`.
 - `next.config.ts` currently only enables `reactCompiler: true`; keep that in
   mind when editing Next config.
 
 ## Module Architecture
 
-All feature code lives in `src/modules/<domain>/` with a strict four-layer
-split:
+All feature code lives in `src/modules/<domain>/` with a strict three-layer
+split (no `server-actions/` layer in this project):
 
-| Sub-folder        | Runs in | Contents                                                                |
-|-------------------|---------|-------------------------------------------------------------------------|
-| `client/`         | Browser | React Query hooks (`use-*.queries.ts`), client components, client repos |
-| `server/`         | Server  | Server-side API repositories (`*-api.repository.ts`, `backend-client`)  |
-| `server-actions/` | Server  | Next.js Server Actions (`*-mutations.action.ts`)                        |
-| `shared/`         | Both    | Types, pure utilities, constants — no runtime imports from either side  |
+| Sub-folder | Runs in | Contents                                                                |
+|------------|---------|-------------------------------------------------------------------------|
+| `client/`  | Browser | React Query hooks (`use-*.queries.ts`), client components, client repos |
+| `server/`  | Server  | Server-side renderers, handler factories, API repositories              |
+| `shared/`  | Both    | Types, schemas (Zod), routes, registries — no runtime imports from either side |
 
-Current domains: 
+Current domains: `og` · `badge` · `seo` · `http`
 
 
 **Naming conventions:**
@@ -75,6 +77,73 @@ Current domains:
 - Server code uses `src/modules/http/server/backend-client.ts` 
 - Never import `api-client.repository.ts` in server code or
   `backend-client.ts` in client components.
+
+## Domain Architecture
+
+### OG Image Module (`src/modules/og/`)
+
+Every OG API route (`src/app/api/og/<template>/route.tsx`) is one line:
+
+```typescript
+export const GET = createOgHandler(generalSchema, generalRenderer);
+```
+
+- **`createOgHandler`** (`og-handler.server.ts`) — factory that parses query params
+  with Zod, resolves theme/fonts/target-size, pre-fetches image URLs to base64,
+  then renders via `next/og`'s `ImageResponse` (Satori). Never use `export const runtime = 'edge'`.
+- **Renderers** (`server/renderers/<name>.renderer.tsx`) — pure functions:
+  `(params: TParams, ctx: OgRendererContext) => React.ReactElement`. Satori only
+  supports a subset of CSS; use inline styles, no Tailwind classes in renderers.
+- **Schemas** (`shared/og-schemas.ts`) — one `z.object().merge(baseSchema)` per
+  template. `baseSchema` provides `theme`, `target`, `fontFamily`, `bgStyle`, `logo`, etc.
+- **`bgStyle`** (`shared/og-schemas.ts`, `server/og-visuals.server.ts`) — composable
+  `+`-separated tokens. Base layers: `solid | gradient | aurora | mesh`.
+  Overlay layers: `grid | dots | diagonal | noise | spotlight | vignette`.
+  Example: `bgStyle=aurora+grid+vignette`. Parsed by `composeBackgroundStyleWithTone`.
+- **Routes** — use `OG_ROUTES` from `shared/og-routes.ts` or `ROUTES.api.og` from
+  `src/lib/utils/routes.ts`; never hardcode paths.
+- **URL builder** — `buildOgUrl(deploymentURL, { template, ...params })` from
+  `shared/og-query.ts` — safe for both client and server.
+- **Templates**: `general` · `gradient` · `blog` · `minimal` · `article` · `product`
+  · `portfolio` · `quote` · `changelog` · `event` · `launch`
+- **Target sizes** (`shared/og-schemas.ts`): `og` (1200×630) · `twitter-large` (1200×628)
+  · `twitter-small` (800×800) · `linkedin` (1200×627)
+- **Fonts** — local `.woff2`/`.ttf`/`.otf` files in `src/assets/fonts/`, catalogued
+  in `shared/og-font-catalog.ts`. Run `python ops/scripts/download-fonts.py` to
+  fetch new font files.
+- **Theme palette** — `resolveTheme(theme)` from `server/og-themes.server.ts` returns
+  a `ThemePalette` with `bg`, `text`, `textMuted`, `border`, `tagBg`, `tagText`.
+
+**Render utilities** (`server/og-render.server.ts`):
+- `clampStyle(n)` — webkit line-clamp CSS for Satori
+- `hexToRgba(hex, alpha)` — hex to rgba string
+- `getContrastColor(hex)` — WCAG luminance → `'#111111'` or `'#ffffff'`
+
+**To add a new OG template:**
+1. Add `TemplateName` union in `shared/og.types.ts`
+2. Add schema in `shared/og-schemas.ts` (extend `baseSchema`)
+3. Add renderer in `server/renderers/<name>.renderer.tsx`
+4. Add route `src/app/api/og/<name>/route.tsx` with one-liner
+5. Add entry to `OG_ROUTES`, `TEMPLATE_META`, `TEMPLATE_SECTIONS`, `EXAMPLE_PARAMS` in shared files
+
+### Badge Module (`src/modules/badge/`)
+
+```typescript
+export const GET = createBadgeHandler(labelSchema, labelRenderer);
+```
+
+- **`createBadgeHandler`** (`server/badge-handler.server.ts`) — Zod parsing + SVG
+  response (`Content-Type: image/svg+xml`). No Satori dependency — badges are
+  pure SVG string generation.
+- **Badge types**: `label` · `stat` · `status` · `progress` · `score` · `socials`
+  · `tech-stack` · `availability`
+- **Routes** — use `BADGE_ROUTES` from `shared/badge-routes.ts`
+
+### SEO Assets Module (`src/modules/seo/`)
+
+- Generates favicons, Apple touch icons, PWA manifest icons, Twitter cards.
+- **SEO types**: `favicon` · `apple-touch-icon` · `manifest-icon` · `twitter-card`
+- **Routes** — use `SEO_ROUTES` from `shared/seo-routes.ts`
 
 ## Code Organization Rule (Non-Negotiable)
 
