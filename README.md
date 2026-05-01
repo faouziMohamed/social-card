@@ -2,7 +2,8 @@
 
 **Self-hostable Open Graph image & badge generator — drop a URL, get a 1200×630 PNG.**
 
-OG Graph is a Next.js application that exposes a REST API for generating social card images across 11 templates, 8 SVG badge types, and SEO asset variants. Developers paste one URL into their `<meta>` tags and ship.
+OG Graph is a Next.js application that exposes a REST API for generating social card images across 11 templates, 8 SVG
+badge types, and SEO asset variants. Developers paste one URL into their `<meta>` tags and ship.
 
 🌐 **Live demo:** [placard.mfaouzi.com](https://placard.mfaouzi.com)
 
@@ -15,9 +16,9 @@ OG Graph is a Next.js application that exposes a REST API for generating social 
 - [Architecture](#architecture)
 - [Project Structure](#project-structure)
 - [API Reference](#api-reference)
-  - [OG Image Templates](#og-image-templates)
-  - [Badge API](#badge-api)
-  - [SEO Assets](#seo-assets)
+    - [OG Image Templates](#og-image-templates)
+    - [Badge API](#badge-api)
+    - [SEO Assets](#seo-assets)
 - [Template Parameters](#template-parameters)
 - [Background Styles](#background-styles)
 - [Getting Started](#getting-started)
@@ -31,16 +32,16 @@ OG Graph is a Next.js application that exposes a REST API for generating social 
 
 ```mermaid
 graph LR
-    DEV["Developer"] -->|"?title=…&bgStyle=gradient+grid"| API["OG Graph API"]
-    API -->|"1200×630 PNG"| META["<meta og:image>"]
-    DEV -->|"Visual config"| BUILDER["/builder UI"]
-    BUILDER -->|"Copies URL"| META
+    DEV["Developer"] -->|" ?title=…&bgStyle=gradient+grid "| API["OG Graph API"]
+    API -->|" 1200×630 PNG "| META["<meta og:image>"]
+    DEV -->|" Visual config "| BUILDER["/builder UI"]
+    BUILDER -->|" Copies URL "| META
 ```
 
 OG Graph solves the social preview problem in one HTTP request:
 
 | What you get          | How                                       |
-| --------------------- | ----------------------------------------- |
+|-----------------------|-------------------------------------------|
 | 11 OG image templates | `GET /api/og/<template>?params`           |
 | 8 SVG badge types     | `GET /api/badge/<type>?params`            |
 | SEO icon assets       | `GET /api/seo/<asset>?params`             |
@@ -51,7 +52,8 @@ OG Graph solves the social preview problem in one HTTP request:
 
 ## Live Examples
 
-All previews below are generated live from **[placard.mfaouzi.com](https://placard.mfaouzi.com)** — no static assets, just URLs.
+All previews below are generated live from **[placard.mfaouzi.com](https://placard.mfaouzi.com)** — no static assets,
+just URLs.
 
 ---
 
@@ -62,8 +64,9 @@ All previews below are generated live from **[placard.mfaouzi.com](https://placa
 [![OG General](https://placard.mfaouzi.com/api/og/general?siteName=OG+Graph&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)](https://placard.mfaouzi.com/api/og/general?siteName=OG+Graph&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)
 
 ```html
+
 <meta property="og:image"
-  content="https://placard.mfaouzi.com/api/og/general
+      content="https://placard.mfaouzi.com/api/og/general
            ?siteName=My+App&title=Page+Title
            &description=A+short+description
            &theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid" />
@@ -77,7 +80,7 @@ export async function generateMetadata(): Promise<Metadata> {
   url.searchParams.set('title', 'Page Title');
   url.searchParams.set('theme', 'dark');
   url.searchParams.set('bgStyle', 'gradient+grid');
-  return { openGraph: { images: [url.toString()] } };
+  return {openGraph: {images: [url.toString()]}};
 }
 ```
 
@@ -88,8 +91,9 @@ export async function generateMetadata(): Promise<Metadata> {
 [![OG Blog](https://placard.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)](https://placard.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)
 
 ```html
+
 <meta property="og:image"
-  content="https://placard.mfaouzi.com/api/og/blog
+      content="https://placard.mfaouzi.com/api/og/blog
            ?title=My+Post+Title
            &authorName=Jane+Doe&authorHandle=%40janedoe
            &tags=Next.js%2CReact&readingTime=5+min+read
@@ -103,8 +107,9 @@ export async function generateMetadata(): Promise<Metadata> {
 [![OG Product](https://placard.mfaouzi.com/api/og/product?productName=OG+Graph&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)](https://placard.mfaouzi.com/api/og/product?productName=OG+Graph&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)
 
 ```html
+
 <meta property="og:image"
-  content="https://placard.mfaouzi.com/api/og/product
+      content="https://placard.mfaouzi.com/api/og/product
            ?productName=My+Product&tagline=Your+One-Liner+Here
            &feature1=Feature+A&feature2=Feature+B&feature3=Feature+C
            &cta=Get+Started&accentColor=%238b5cf6
@@ -118,10 +123,11 @@ export async function generateMetadata(): Promise<Metadata> {
 [![OG Portfolio](https://placard.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)](https://placard.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)
 
 ```html
+
 <meta property="og:image"
-  content="https://placard.mfaouzi.com/api/og/portfolio
+      content="https://placard.mfaouzi.com/api/og/portfolio
            ?name=Your+Name&role=Your+Role
-           &skills=TypeScript%2CReact%2CNode.js
+           &skills=TypeScript%2CReact%2CNode.js%2CDocker&websiteUrl=yourwebsite.com
            &githubHandle=yourhandle&available=true
            &accentColor=%236366f1&bgStyle=aurora%2Bvignette" />
 ```
@@ -134,15 +140,15 @@ Embed directly in HTML, Markdown, or any `<img>` tag.
 
 <!-- badges are SVG — rendered live -->
 
-| Preview | Usage |
-|---------|-------|
-| ![version](https://placard.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1&style=flat) | `![version](https://placard.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1)` |
-| ![status](https://placard.mfaouzi.com/api/badge/status?label=API&status=online) | `![status](https://placard.mfaouzi.com/api/badge/status?label=API&status=online)` |
-| ![coverage](https://placard.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e) | `![coverage](https://placard.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)` |
-| ![score](https://placard.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1) | `![score](https://placard.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1)` |
-| ![stack](https://placard.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&color=%236366f1&style=tags) | `![stack](https://placard.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&style=tags)` |
-| ![github](https://placard.mfaouzi.com/api/badge/socials?platform=github&handle=faouziMohamed&followers=128&color=%236366f1) | `![github](https://placard.mfaouzi.com/api/badge/socials?platform=github&handle=yourhandle&followers=1.2k)` |
-| ![available](https://placard.mfaouzi.com/api/badge/availability?label=Faouzi+Mohamed&available=true&hireText=Open+to+work&color=%2322c55e) | `![available](https://placard.mfaouzi.com/api/badge/availability?label=Your+Name&available=true)` |
+| Preview                                                                                                                                    | Usage                                                                                                       |
+|--------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| ![version](https://placard.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1&style=flat)                             | `![version](https://placard.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1)`       |
+| ![status](https://placard.mfaouzi.com/api/badge/status?label=API&status=online)                                                            | `![status](https://placard.mfaouzi.com/api/badge/status?label=API&status=online)`                           |
+| ![coverage](https://placard.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)                                        | `![coverage](https://placard.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)`       |
+| ![score](https://placard.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1)                                           | `![score](https://placard.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1)`          |
+| ![stack](https://placard.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&color=%236366f1&style=tags)                  | `![stack](https://placard.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&style=tags)` |
+| ![github](https://placard.mfaouzi.com/api/badge/socials?platform=github&handle=faouziMohamed&followers=128&color=%236366f1)                | `![github](https://placard.mfaouzi.com/api/badge/socials?platform=github&handle=yourhandle&followers=1.2k)` |
+| ![available](https://placard.mfaouzi.com/api/badge/availability?label=Faouzi+Mohamed&available=true&hireText=Open+to+work&color=%2322c55e) | `![available](https://placard.mfaouzi.com/api/badge/availability?label=Your+Name&available=true)`           |
 
 ---
 
@@ -151,28 +157,29 @@ Embed directly in HTML, Markdown, or any `<img>` tag.
 ```html
 <!-- Favicon (32×32) -->
 <link rel="icon" type="image/png"
-  href="https://placard.mfaouzi.com/api/seo/favicon?initial=A&color=%230f0f0f&accentColor=%236366f1&shape=rounded" />
+      href="https://placard.mfaouzi.com/api/seo/favicon?initial=A&color=%230f0f0f&accentColor=%236366f1&shape=rounded" />
 
 <!-- Apple touch icon (180×180) -->
 <link rel="apple-touch-icon"
-  href="https://placard.mfaouzi.com/api/seo/apple-touch-icon?initial=A&color=%230f0f0f&accentColor=%236366f1" />
+      href="https://placard.mfaouzi.com/api/seo/apple-touch-icon?initial=A&color=%230f0f0f&accentColor=%236366f1" />
 
 <!-- PWA manifest icons -->
 {
-  "icons": [
-    {
-      "src": "https://placard.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=192",
-      "sizes": "192x192", "type": "image/png", "purpose": "maskable"
-    },
-    {
-      "src": "https://placard.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=512",
-      "sizes": "512x512", "type": "image/png", "purpose": "maskable"
-    }
-  ]
+"icons": [
+{
+"src": "https://placard.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=192",
+"sizes": "192x192", "type": "image/png", "purpose": "maskable"
+},
+{
+"src": "https://placard.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=512",
+"sizes": "512x512", "type": "image/png", "purpose": "maskable"
+}
+]
 }
 ```
 
-> **Tip:** use the [visual builder](https://placard.mfaouzi.com/builder) to configure any template and copy the ready-made URL — no guessing query params.
+> **Tip:** use the [visual builder](https://placard.mfaouzi.com/builder) to configure any template and copy the
+> ready-made URL — no guessing query params.
 
 ---
 
@@ -187,13 +194,12 @@ sequenceDiagram
     participant Handler as Route Handler
     participant Zod as Zod Schema
     participant Renderer as @vercel/og
-
-    Client->>Next: GET /api/og/blog?title=Hello&theme=dark
-    Next->>Handler: route.ts GET()
-    Handler->>Zod: parse(searchParams)
-    Zod-->>Handler: typed params (or 400)
-    Handler->>Renderer: ImageResponse(JSX, fonts)
-    Renderer-->>Client: 1200×630 PNG
+    Client ->> Next: GET /api/og/blog?title=Hello&theme=dark
+    Next ->> Handler: route.ts GET()
+    Handler ->> Zod: parse(searchParams)
+    Zod -->> Handler: typed params (or 400)
+    Handler ->> Renderer: ImageResponse(JSX, fonts)
+    Renderer -->> Client: 1200×630 PNG
 ```
 
 ### High-Level System
@@ -243,8 +249,8 @@ graph LR
 
     CLIENT -->|imports| SHARED
     SERVER -->|imports| SHARED
-    CLIENT -.->|"never imports"| SERVER
-    SERVER -.->|"never imports"| CLIENT
+    CLIENT -.->|" never imports "| SERVER
+    SERVER -.->|" never imports "| CLIENT
 ```
 
 ---
@@ -306,7 +312,7 @@ GET /api/og/<template>?<params>
 #### Available Templates
 
 | Template    | Endpoint            | Best for                      |
-| ----------- | ------------------- | ----------------------------- |
+|-------------|---------------------|-------------------------------|
 | `general`   | `/api/og/general`   | Generic brand / landing page  |
 | `gradient`  | `/api/og/gradient`  | Vivid gradient headline       |
 | `blog`      | `/api/og/blog`      | Blog posts with author + tags |
@@ -322,7 +328,7 @@ GET /api/og/<template>?<params>
 #### Output Dimensions (`target`)
 
 | Value            | Width | Height | Platform             |
-| ---------------- | ----- | ------ | -------------------- |
+|------------------|-------|--------|----------------------|
 | `og` _(default)_ | 1200  | 630    | Facebook, generic OG |
 | `twitter-large`  | 1200  | 628    | Twitter large card   |
 | `twitter-small`  | 800   | 800    | Twitter small card   |
@@ -364,7 +370,7 @@ GET /api/badge/<type>?<params>
 #### Badge Types
 
 | Type           | Endpoint                  | Description                        |
-| -------------- | ------------------------- | ---------------------------------- |
+|----------------|---------------------------|------------------------------------|
 | `label`        | `/api/badge/label`        | Two-segment shields.io-style badge |
 | `stat`         | `/api/badge/stat`         | Single metric with big number      |
 | `status`       | `/api/badge/status`       | Service health indicator           |
@@ -422,7 +428,7 @@ graph LR
 Dynamically generated icon and manifest assets.
 
 | Asset            | Endpoint                    | Size     | Format |
-| ---------------- | --------------------------- | -------- | ------ |
+|------------------|-----------------------------|----------|--------|
 | Favicon          | `/api/seo/favicon`          | 32×32    | PNG    |
 | Apple touch icon | `/api/seo/apple-touch-icon` | 180×180  | PNG    |
 | Manifest icon    | `/api/seo/manifest-icon`    | 512×512  | PNG    |
@@ -435,7 +441,7 @@ Dynamically generated icon and manifest assets.
 ### Base Parameters (all templates)
 
 | Param            | Type                                               | Default         | Description                         |
-| ---------------- | -------------------------------------------------- | --------------- | ----------------------------------- |
+|------------------|----------------------------------------------------|-----------------|-------------------------------------|
 | `theme`          | `dark \| light \| auto`                            | `dark`          | Color theme                         |
 | `target`         | `og \| twitter-large \| twitter-small \| linkedin` | `og`            | Output dimensions                   |
 | `fontFamily`     | string                                             | `geist`         | Typography preset (60+ fonts)       |
@@ -453,7 +459,7 @@ Dynamically generated icon and manifest assets.
 #### `general`
 
 | Param         | Type   | Default     | Description                         |
-| ------------- | ------ | ----------- | ----------------------------------- |
+|---------------|--------|-------------|-------------------------------------|
 | `siteName`    | string | `Site Name` | Brand / website name                |
 | `title`       | string | —           | Page title (optional hero override) |
 | `description` | string | —           | Subtitle text (max 2 lines)         |
@@ -462,7 +468,7 @@ Dynamically generated icon and manifest assets.
 #### `gradient`
 
 | Param           | Type   | Default     | Description                        |
-| --------------- | ------ | ----------- | ---------------------------------- |
+|-----------------|--------|-------------|------------------------------------|
 | `siteName`      | string | `Site Name` | Lower subheading                   |
 | `title`         | string | —           | Main heading with gradient applied |
 | `description`   | string | —           | Paragraph below heading            |
@@ -473,7 +479,7 @@ Dynamically generated icon and manifest assets.
 #### `blog`
 
 | Param          | Type   | Default      | Description                     |
-| -------------- | ------ | ------------ | ------------------------------- |
+|----------------|--------|--------------|---------------------------------|
 | `title`        | string | `Blog Title` | Post title (max 3 lines)        |
 | `tags`         | string | —            | Comma-separated tags (up to 4)  |
 | `authorName`   | string | —            | Author display name             |
@@ -489,7 +495,7 @@ Dynamically generated icon and manifest assets.
 #### `minimal`
 
 | Param         | Type   | Default   | Description                          |
-| ------------- | ------ | --------- | ------------------------------------ |
+|---------------|--------|-----------|--------------------------------------|
 | `title`       | string | `Title`   | Large centered heading (max 3 lines) |
 | `description` | string | —         | Subtext below title (max 2 lines)    |
 | `eyebrow`     | string | —         | ALL-CAPS small label above title     |
@@ -500,7 +506,7 @@ Dynamically generated icon and manifest assets.
 #### `article`
 
 | Param             | Type   | Default         | Description                             |
-| ----------------- | ------ | --------------- | --------------------------------------- |
+|-------------------|--------|-----------------|-----------------------------------------|
 | `title`           | string | `Article Title` | Headline (max 3 lines)                  |
 | `excerpt`         | string | —               | 1–2 sentence teaser (max 2 lines)       |
 | `authorName`      | string | —               | Author name                             |
@@ -515,7 +521,7 @@ Dynamically generated icon and manifest assets.
 #### `product`
 
 | Param         | Type   | Default   | Description                         |
-| ------------- | ------ | --------- | ----------------------------------- |
+|---------------|--------|-----------|-------------------------------------|
 | `productName` | string | `Product` | Large product name                  |
 | `tagline`     | string | —         | One-liner value proposition         |
 | `feature1`    | string | —         | First feature bullet                |
@@ -529,7 +535,7 @@ Dynamically generated icon and manifest assets.
 #### `portfolio`
 
 | Param           | Type            | Default     | Description                              |
-| --------------- | --------------- | ----------- | ---------------------------------------- |
+|-----------------|-----------------|-------------|------------------------------------------|
 | `name`          | string          | `Your Name` | Full name — largest text element         |
 | `role`          | string          | —           | Job title e.g. `Full-Stack Developer`    |
 | `bio`           | string          | —           | One-liner personal tagline               |
@@ -545,7 +551,7 @@ Dynamically generated icon and manifest assets.
 #### `quote`
 
 | Param         | Type   | Default                   | Description                     |
-| ------------- | ------ | ------------------------- | ------------------------------- |
+|---------------|--------|---------------------------|---------------------------------|
 | `quote`       | string | `Build fast. Ship often.` | Primary quote text              |
 | `author`      | string | —                         | Quote author                    |
 | `kicker`      | string | —                         | Small category label            |
@@ -554,7 +560,7 @@ Dynamically generated icon and manifest assets.
 #### `changelog`
 
 | Param         | Type   | Default         | Description           |
-| ------------- | ------ | --------------- | --------------------- |
+|---------------|--------|-----------------|-----------------------|
 | `productName` | string | `OG Graph`      | Product name          |
 | `version`     | string | `v2.0.0`        | Release version       |
 | `headline`    | string | `Major upgrade` | Release headline      |
@@ -566,7 +572,7 @@ Dynamically generated icon and manifest assets.
 #### `event`
 
 | Param         | Type   | Default      | Description                     |
-| ------------- | ------ | ------------ | ------------------------------- |
+|---------------|--------|--------------|---------------------------------|
 | `eventName`   | string | `Event Name` | Conference or event name        |
 | `tagline`     | string | —            | Short event tagline or theme    |
 | `eventDate`   | string | —            | ISO 8601 date e.g. `2026-09-15` |
@@ -578,7 +584,7 @@ Dynamically generated icon and manifest assets.
 #### `launch`
 
 | Param         | Type   | Default      | Description                             |
-| ------------- | ------ | ------------ | --------------------------------------- |
+|---------------|--------|--------------|-----------------------------------------|
 | `productName` | string | `My Product` | Product or project name                 |
 | `punchline`   | string | —            | Bold one-line value proposition         |
 | `launchDate`  | string | —            | ISO date or freeform e.g. `Coming soon` |
@@ -592,19 +598,18 @@ Dynamically generated icon and manifest assets.
 
 ## Background Styles
 
-The `bgStyle` parameter is a `+`-separated list of composable tokens. Pick one **base** and combine with any **overlay** tokens.
+The `bgStyle` parameter is a `+`-separated list of composable tokens. Pick one **base** and combine with any **overlay**
+tokens.
 
 ```mermaid
 graph TD
     BGSTYLE["bgStyle=base+overlay1+overlay2"]
     BGSTYLE --> BASE["Base — pick one"]
     BGSTYLE --> OVERLAYS["Overlays — combine freely"]
-
     BASE --> SOLID["solid"]
     BASE --> GRADIENT["gradient"]
     BASE --> AURORA["aurora"]
     BASE --> MESH["mesh"]
-
     OVERLAYS --> GRID["grid"]
     OVERLAYS --> DOTS["dots"]
     OVERLAYS --> DIAGONAL["diagonal"]
@@ -614,7 +619,7 @@ graph TD
 ```
 
 | `bgStyle` value           | Result                                    |
-| ------------------------- | ----------------------------------------- |
+|---------------------------|-------------------------------------------|
 | `solid`                   | Flat background                           |
 | `gradient+grid`           | Gradient + grid lines _(default)_         |
 | `aurora+dots+noise`       | Aurora effect with dots and noise texture |
@@ -648,8 +653,8 @@ cp .env.example .env
 
 Only one variable is supported — everything else works out of the box.
 
-| Variable                     | Required    | Description                                                                                                 |
-| ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------- |
+| Variable                     | Required   | Description                                                                                                 |
+|------------------------------|------------|-------------------------------------------------------------------------------------------------------------|
 | `NEXT_PUBLIC_DEPLOYMENT_URL` | ❌ optional | Canonical app URL. Falls back to `NEXT_PUBLIC_VERCEL_URL` (auto-set by Vercel) then `http://localhost:3000` |
 
 ### Running
@@ -670,7 +675,7 @@ pnpm test       # Run tests
 ### Stack
 
 | Layer            | Technology                             |
-| ---------------- | -------------------------------------- |
+|------------------|----------------------------------------|
 | Framework        | Next.js 16 (App Router)                |
 | Runtime          | Node.js (no edge runtime)              |
 | Language         | TypeScript 5                           |
@@ -693,15 +698,14 @@ sequenceDiagram
     participant RHF as React Hook Form
     participant RQ as TanStack Query
     participant API as /api/og/<template>
-
-    User->>Builder: Select template + fill params
-    Builder->>RHF: Form field change
-    RHF->>RQ: Trigger query (debounced)
-    RQ->>API: GET /api/og/blog?title=…
-    API-->>RQ: 1200×630 PNG
-    RQ-->>Builder: Render preview <img>
-    User->>Builder: Click "Copy URL"
-    Builder-->>User: URL in clipboard
+    User ->> Builder: Select template + fill params
+    Builder ->> RHF: Form field change
+    RHF ->> RQ: Trigger query (debounced)
+    RQ ->> API: GET /api/og/blog?title=…
+    API -->> RQ: 1200×630 PNG
+    RQ -->> Builder: Render preview <img>
+    User ->> Builder: Click "Copy URL"
+    Builder -->> User: URL in clipboard
 ```
 
 ### Adding a New OG Template
@@ -715,7 +719,8 @@ flowchart LR
 
 ### Font Catalog
 
-60+ fonts are pre-bundled in `src/assets/fonts/`. Font catalog is defined in `src/lib/fonts.ts` and `src/modules/og/shared/og-font-catalog.ts`.
+60+ fonts are pre-bundled in `src/assets/fonts/`. Font catalog is defined in `src/lib/fonts.ts` and
+`src/modules/og/shared/og-font-catalog.ts`.
 
 To download additional fonts:
 
@@ -747,9 +752,8 @@ graph TB
 
     OG_C -->|axios| HTTP_C
     OG_SV -->|axios| HTTP_SV
-
-    HTTP_C -.->|"browser only"| OG_C
-    HTTP_SV -.->|"server only"| OG_SV
+    HTTP_C -.->|" browser only "| OG_C
+    HTTP_SV -.->|" server only "| OG_SV
 ```
 
 ### HTTP Layer Rules
@@ -767,7 +771,7 @@ graph TB
 Full-stack developer. Built OG Graph as a self-hostable alternative to paid social-card services.
 
 |                |                                                                                                 |
-| -------------- | ----------------------------------------------------------------------------------------------- |
+|----------------|-------------------------------------------------------------------------------------------------|
 | 🌐 Portfolio   | [mfaouzi.com](https://mfaouzi.com) · [dev.mfaouzi.com](https://dev.mfaouzi.com) _(in progress)_ |
 | 🐙 GitHub      | [@faouziMohamed](https://github.com/faouziMohamed)                                              |
 | 💼 LinkedIn    | [mohamed-faouzi](https://linkedin.com/in/mohamed-faouzi)                                        |
