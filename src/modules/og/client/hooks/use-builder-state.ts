@@ -9,6 +9,23 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 export type TargetKey = 'og' | 'twitter-large' | 'twitter-small' | 'linkedin';
 
+// ─── Validation ──────────────────────────────────────────────────────────────
+
+const VALID_TEMPLATES = new Set(Object.keys(OG_ROUTES) as TemplateName[]);
+const VALID_TARGETS = new Set<TargetKey>(['og', 'twitter-large', 'twitter-small', 'linkedin']);
+
+function toValidTemplate(value: unknown): TemplateName {
+  return typeof value === 'string' && VALID_TEMPLATES.has(value as TemplateName)
+    ? (value as TemplateName)
+    : 'general';
+}
+
+function toValidTarget(value: unknown): TargetKey {
+  return typeof value === 'string' && VALID_TARGETS.has(value as TargetKey)
+    ? (value as TargetKey)
+    : 'og';
+}
+
 export interface BuilderState {
   template: TemplateName;
   params: Record<string, string>;
@@ -63,8 +80,7 @@ export function useBuilderState(): BuilderState {
 
   // Resolve initial template from URL only (safe for SSR — no localStorage)
   const initialTemplate = useMemo<TemplateName>(() => {
-    const url = searchParams.get('template') as TemplateName | null;
-    return url ?? 'general';
+    return toValidTemplate(searchParams.get('template'));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -81,14 +97,13 @@ export function useBuilderState(): BuilderState {
     const persisted = load();
     if (!persisted) return;
     // If no template was in the URL, also restore the last-used template
-    const tmpl =
-      (searchParams.get('template') as TemplateName | null) ??
-      persisted.current ??
-      initialTemplate;
+    const tmpl = toValidTemplate(
+      searchParams.get('template') ?? persisted.current ?? initialTemplate,
+    );
     const slot = persisted.templates[tmpl];
     setTemplateRaw(tmpl);
     setParams(slot?.params ?? {});
-    setTargetRaw(slot?.target ?? 'og');
+    setTargetRaw(toValidTarget(slot?.target));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -6,6 +6,16 @@ import type {BadgeName} from '@/modules/badge/shared/badge-schemas';
 import {TEMPLATE_SECTIONS} from '@/modules/badge/shared/badge-template-registry';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
+// ─── Validation ──────────────────────────────────────────────────────────────
+
+const VALID_BADGES = new Set(Object.keys(BADGE_ROUTES) as BadgeName[]);
+
+function toValidBadge(value: unknown): BadgeName {
+  return typeof value === 'string' && VALID_BADGES.has(value as BadgeName)
+    ? (value as BadgeName)
+    : 'label';
+}
+
 export interface BadgeBuilderState {
   template: BadgeName;
   params: Record<string, string>;
@@ -61,7 +71,7 @@ export function useBadgeBuilderState(): BadgeBuilderState {
     hydratedRef.current = true;
     const persisted = load();
     if (!persisted) return;
-    const tmpl = persisted.current ?? 'label';
+    const tmpl = toValidBadge(persisted.current);
     const slot = persisted.templates[tmpl];
     setTemplateRaw(tmpl);
     setParams(slot?.params ?? {});

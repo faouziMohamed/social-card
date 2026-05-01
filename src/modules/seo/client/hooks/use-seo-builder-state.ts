@@ -6,6 +6,16 @@ import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 import {TEMPLATE_SECTIONS} from '@/modules/seo/shared/seo-template-registry';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
+// ─── Validation ──────────────────────────────────────────────────────────────
+
+const VALID_SEO = new Set(Object.keys(SEO_ROUTES) as SeoTemplateName[]);
+
+function toValidSeo(value: unknown): SeoTemplateName {
+  return typeof value === 'string' && VALID_SEO.has(value as SeoTemplateName)
+    ? (value as SeoTemplateName)
+    : 'favicon';
+}
+
 export interface SeoBuilderState {
   template: SeoTemplateName;
   params: Record<string, string>;
@@ -61,7 +71,7 @@ export function useSeoBuilderState(): SeoBuilderState {
     hydratedRef.current = true;
     const persisted = load();
     if (!persisted) return;
-    const tmpl = persisted.current ?? 'favicon';
+    const tmpl = toValidSeo(persisted.current);
     const slot = persisted.templates[tmpl];
     setTemplateRaw(tmpl);
     setParams(slot?.params ?? {});
