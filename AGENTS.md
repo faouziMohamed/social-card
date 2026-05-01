@@ -335,4 +335,5 @@ import { CalendarIcon } from "lucide-react";
 <button onClick={...}>Click</button>
 ```
 
+
 <!-- END:nextjs-agent-rules -->
