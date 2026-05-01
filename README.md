@@ -11,6 +11,7 @@ OG Graph is a Next.js application that exposes a REST API for generating social 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Live Examples](#live-examples)
 - [Architecture](#architecture)
 - [Project Structure](#project-structure)
 - [API Reference](#api-reference)
@@ -45,6 +46,133 @@ OG Graph solves the social preview problem in one HTTP request:
 | SEO icon assets       | `GET /api/seo/<asset>?params`             |
 | Visual builder        | `/builder` — configure, preview, copy URL |
 | API reference         | `/docs`                                   |
+
+---
+
+## Live Examples
+
+All previews below are generated live from **[placard.mfaouzi.com](https://placard.mfaouzi.com)** — no static assets, just URLs.
+
+---
+
+### OG Images
+
+#### General — brand / landing page
+
+[![OG General](https://placard.mfaouzi.com/api/og/general?siteName=OG+Graph&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)](https://placard.mfaouzi.com/api/og/general?siteName=OG+Graph&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)
+
+```html
+<meta property="og:image"
+  content="https://placard.mfaouzi.com/api/og/general
+           ?siteName=My+App&title=Page+Title
+           &description=A+short+description
+           &theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid" />
+```
+
+```ts
+// Next.js generateMetadata()
+export async function generateMetadata(): Promise<Metadata> {
+  const url = new URL('/api/og/general', process.env.NEXT_PUBLIC_DEPLOYMENT_URL);
+  url.searchParams.set('siteName', 'My App');
+  url.searchParams.set('title', 'Page Title');
+  url.searchParams.set('theme', 'dark');
+  url.searchParams.set('bgStyle', 'gradient+grid');
+  return { openGraph: { images: [url.toString()] } };
+}
+```
+
+---
+
+#### Blog — post with author & tags
+
+[![OG Blog](https://placard.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)](https://placard.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)
+
+```html
+<meta property="og:image"
+  content="https://placard.mfaouzi.com/api/og/blog
+           ?title=My+Post+Title
+           &authorName=Jane+Doe&authorHandle=%40janedoe
+           &tags=Next.js%2CReact&readingTime=5+min+read
+           &publishDate=2026-05-01&bgStyle=aurora%2Bgrid" />
+```
+
+---
+
+#### Product — SaaS / tool launch
+
+[![OG Product](https://placard.mfaouzi.com/api/og/product?productName=OG+Graph&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)](https://placard.mfaouzi.com/api/og/product?productName=OG+Graph&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)
+
+```html
+<meta property="og:image"
+  content="https://placard.mfaouzi.com/api/og/product
+           ?productName=My+Product&tagline=Your+One-Liner+Here
+           &feature1=Feature+A&feature2=Feature+B&feature3=Feature+C
+           &cta=Get+Started&accentColor=%238b5cf6
+           &bgStyle=mesh%2Bspotlight%2Bnoise" />
+```
+
+---
+
+#### Portfolio — developer profile
+
+[![OG Portfolio](https://placard.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)](https://placard.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)
+
+```html
+<meta property="og:image"
+  content="https://placard.mfaouzi.com/api/og/portfolio
+           ?name=Your+Name&role=Your+Role
+           &skills=TypeScript%2CReact%2CNode.js
+           &githubHandle=yourhandle&available=true
+           &accentColor=%236366f1&bgStyle=aurora%2Bvignette" />
+```
+
+---
+
+### SVG Badges
+
+Embed directly in HTML, Markdown, or any `<img>` tag.
+
+<!-- badges are SVG — rendered live -->
+
+| Preview | Usage |
+|---------|-------|
+| ![version](https://placard.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1&style=flat) | `![version](https://placard.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1)` |
+| ![status](https://placard.mfaouzi.com/api/badge/status?label=API&status=online) | `![status](https://placard.mfaouzi.com/api/badge/status?label=API&status=online)` |
+| ![coverage](https://placard.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e) | `![coverage](https://placard.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)` |
+| ![score](https://placard.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1) | `![score](https://placard.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1)` |
+| ![stack](https://placard.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&color=%236366f1&style=tags) | `![stack](https://placard.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&style=tags)` |
+| ![github](https://placard.mfaouzi.com/api/badge/socials?platform=github&handle=faouziMohamed&followers=128&color=%236366f1) | `![github](https://placard.mfaouzi.com/api/badge/socials?platform=github&handle=yourhandle&followers=1.2k)` |
+| ![available](https://placard.mfaouzi.com/api/badge/availability?label=Faouzi+Mohamed&available=true&hireText=Open+to+work&color=%2322c55e) | `![available](https://placard.mfaouzi.com/api/badge/availability?label=Your+Name&available=true)` |
+
+---
+
+### SEO Assets
+
+```html
+<!-- Favicon (32×32) -->
+<link rel="icon" type="image/png"
+  href="https://placard.mfaouzi.com/api/seo/favicon?initial=A&color=%230f0f0f&accentColor=%236366f1&shape=rounded" />
+
+<!-- Apple touch icon (180×180) -->
+<link rel="apple-touch-icon"
+  href="https://placard.mfaouzi.com/api/seo/apple-touch-icon?initial=A&color=%230f0f0f&accentColor=%236366f1" />
+
+<!-- PWA manifest icons -->
+{
+  "icons": [
+    {
+      "src": "https://placard.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=192",
+      "sizes": "192x192", "type": "image/png", "purpose": "maskable"
+    },
+    {
+      "src": "https://placard.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=512",
+      "sizes": "512x512", "type": "image/png", "purpose": "maskable"
+    }
+  ]
+}
+```
+
+> **Tip:** use the [visual builder](https://placard.mfaouzi.com/builder) to configure any template and copy the ready-made URL — no guessing query params.
 
 ---
 
@@ -216,7 +344,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     openGraph: {
       images: [
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/og/general?siteName=My+App&title=Page+Title&accentColor=%236366f1`,
+        `${process.env.NEXT_PUBLIC_DEPLOYMENT_URL}/api/og/general?siteName=My+App&title=Page+Title&accentColor=%236366f1`,
       ],
     },
   };
