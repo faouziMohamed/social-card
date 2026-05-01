@@ -1,6 +1,12 @@
 import React from 'react';
 import type {PortfolioParams} from '../../shared/og-schemas';
 import type {OgRendererContext} from '../og-handler.server';
+import {
+  GitHubIcon,
+  GlobeIcon,
+  MapPinIcon,
+  XTwitterIcon,
+} from '../og-brand-icons.server';
 import {clampStyle, hexToRgba} from '../og-render.server';
 import {
   composeBackgroundStyleWithTone,
@@ -31,12 +37,13 @@ export function portfolioRenderer(
         .filter(Boolean)
         .slice(0, 6)
     : [];
-  const socialItems: {icon: string; text: string}[] = [];
-  if (p.githubHandle) socialItems.push({icon: 'GH', text: p.githubHandle});
-  if (p.twitterHandle) socialItems.push({icon: 'X', text: p.twitterHandle});
+  type SocialIconComponent = React.ComponentType<{size?: number; color?: string}>;
+  const socialItems: {Icon: SocialIconComponent; text: string}[] = [];
+  if (p.githubHandle) socialItems.push({Icon: GitHubIcon, text: p.githubHandle});
+  if (p.twitterHandle) socialItems.push({Icon: XTwitterIcon, text: p.twitterHandle});
   if (p.websiteUrl)
-    socialItems.push({icon: 'WEB', text: stripDomain(p.websiteUrl)});
-  if (p.location) socialItems.push({icon: 'LOC', text: p.location});
+    socialItems.push({Icon: GlobeIcon, text: stripDomain(p.websiteUrl)});
+  if (p.location) socialItems.push({Icon: MapPinIcon, text: p.location});
 
   return (
     <div
@@ -185,16 +192,7 @@ export function portfolioRenderer(
                   columnGap: 6,
                 }}
               >
-                <span
-                  style={{
-                    ...typography,
-                    fontSize: 16,
-                    fontWeight: 700,
-                    color: accentColor,
-                  }}
-                >
-                  {item.icon}
-                </span>
+                <item.Icon size={18} color={accentColor} />
                 <span
                   style={{
                     ...typography,

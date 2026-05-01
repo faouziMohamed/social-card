@@ -1,6 +1,7 @@
 import React from 'react';
 import type {BlogParams} from '../../shared/og-schemas';
 import type {OgRendererContext} from '../og-handler.server';
+import {detectSocialIcon} from '../og-brand-icons.server';
 import {clampStyle} from '../og-render.server';
 import {
   composeBackgroundStyleWithTone,
@@ -229,16 +230,29 @@ export function blogRenderer(
                 {p.authorName}
               </span>
               {p.authorHandle && (
-                <span
+                <div
                   style={{
-                    ...typography,
-                    fontSize: 20,
-                    fontWeight: 400,
-                    color: theme.textMuted,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    columnGap: 5,
                   }}
                 >
-                  {p.authorHandle}
-                </span>
+                  {(() => {
+                    const HandleIcon = detectSocialIcon(p.authorHandle);
+                    return <HandleIcon size={16} color={theme.textMuted} />;
+                  })()}
+                  <span
+                    style={{
+                      ...typography,
+                      fontSize: 20,
+                      fontWeight: 400,
+                      color: theme.textMuted,
+                    }}
+                  >
+                    {p.authorHandle}
+                  </span>
+                </div>
               )}
             </div>
           </div>
