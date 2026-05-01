@@ -1,12 +1,12 @@
-import type { BadgeName } from './badge-schemas';
+import type {BadgeName} from './badge-schemas';
 
 export const BADGE_ROUTES: Record<BadgeName, string> = {
-  label:        '/api/badge/label',
-  stat:         '/api/badge/stat',
-  status:       '/api/badge/status',
-  progress:     '/api/badge/progress',
-  score:        '/api/badge/score',
-  socials:      '/api/badge/socials',
+  label: '/api/badge/label',
+  stat: '/api/badge/stat',
+  status: '/api/badge/status',
+  progress: '/api/badge/progress',
+  score: '/api/badge/score',
+  socials: '/api/badge/socials',
   'tech-stack': '/api/badge/tech-stack',
   availability: '/api/badge/availability',
 };

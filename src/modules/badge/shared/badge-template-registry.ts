@@ -1,7 +1,10 @@
+import type {FormSection} from '@/modules/og/shared/og-template-registry';
 import type {BadgeName} from './badge-schemas';
 
-export type {FieldDef, FormSection} from '@/modules/og/shared/og-template-registry';
-import type {FormSection} from '@/modules/og/shared/og-template-registry';
+export type {
+  FieldDef,
+  FormSection,
+} from '@/modules/og/shared/og-template-registry';
 
 // ─── Template metadata ────────────────────────────────────────────────────────
 
@@ -95,7 +98,12 @@ export const TEMPLATE_SECTIONS: Record<BadgeName, FormSection[]> = {
       fields: [
         {key: 'color', label: 'Message color', type: 'color'},
         {key: 'labelColor', label: 'Label color', type: 'color'},
-        {key: 'style', label: 'Style', type: 'select', options: ['flat', 'pill']},
+        {
+          key: 'style',
+          label: 'Style',
+          type: 'select',
+          options: ['flat', 'pill'],
+        },
       ],
     },
     SHARED_THEME,
@@ -169,7 +177,12 @@ export const TEMPLATE_SECTIONS: Record<BadgeName, FormSection[]> = {
     {
       title: 'Content',
       fields: [
-        {key: 'label', label: 'Label', type: 'text', placeholder: 'Performance'},
+        {
+          key: 'label',
+          label: 'Label',
+          type: 'text',
+          placeholder: 'Performance',
+        },
         {key: 'value', label: 'Score', type: 'text', placeholder: '95'},
         {key: 'max', label: 'Max', type: 'text', placeholder: '100'},
       ],
@@ -188,10 +201,25 @@ export const TEMPLATE_SECTIONS: Record<BadgeName, FormSection[]> = {
           key: 'platform',
           label: 'Platform',
           type: 'select',
-          options: ['github', 'x', 'bluesky', 'linkedin', 'youtube', 'twitch', 'discord', 'npm', 'pypi'],
+          options: [
+            'github',
+            'x',
+            'bluesky',
+            'linkedin',
+            'youtube',
+            'twitch',
+            'discord',
+            'npm',
+            'pypi',
+          ],
         },
         {key: 'handle', label: 'Handle', type: 'text', placeholder: 'acme'},
-        {key: 'followers', label: 'Followers', type: 'text', placeholder: '4.2k'},
+        {
+          key: 'followers',
+          label: 'Followers',
+          type: 'text',
+          placeholder: '4.2k',
+        },
       ],
     },
     {
@@ -204,14 +232,24 @@ export const TEMPLATE_SECTIONS: Record<BadgeName, FormSection[]> = {
     {
       title: 'Content',
       fields: [
-        {key: 'stack', label: 'Stack', type: 'text', placeholder: 'React,TypeScript,Go'},
+        {
+          key: 'stack',
+          label: 'Stack',
+          type: 'text',
+          placeholder: 'React,TypeScript,Go',
+        },
       ],
     },
     {
       title: 'Style',
       fields: [
         {key: 'color', label: 'Tag color', type: 'color'},
-        {key: 'style', label: 'Layout', type: 'select', options: ['tags', 'row']},
+        {
+          key: 'style',
+          label: 'Layout',
+          type: 'select',
+          options: ['tags', 'row'],
+        },
       ],
     },
     SHARED_THEME,
@@ -220,9 +258,24 @@ export const TEMPLATE_SECTIONS: Record<BadgeName, FormSection[]> = {
     {
       title: 'Content',
       fields: [
-        {key: 'label', label: 'Name / Role', type: 'text', placeholder: 'Mohamed Faouzi'},
-        {key: 'available', label: 'Available', type: 'select', options: ['true', 'false']},
-        {key: 'hireText', label: 'CTA text', type: 'text', placeholder: 'Available for freelance'},
+        {
+          key: 'label',
+          label: 'Name / Role',
+          type: 'text',
+          placeholder: 'Mohamed Faouzi',
+        },
+        {
+          key: 'available',
+          label: 'Available',
+          type: 'select',
+          options: ['true', 'false'],
+        },
+        {
+          key: 'hireText',
+          label: 'CTA text',
+          type: 'text',
+          placeholder: 'Available for freelance',
+        },
       ],
     },
     {
@@ -238,7 +291,8 @@ export const TEMPLATE_SECTIONS: Record<BadgeName, FormSection[]> = {
 export const DEMO_PARAMS: {template: BadgeName; params: string}[] = [
   {
     template: 'label',
-    params: 'label=version&message=1.0.0&color=%236366f1&labelColor=%23555555&style=flat&theme=dark',
+    params:
+      'label=version&message=1.0.0&color=%236366f1&labelColor=%23555555&style=flat&theme=dark',
   },
   {
     template: 'stat',
@@ -258,11 +312,13 @@ export const DEMO_PARAMS: {template: BadgeName; params: string}[] = [
   },
   {
     template: 'socials',
-    params: 'platform=github&handle=acme&followers=4.2k&color=%236366f1&theme=dark',
+    params:
+      'platform=github&handle=acme&followers=4.2k&color=%236366f1&theme=dark',
   },
   {
     template: 'tech-stack',
-    params: 'stack=React%2CTypeScript%2CGo&color=%236366f1&style=tags&theme=dark',
+    params:
+      'stack=React%2CTypeScript%2CGo&color=%236366f1&style=tags&theme=dark',
   },
   {
     template: 'availability',

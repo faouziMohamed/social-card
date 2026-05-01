@@ -8,11 +8,11 @@ the relevant guide in `node_modules/next/dist/docs/` before writing any code. He
 ## Project structure
 
 | Path                      | What it is                                                                                          |
-|---------------------------|-----------------------------------------------------------------------------------------------------|
+| ------------------------- | --------------------------------------------------------------------------------------------------- |
 | `src/app/`                | App Router entry points and global UI shell: `layout.tsx`, `page.tsx`, `globals.css`, `favicon.ico` |
 | `src/app/api/`            | API route handlers (`og/`, `badge/`, `seo/`)                                                        |
 | `src/app/builder/`        | Interactive OG/badge/SEO builder UI (`/builder` page)                                               |
-| `src/app/docs/`           | API reference docs page (`/docs`)                                                                    |
+| `src/app/docs/`           | API reference docs page (`/docs`)                                                                   |
 | `src/assets/fonts/`       | Local font files (`.woff2`, `.ttf`, `.otf`) loaded by `og-fonts.server.ts` for Satori rendering     |
 | `src/proxy.ts`            | Request-path header shim that sets `x-current-path`                                                 |
 | `src/lib/env.ts`          | Deployment URL resolution (`NEXT_PUBLIC_DEPLOYMENT_URL` → Vercel → `localhost:3000`)                |
@@ -52,14 +52,13 @@ the relevant guide in `node_modules/next/dist/docs/` before writing any code. He
 All feature code lives in `src/modules/<domain>/` with a strict three-layer
 split (no `server-actions/` layer in this project):
 
-| Sub-folder | Runs in | Contents                                                                |
-|------------|---------|-------------------------------------------------------------------------|
-| `client/`  | Browser | React Query hooks (`use-*.queries.ts`), client components, client repos |
-| `server/`  | Server  | Server-side renderers, handler factories, API repositories              |
+| Sub-folder | Runs in | Contents                                                                       |
+| ---------- | ------- | ------------------------------------------------------------------------------ |
+| `client/`  | Browser | React Query hooks (`use-*.queries.ts`), client components, client repos        |
+| `server/`  | Server  | Server-side renderers, handler factories, API repositories                     |
 | `shared/`  | Both    | Types, schemas (Zod), routes, registries — no runtime imports from either side |
 
 Current domains: `og` · `badge` · `seo` · `http`
-
 
 **Naming conventions:**
 
@@ -73,8 +72,8 @@ Current domains: `og` · `badge` · `seo` · `http`
 **HTTP layer:**
 
 - Client components call the Axios client from
-  `src/modules/http/client/api-client.repository.ts` 
-- Server code uses `src/modules/http/server/backend-client.ts` 
+  `src/modules/http/client/api-client.repository.ts`
+- Server code uses `src/modules/http/server/backend-client.ts`
 - Never import `api-client.repository.ts` in server code or
   `backend-client.ts` in client components.
 
@@ -115,11 +114,13 @@ export const GET = createOgHandler(generalSchema, generalRenderer);
   a `ThemePalette` with `bg`, `text`, `textMuted`, `border`, `tagBg`, `tagText`.
 
 **Render utilities** (`server/og-render.server.ts`):
+
 - `clampStyle(n)` — webkit line-clamp CSS for Satori
 - `hexToRgba(hex, alpha)` — hex to rgba string
 - `getContrastColor(hex)` — WCAG luminance → `'#111111'` or `'#ffffff'`
 
 **To add a new OG template:**
+
 1. Add `TemplateName` union in `shared/og.types.ts`
 2. Add schema in `shared/og-schemas.ts` (extend `baseSchema`)
 3. Add renderer in `server/renderers/<name>.renderer.tsx`
@@ -267,6 +268,7 @@ tell the user which skill you are about to use and why. Do not silently invoke
 skills. This allows the user to intervene before a skill takes over.
 
 **Good:**
+
 > "I'm going to use the `writing-plans` skill to turn the approved spec into
 > a detailed implementation plan."
 
@@ -275,7 +277,6 @@ skills. This allows the user to intervene before a skill takes over.
 This rule applies to: `writing-plans`, `executing-plans`, `subagent-driven-development`,
 `dispatching-parallel-agents`, `test-driven-development`, and any other skill that
 drives implementation work.
-
 
 ### 8. Skip Heavy Plan Docs — Code Directly
 
@@ -298,14 +299,14 @@ gains are marginal and the compatibility cost is high.
 
 **All interactive UI must use library components — never raw HTML elements.**
 
-| Element | Use instead |
-|---|---|
-| `<input>`, `<textarea>` | `Input`, `Textarea` from `src/components/ui/` |
-| `<select>`, `<option>` | `Select` / `SelectContent` / `SelectItem` from shadcn/ui |
-| `<input type="date">` | `Calendar` + `Popover` from shadcn/ui (`react-day-picker`) |
-| `<button>` | `Button` from `src/components/ui/button.tsx` |
-| `<dialog>`, `window.alert`, `window.confirm` | `Dialog`, `AlertDialog`, `Sheet` from shadcn/ui |
-| `<label>` | `Label` from `src/components/ui/label.tsx` |
+| Element                                      | Use instead                                                |
+| -------------------------------------------- | ---------------------------------------------------------- |
+| `<input>`, `<textarea>`                      | `Input`, `Textarea` from `src/components/ui/`              |
+| `<select>`, `<option>`                       | `Select` / `SelectContent` / `SelectItem` from shadcn/ui   |
+| `<input type="date">`                        | `Calendar` + `Popover` from shadcn/ui (`react-day-picker`) |
+| `<button>`                                   | `Button` from `src/components/ui/button.tsx`               |
+| `<dialog>`, `window.alert`, `window.confirm` | `Dialog`, `AlertDialog`, `Sheet` from shadcn/ui            |
+| `<label>`                                    | `Label` from `src/components/ui/label.tsx`                 |
 
 **Icons:** use `lucide-react` (already installed) or `react-icons` — never inline SVG or emoji substitutes for interactive icons.
 
@@ -334,6 +335,5 @@ import { CalendarIcon } from "lucide-react";
 <select onChange={...}><option>...</option></select>
 <button onClick={...}>Click</button>
 ```
-
 
 <!-- END:nextjs-agent-rules -->

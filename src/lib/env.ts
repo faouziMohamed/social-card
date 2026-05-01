@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import {z} from 'zod';
 
 const envSchema = z.object({
   NEXT_PUBLIC_DEPLOYMENT_URL: z.string().url().optional(),

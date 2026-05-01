@@ -1,5 +1,5 @@
-import type { MetadataRoute } from "next";
-import { env } from "@/lib/env";
+import {env} from '@/lib/env';
+import type {MetadataRoute} from 'next';
 
 export default function robots(): MetadataRoute.Robots {
   const base = env.deploymentURL;
@@ -7,13 +7,12 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: "*",
-        allow: ["/", "/builder", "/docs"],
+        userAgent: '*',
+        allow: ['/', '/builder', '/docs'],
         // API routes are dynamic image generators — nothing useful for crawlers
-        disallow: ["/api/"],
+        disallow: ['/api/'],
       },
     ],
     sitemap: `${base}/sitemap.xml`,
   };
 }
-

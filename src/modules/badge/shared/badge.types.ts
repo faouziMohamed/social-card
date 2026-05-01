@@ -1,11 +1,11 @@
 export type {
+  AvailabilityParams,
   BadgeName,
   LabelParams,
-  StatParams,
-  StatusParams,
   ProgressParams,
   ScoreParams,
   SocialsParams,
+  StatParams,
+  StatusParams,
   TechStackParams,
-  AvailabilityParams,
 } from './badge-schemas';

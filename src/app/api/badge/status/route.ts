@@ -1,4 +1,4 @@
-import { createBadgeHandler } from '@/modules/badge/server/badge-handler.server';
+import {createBadgeHandler} from '@/modules/badge/server/badge-handler.server';
 import {
   STATUS_COLORS,
   circle,
@@ -11,7 +11,10 @@ import {
   svgRoot,
   text,
 } from '@/modules/badge/server/badge-render.server';
-import { statusSchema, type StatusParams } from '@/modules/badge/shared/badge-schemas';
+import {
+  statusSchema,
+  type StatusParams,
+} from '@/modules/badge/shared/badge-schemas';
 
 export function statusRenderer(p: StatusParams): string {
   const accent = p.color ?? STATUS_COLORS[p.status] ?? '#6b7280';
@@ -33,7 +36,14 @@ export function statusRenderer(p: StatusParams): string {
     premiumChip(chipX, 6, chipWidth, 18, 9, accent, 0.16),
     circle(dotX, height / 2, 6, 'url(#status-glow)'),
     circle(dotX, height / 2, 3.5, accent),
-    text(statusLabel, dotX + 9, height / 2, hexToRgba(accent, 0.96), fontSize, 'bold'),
+    text(
+      statusLabel,
+      dotX + 9,
+      height / 2,
+      hexToRgba(accent, 0.96),
+      fontSize,
+      'bold',
+    ),
   ].join('');
 
   return svgRoot(width, height, content, defs);

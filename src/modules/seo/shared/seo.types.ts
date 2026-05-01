@@ -1,8 +1,8 @@
 export type {
-  SeoTemplateName,
-  SeoSizeKey,
-  FaviconParams,
   AppleTouchIconParams,
+  FaviconParams,
   ManifestIconParams,
+  SeoSizeKey,
+  SeoTemplateName,
   TwitterCardParams,
 } from './seo-schemas';

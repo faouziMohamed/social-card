@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Copy, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import {Button} from '@/components/ui/button';
+import {Check, Copy} from 'lucide-react';
+import {useState} from 'react';
 
 interface CopyButtonProps {
   text: string;
 }
 
-export function CopyButton({ text }: CopyButtonProps) {
+export function CopyButton({text}: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -25,7 +25,11 @@ export function CopyButton({ text }: CopyButtonProps) {
       className="h-7 w-7 shrink-0 text-muted-fg hover:text-terminal-green"
       aria-label="Copy URL"
     >
-      {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+      {copied ? (
+        <Check className="h-3.5 w-3.5" />
+      ) : (
+        <Copy className="h-3.5 w-3.5" />
+      )}
     </Button>
   );
 }

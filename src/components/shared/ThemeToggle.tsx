@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
-import { Check, ChevronDown, Monitor, Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils/cn";
+import {Button} from '@/components/ui/button';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {cn} from '@/lib/utils/cn';
+import {Check, ChevronDown, Monitor, Moon, Sun} from 'lucide-react';
+import {useTheme} from 'next-themes';
+import {useEffect, useState} from 'react';
 
 const THEMES = [
-  { value: "dark", label: "Night Vision", Icon: Moon },
-  { value: "light", label: "High Visibility", Icon: Sun },
-  { value: "system", label: "Auto Detect", Icon: Monitor },
+  {value: 'dark', label: 'Night Vision', Icon: Moon},
+  {value: 'light', label: 'High Visibility', Icon: Sun},
+  {value: 'system', label: 'Auto Detect', Icon: Monitor},
 ] as const;
 
-type ThemeValue = (typeof THEMES)[number]["value"];
+type ThemeValue = (typeof THEMES)[number]['value'];
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const {theme, setTheme} = useTheme();
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -26,8 +26,8 @@ export function ThemeToggle() {
     return <span aria-hidden className="inline-flex h-9 w-9 opacity-0" />;
   }
 
-  const activeTheme = (theme ?? "system") as ThemeValue;
-  const current = THEMES.find((t) => t.value === activeTheme) ?? THEMES[2];
+  const activeTheme = (theme ?? 'system') as ThemeValue;
+  const current = THEMES.find(t => t.value === activeTheme) ?? THEMES[2];
   const CurrentIcon = current.Icon;
 
   return (
@@ -47,7 +47,7 @@ export function ThemeToggle() {
 
       <PopoverContent align="end" className="w-44 p-1">
         <div className="flex flex-col gap-0.5">
-          {THEMES.map(({ value, label, Icon }) => {
+          {THEMES.map(({value, label, Icon}) => {
             const active = activeTheme === value;
 
             return (
@@ -60,8 +60,8 @@ export function ThemeToggle() {
                   setOpen(false);
                 }}
                 className={cn(
-                  "h-8 w-full justify-start gap-2 px-2 text-xs",
-                  active && "text-primary",
+                  'h-8 w-full justify-start gap-2 px-2 text-xs',
+                  active && 'text-primary',
                 )}
               >
                 <Icon className="h-3.5 w-3.5" />

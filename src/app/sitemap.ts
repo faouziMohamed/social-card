@@ -1,5 +1,5 @@
-import type { MetadataRoute } from "next";
-import { env } from "@/lib/env";
+import {env} from '@/lib/env';
+import type {MetadataRoute} from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = env.deploymentURL;
@@ -8,21 +8,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${base}/`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${base}/builder`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${base}/docs`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 0.9,
     },
   ];
 }
-

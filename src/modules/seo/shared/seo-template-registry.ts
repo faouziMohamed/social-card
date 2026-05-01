@@ -1,7 +1,10 @@
+import type {FormSection} from '@/modules/og/shared/og-template-registry';
 import type {SeoTemplateName} from './seo-schemas';
 
-export type {FieldDef, FormSection} from '@/modules/og/shared/og-template-registry';
-import type {FormSection} from '@/modules/og/shared/og-template-registry';
+export type {
+  FieldDef,
+  FormSection,
+} from '@/modules/og/shared/og-template-registry';
 
 // ─── Template metadata ────────────────────────────────────────────────────────
 
@@ -66,7 +69,12 @@ const ICON_BASE_SECTIONS: FormSection[] = [
     fields: [
       {key: 'color', label: 'Background', type: 'color'},
       {key: 'accentColor', label: 'Accent', type: 'color'},
-      {key: 'shape', label: 'Shape', type: 'select', options: ['circle', 'square', 'rounded']},
+      {
+        key: 'shape',
+        label: 'Shape',
+        type: 'select',
+        options: ['circle', 'square', 'rounded'],
+      },
     ],
   },
   SHARED_THEME,
@@ -88,7 +96,12 @@ export const TEMPLATE_SECTIONS: Record<SeoTemplateName, FormSection[]> = {
       fields: [
         {key: 'color', label: 'Background', type: 'color'},
         {key: 'accentColor', label: 'Accent', type: 'color'},
-        {key: 'shape', label: 'Shape', type: 'select', options: ['circle', 'square', 'rounded']},
+        {
+          key: 'shape',
+          label: 'Shape',
+          type: 'select',
+          options: ['circle', 'square', 'rounded'],
+        },
         {key: 'size', label: 'Size', type: 'select', options: ['192', '512']},
       ],
     },
@@ -99,8 +112,18 @@ export const TEMPLATE_SECTIONS: Record<SeoTemplateName, FormSection[]> = {
       title: 'Content',
       fields: [
         {key: 'title', label: 'Title', type: 'text', placeholder: 'Title'},
-        {key: 'description', label: 'Description', type: 'text', placeholder: 'Short description'},
-        {key: 'siteName', label: 'Site name', type: 'text', placeholder: 'My Site'},
+        {
+          key: 'description',
+          label: 'Description',
+          type: 'text',
+          placeholder: 'Short description',
+        },
+        {
+          key: 'siteName',
+          label: 'Site name',
+          type: 'text',
+          placeholder: 'My Site',
+        },
         {key: 'logo', label: 'Logo URL', type: 'url', placeholder: 'https://…'},
       ],
     },
@@ -108,7 +131,12 @@ export const TEMPLATE_SECTIONS: Record<SeoTemplateName, FormSection[]> = {
       title: 'Style',
       fields: [
         {key: 'accentColor', label: 'Accent', type: 'color'},
-        {key: 'bgStyle', label: 'BG style', type: 'text', placeholder: 'gradient+grid'},
+        {
+          key: 'bgStyle',
+          label: 'BG style',
+          type: 'text',
+          placeholder: 'gradient+grid',
+        },
       ],
     },
     SHARED_THEME,
@@ -120,18 +148,22 @@ export const TEMPLATE_SECTIONS: Record<SeoTemplateName, FormSection[]> = {
 export const DEMO_PARAMS: {template: SeoTemplateName; params: string}[] = [
   {
     template: 'favicon',
-    params: 'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded&theme=dark',
+    params:
+      'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded&theme=dark',
   },
   {
     template: 'apple-touch-icon',
-    params: 'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded&theme=dark',
+    params:
+      'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded&theme=dark',
   },
   {
     template: 'manifest-icon',
-    params: 'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded&size=512&theme=dark',
+    params:
+      'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded&size=512&theme=dark',
   },
   {
     template: 'twitter-card',
-    params: 'title=Open+Graph+Generator&description=Self-hostable+social+card+generator&siteName=og-graph&accentColor=%236366f1&bgStyle=gradient%2Bgrid&theme=dark',
+    params:
+      'title=Open+Graph+Generator&description=Self-hostable+social+card+generator&siteName=og-graph&accentColor=%236366f1&bgStyle=gradient%2Bgrid&theme=dark',
   },
 ];

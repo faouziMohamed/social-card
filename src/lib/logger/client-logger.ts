@@ -12,7 +12,7 @@ export function createClientLogger(name: string): ClientLogger {
   const isProduction = process.env.NODE_ENV === 'production';
 
   function log(level: LogLevel, msg: string, ctx?: LogContext) {
-    const entry = { level, name, msg, ...ctx, ts: new Date().toISOString() };
+    const entry = {level, name, msg, ...ctx, ts: new Date().toISOString()};
     const fn =
       level === 'error'
         ? console.error
@@ -27,7 +27,7 @@ export function createClientLogger(name: string): ClientLogger {
     if (isProduction && level !== 'debug') {
       fetch('/api/logs', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(entry),
         keepalive: true,
         // eslint-disable-next-line no-empty-function

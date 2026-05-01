@@ -593,12 +593,32 @@ export const TEMPLATE_SECTIONS: Record<TemplateName, FormSection[]> = {
     {
       title: 'Event',
       fields: [
-        {key: 'eventName',  label: 'Event name', type: 'text', placeholder: 'DesignConf 2026'},
-        {key: 'tagline',    label: 'Tagline',    type: 'text', placeholder: 'The future of design'},
-        {key: 'eventDate',  label: 'Date',       type: 'date'},
-        {key: 'dateLocale', label: 'Locale',     type: 'text', placeholder: 'en-US'},
-        {key: 'location',   label: 'Location',   type: 'text', placeholder: 'Paris, France'},
-        {key: 'host',       label: 'Host',       type: 'text', placeholder: 'Acme Events'},
+        {
+          key: 'eventName',
+          label: 'Event name',
+          type: 'text',
+          placeholder: 'DesignConf 2026',
+        },
+        {
+          key: 'tagline',
+          label: 'Tagline',
+          type: 'text',
+          placeholder: 'The future of design',
+        },
+        {key: 'eventDate', label: 'Date', type: 'date'},
+        {
+          key: 'dateLocale',
+          label: 'Locale',
+          type: 'text',
+          placeholder: 'en-US',
+        },
+        {
+          key: 'location',
+          label: 'Location',
+          type: 'text',
+          placeholder: 'Paris, France',
+        },
+        {key: 'host', label: 'Host', type: 'text', placeholder: 'Acme Events'},
       ],
     },
     {
@@ -612,18 +632,48 @@ export const TEMPLATE_SECTIONS: Record<TemplateName, FormSection[]> = {
     {
       title: 'Launch',
       fields: [
-        {key: 'productName', label: 'Product',   type: 'text', placeholder: 'SuperApp'},
-        {key: 'punchline',   label: 'Punchline',  type: 'text', placeholder: 'The tool you wished existed'},
-        {key: 'launchDate',  label: 'Launch date', type: 'text', placeholder: 'March 2026'},
-        {key: 'badge',       label: 'Badge',      type: 'text', placeholder: 'Now live'},
+        {
+          key: 'productName',
+          label: 'Product',
+          type: 'text',
+          placeholder: 'SuperApp',
+        },
+        {
+          key: 'punchline',
+          label: 'Punchline',
+          type: 'text',
+          placeholder: 'The tool you wished existed',
+        },
+        {
+          key: 'launchDate',
+          label: 'Launch date',
+          type: 'text',
+          placeholder: 'March 2026',
+        },
+        {key: 'badge', label: 'Badge', type: 'text', placeholder: 'Now live'},
       ],
     },
     {
       title: 'Highlights',
       fields: [
-        {key: 'highlight1', label: 'Highlight 1', type: 'text', placeholder: '10× faster'},
-        {key: 'highlight2', label: 'Highlight 2', type: 'text', placeholder: 'Open source'},
-        {key: 'highlight3', label: 'Highlight 3', type: 'text', placeholder: 'Zero config'},
+        {
+          key: 'highlight1',
+          label: 'Highlight 1',
+          type: 'text',
+          placeholder: '10× faster',
+        },
+        {
+          key: 'highlight2',
+          label: 'Highlight 2',
+          type: 'text',
+          placeholder: 'Open source',
+        },
+        {
+          key: 'highlight3',
+          label: 'Highlight 3',
+          type: 'text',
+          placeholder: 'Zero config',
+        },
       ],
     },
     {

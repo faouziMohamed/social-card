@@ -1,4 +1,4 @@
-import { createBadgeHandler } from '@/modules/badge/server/badge-handler.server';
+import {createBadgeHandler} from '@/modules/badge/server/badge-handler.server';
 import {
   circle,
   estimateTextWidth,
@@ -11,14 +11,20 @@ import {
   svgRoot,
   text,
 } from '@/modules/badge/server/badge-render.server';
-import { statSchema, type StatParams } from '@/modules/badge/shared/badge-schemas';
+import {
+  statSchema,
+  type StatParams,
+} from '@/modules/badge/shared/badge-schemas';
 
 export function statRenderer(p: StatParams): string {
   const accent = p.color ?? '#6366f1';
   const palette = resolvePalette(p.theme);
   const value = p.unit ? `${p.value}${p.unit}` : p.value;
   const hasIcon = Boolean(p.icon);
-  const width = Math.max(150, estimateTextWidth(value, 18) + estimateTextWidth(p.label, 10) + 58);
+  const width = Math.max(
+    150,
+    estimateTextWidth(value, 18) + estimateTextWidth(p.label, 10) + 58,
+  );
   const height = 58;
   const orbX = 25;
   const orbY = height / 2;

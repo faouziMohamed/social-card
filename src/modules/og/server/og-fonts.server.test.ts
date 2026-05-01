@@ -27,7 +27,8 @@ const SAMPLE_GOOGLE_CSS = `
 test('parses supported Google font sources for the requested weights', () => {
   assert.equal(typeof ogFonts.parseGoogleFontCss, 'function');
 
-  const sources = ogFonts.parseGoogleFontCss?.(SAMPLE_GOOGLE_CSS, [400, 700]) ?? [];
+  const sources =
+    ogFonts.parseGoogleFontCss?.(SAMPLE_GOOGLE_CSS, [400, 700]) ?? [];
 
   assert.deepEqual(sources, [
     {

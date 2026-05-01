@@ -1,4 +1,4 @@
-import { createBadgeHandler } from '@/modules/badge/server/badge-handler.server';
+import {createBadgeHandler} from '@/modules/badge/server/badge-handler.server';
 import {
   hexToRgba,
   monoText,
@@ -9,7 +9,10 @@ import {
   svgRoot,
   text,
 } from '@/modules/badge/server/badge-render.server';
-import { scoreSchema, type ScoreParams } from '@/modules/badge/shared/badge-schemas';
+import {
+  scoreSchema,
+  type ScoreParams,
+} from '@/modules/badge/shared/badge-schemas';
 
 export function scoreRenderer(p: ScoreParams): string {
   const accent = p.color ?? '#6366f1';
@@ -30,7 +33,15 @@ export function scoreRenderer(p: ScoreParams): string {
     `<circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="${hexToRgba(palette.fg, p.theme === 'dark' ? 0.12 : 0.1)}" stroke-width="${strokeWidth}"/>`,
     `<circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="url(#score-accent)" stroke-width="${strokeWidth}" stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" stroke-linecap="round" transform="rotate(-90 ${center} ${center})"/>`,
     `<circle cx="${center}" cy="${center}" r="${radius - 11}" fill="${hexToRgba(palette.bg, 0.42)}" stroke="${hexToRgba(accent, 0.16)}"/>`,
-    monoText(String(p.value), center, center - 5, palette.fg, 21, 'bold', 'middle'),
+    monoText(
+      String(p.value),
+      center,
+      center - 5,
+      palette.fg,
+      21,
+      'bold',
+      'middle',
+    ),
     text(p.label, center, center + 17, palette.muted, 9, 'normal', 'middle'),
   ].join('');
 

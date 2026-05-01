@@ -1,8 +1,12 @@
-import { logger as _logger } from './logger';
+import {logger as _logger} from './logger';
 
-export { logger, type Logger } from './logger';
-export { clientLogger, createClientLogger, type ClientLogger } from './client-logger';
+export {
+  clientLogger,
+  createClientLogger,
+  type ClientLogger,
+} from './client-logger';
+export {logger, type Logger} from './logger';
 
 export function getLogger(context: string) {
-  return _logger.child({ context });
+  return _logger.child({context});
 }

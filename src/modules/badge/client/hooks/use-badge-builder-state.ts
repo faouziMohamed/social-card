@@ -1,36 +1,36 @@
-"use client";
+'use client';
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { BADGE_ROUTES } from "@/modules/badge/shared/badge-routes";
-import { TEMPLATE_SECTIONS } from "@/modules/badge/shared/badge-template-registry";
-import { env } from "@/lib/env";
-import type { BadgeName } from "@/modules/badge/shared/badge-schemas";
+import {env} from '@/lib/env';
+import {BADGE_ROUTES} from '@/modules/badge/shared/badge-routes';
+import type {BadgeName} from '@/modules/badge/shared/badge-schemas';
+import {TEMPLATE_SECTIONS} from '@/modules/badge/shared/badge-template-registry';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 export interface BadgeBuilderState {
-  template:    BadgeName;
-  params:      Record<string, string>;
-  previewUrl:  string;
-  badgeUrl:    string;
+  template: BadgeName;
+  params: Record<string, string>;
+  previewUrl: string;
+  badgeUrl: string;
   setTemplate: (t: BadgeName) => void;
-  setParam:    (key: string, value: string) => void;
+  setParam: (key: string, value: string) => void;
   resetParams: () => void;
 }
 
 // ─── Persistence ─────────────────────────────────────────────────────────────
 
-const STORAGE_KEY = "badge-builder-state-v1";
+const STORAGE_KEY = 'badge-builder-state-v1';
 
 interface TemplateSlot {
   params: Record<string, string>;
 }
 
 interface PersistedState {
-  current:   BadgeName;
+  current: BadgeName;
   templates: Partial<Record<BadgeName, TemplateSlot>>;
 }
 
 function load(): PersistedState | null {
-  if (typeof window === "undefined") return null;
+  if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
@@ -51,8 +51,8 @@ function save(state: PersistedState): void {
 // ─── Hook ────────────────────────────────────────────────────────────────────
 
 export function useBadgeBuilderState(): BadgeBuilderState {
-  const [template, setTemplateRaw] = useState<BadgeName>("label");
-  const [params,   setParams]      = useState<Record<string, string>>({});
+  const [template, setTemplateRaw] = useState<BadgeName>('label');
+  const [params, setParams] = useState<Record<string, string>>({});
 
   // Restore persisted state after hydration
   const hydratedRef = useRef(false);
@@ -61,20 +61,23 @@ export function useBadgeBuilderState(): BadgeBuilderState {
     hydratedRef.current = true;
     const persisted = load();
     if (!persisted) return;
-    const tmpl = persisted.current ?? "label";
+    const tmpl = persisted.current ?? 'label';
     const slot = persisted.templates[tmpl];
     setTemplateRaw(tmpl);
     setParams(slot?.params ?? {});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [previewUrl, setPreviewUrl] = useState("");
+  const [previewUrl, setPreviewUrl] = useState('');
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const buildUrl = useCallback((tmpl: BadgeName, p: Record<string, string>) => {
-    const base    = `${env.deploymentURL}${BADGE_ROUTES[tmpl]}`;
-    const entries = Object.entries(p).filter(([, v]) => v !== "") as [string, string][];
-    const query   = new URLSearchParams(entries);
+    const base = `${env.deploymentURL}${BADGE_ROUTES[tmpl]}`;
+    const entries = Object.entries(p).filter(([, v]) => v !== '') as [
+      string,
+      string,
+    ][];
+    const query = new URLSearchParams(entries);
     return query.size > 0 ? `${base}?${query.toString()}` : base;
   }, []);
 
@@ -84,15 +87,17 @@ export function useBadgeBuilderState(): BadgeBuilderState {
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => setPreviewUrl(badgeUrl), 150);
-    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
   }, [badgeUrl]);
 
   // Persist current template slot whenever params change
   useEffect(() => {
-    const prev = load() ?? { current: template, templates: {} };
+    const prev = load() ?? {current: template, templates: {}};
     save({
       current: template,
-      templates: { ...prev.templates, [template]: { params } },
+      templates: {...prev.templates, [template]: {params}},
     });
   }, [template, params]);
 
@@ -104,17 +109,27 @@ export function useBadgeBuilderState(): BadgeBuilderState {
   };
 
   const setParam = useCallback((key: string, value: string) => {
-    setParams((prev) => ({ ...prev, [key]: value }));
+    setParams(prev => ({...prev, [key]: value}));
   }, []);
 
   const resetParams = useCallback(() => {
-    const keys = TEMPLATE_SECTIONS[template].flatMap((s) => s.fields.map((f) => f.key));
-    setParams((prev) => {
-      const next = { ...prev };
+    const keys = TEMPLATE_SECTIONS[template].flatMap(s =>
+      s.fields.map(f => f.key),
+    );
+    setParams(prev => {
+      const next = {...prev};
       for (const k of keys) delete next[k];
       return next;
     });
   }, [template]);
 
-  return { template, params, previewUrl, badgeUrl, setTemplate, setParam, resetParams };
+  return {
+    template,
+    params,
+    previewUrl,
+    badgeUrl,
+    setTemplate,
+    setParam,
+    resetParams,
+  };
 }

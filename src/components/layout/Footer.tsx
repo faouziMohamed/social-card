@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { ROUTES } from "@/lib/utils/routes";
+import {ROUTES} from '@/lib/utils/routes';
+import Link from 'next/link';
 
 export function Footer() {
   return (
@@ -10,10 +10,16 @@ export function Footer() {
         </span>
 
         <div className="flex items-center gap-6">
-          <Link href={ROUTES.builder} className="hover:text-primary transition-colors">
+          <Link
+            href={ROUTES.builder}
+            className="hover:text-primary transition-colors"
+          >
             Builder
           </Link>
-          <Link href={ROUTES.docs} className="hover:text-primary transition-colors">
+          <Link
+            href={ROUTES.docs}
+            className="hover:text-primary transition-colors"
+          >
             Docs
           </Link>
           <a

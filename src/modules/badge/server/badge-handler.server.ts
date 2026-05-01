@@ -1,6 +1,6 @@
-import type { NextRequest } from 'next/server';
-import type { ZodSchema } from 'zod';
-import { createClientLogger } from '@/lib/logger';
+import {createClientLogger} from '@/lib/logger';
+import type {NextRequest} from 'next/server';
+import type {ZodSchema} from 'zod';
 
 const log = createClientLogger('badge/handler');
 
@@ -25,24 +25,24 @@ export function createBadgeHandler<TParams>(
       const parsed = schema.safeParse(rawParams);
 
       if (!parsed.success) {
-        return Response.json({ error: parsed.error.flatten() }, { status: 400 });
+        return Response.json({error: parsed.error.flatten()}, {status: 400});
       }
 
       const svg = renderer(parsed.data);
 
       return new Response(svg, {
         headers: {
-          'Content-Type':  'image/svg+xml',
+          'Content-Type': 'image/svg+xml',
           'Cache-Control': BADGE_CACHE,
           'X-Content-Type-Options': 'nosniff',
         },
       });
     } catch (error) {
       const err = error as Error;
-      log.error('Badge render failed', { message: err.message });
+      log.error('Badge render failed', {message: err.message});
       return Response.json(
-        { error: 'Internal server error', message: err.message },
-        { status: 500 },
+        {error: 'Internal server error', message: err.message},
+        {status: 500},
       );
     }
   };

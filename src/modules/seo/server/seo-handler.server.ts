@@ -1,14 +1,16 @@
-import { ImageResponse } from 'next/og';
-import { type NextRequest } from 'next/server';
-import React from 'react';
-import type { ZodSchema } from 'zod';
-import { createClientLogger } from '@/lib/logger';
-import { resolveOgFonts } from '@/modules/og/server/og-fonts.server';
-import { CACHE_CONTROL } from '@/modules/og/server/og-render.server';
-import { resolveTheme } from '@/modules/og/server/og-themes.server';
-import type { OgRenderer, OgRendererContext } from '@/modules/og/server/og-handler.server';
+import {createClientLogger} from '@/lib/logger';
+import {resolveOgFonts} from '@/modules/og/server/og-fonts.server';
+import type {
+  OgRenderer,
+  OgRendererContext,
+} from '@/modules/og/server/og-handler.server';
+import {CACHE_CONTROL} from '@/modules/og/server/og-render.server';
+import {resolveTheme} from '@/modules/og/server/og-themes.server';
+import {ImageResponse} from 'next/og';
+import {type NextRequest} from 'next/server';
+import type {ZodSchema} from 'zod';
 
-export type { OgRenderer, OgRendererContext };
+export type {OgRenderer, OgRendererContext};
 
 const log = createClientLogger('seo/handler');
 
@@ -29,18 +31,22 @@ export function createSeoHandler<TParams>(
       const parsed = schema.safeParse(rawParams);
 
       if (!parsed.success) {
-        return Response.json({ error: parsed.error.flatten() }, { status: 400 });
+        return Response.json({error: parsed.error.flatten()}, {status: 400});
       }
 
       const p = parsed.data;
       const theme = resolveTheme(
-        (p as { theme?: 'dark' | 'light' | 'auto' }).theme ?? 'dark',
+        (p as {theme?: 'dark' | 'light' | 'auto'}).theme ?? 'dark',
       );
 
       // Pre-fetch logo image if present
       const resolved = await resolveLogoParam(p as Record<string, unknown>);
 
-      const element = renderer(resolved as TParams, { theme, width, height } satisfies OgRendererContext);
+      const element = renderer(resolved as TParams, {
+        theme,
+        width,
+        height,
+      } satisfies OgRendererContext);
 
       // Always load at least one font — ImageResponse requires it even for tiny icons
       const fonts = await resolveOgFonts('geist').catch(() => []);
@@ -49,29 +55,31 @@ export function createSeoHandler<TParams>(
         width,
         height,
         fonts,
-        headers: { 'Cache-Control': CACHE_CONTROL },
+        headers: {'Cache-Control': CACHE_CONTROL},
       });
     } catch (error) {
       const err = error as Error;
-      log.error('SEO render failed', { message: err.message });
+      log.error('SEO render failed', {message: err.message});
       return Response.json(
-        { error: 'Internal server error', message: err.message },
-        { status: 500 },
+        {error: 'Internal server error', message: err.message},
+        {status: 500},
       );
     }
   };
 }
 
-async function resolveLogoParam(params: Record<string, unknown>): Promise<Record<string, unknown>> {
+async function resolveLogoParam(
+  params: Record<string, unknown>,
+): Promise<Record<string, unknown>> {
   const logo = params['logo'];
   if (typeof logo !== 'string' || !logo.startsWith('http')) return params;
   try {
-    const res = await fetch(logo, { headers: { Accept: 'image/*' } });
+    const res = await fetch(logo, {headers: {Accept: 'image/*'}});
     if (!res.ok) return params;
     const mime = res.headers.get('content-type') ?? 'image/png';
     const buffer = await res.arrayBuffer();
     const b64 = Buffer.from(buffer).toString('base64');
-    return { ...params, logo: `data:${mime};base64,${b64}` };
+    return {...params, logo: `data:${mime};base64,${b64}`};
   } catch {
     return params;
   }

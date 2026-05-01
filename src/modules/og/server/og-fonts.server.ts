@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import {readFile} from 'node:fs/promises';
 import path from 'node:path';
 
 import {
@@ -6,18 +6,9 @@ import {
   resolveOgFontDefinition,
 } from '../shared/og-font-catalog';
 
-export { resolveOgFontDefinition } from '../shared/og-font-catalog';
+export {resolveOgFontDefinition} from '../shared/og-font-catalog';
 
-export type OgFontWeight =
-  | 100
-  | 200
-  | 300
-  | 400
-  | 500
-  | 600
-  | 700
-  | 800
-  | 900;
+export type OgFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 export interface ParsedGoogleFontSource {
   weight: OgFontWeight;
@@ -33,7 +24,9 @@ export interface ResolvedOgFont {
   style: 'normal' | 'italic';
 }
 
-export async function resolveOgFonts(fontFamily: string): Promise<ResolvedOgFont[]> {
+export async function resolveOgFonts(
+  fontFamily: string,
+): Promise<ResolvedOgFont[]> {
   const definition = resolveOgFontDefinition(fontFamily);
 
   if (definition.source === 'google' && !hasFreshFailure(definition.key)) {
@@ -66,9 +59,7 @@ export function parseGoogleFontCss(
       | 'italic'
       | undefined;
     const weight = Number(block.match(/font-weight:\s*(\d+)/)?.[1]);
-    const src = block.match(
-      /src:\s*url\(([^)]+)\)\s*format\('([^']+)'\)/,
-    );
+    const src = block.match(/src:\s*url\(([^)]+)\)\s*format\('([^']+)'\)/);
 
     if (
       !style ||
@@ -102,7 +93,8 @@ export function parseGoogleFontCss(
 
   return [...selected.values()].toSorted(
     (left, right) =>
-      requestedWeights.indexOf(left.weight) - requestedWeights.indexOf(right.weight),
+      requestedWeights.indexOf(left.weight) -
+      requestedWeights.indexOf(right.weight),
   );
 }
 
@@ -111,16 +103,20 @@ const cssCache = new Map<string, Promise<string>>();
 const fontDataCache = new Map<string, Promise<ArrayBuffer>>();
 const recentFailures = new Map<string, number>();
 
-async function loadGoogleFonts(definition: OgFontDefinition): Promise<ResolvedOgFont[]> {
+async function loadGoogleFonts(
+  definition: OgFontDefinition,
+): Promise<ResolvedOgFont[]> {
   const css = await getGoogleFontCss(definition);
   const sources = parseGoogleFontCss(css, definition.weights);
 
   if (sources.length === 0) {
-    throw new Error(`No supported Google font sources found for ${definition.family}`);
+    throw new Error(
+      `No supported Google font sources found for ${definition.family}`,
+    );
   }
 
   return Promise.all(
-    sources.map(async (source) => ({
+    sources.map(async source => ({
       name: definition.family,
       data: await getFontArrayBuffer(source.url),
       weight: source.weight,
@@ -136,7 +132,7 @@ async function loadLocalFallbackFonts(
 
   if (primaryFiles && primaryFiles.length > 0) {
     return Promise.all(
-      primaryFiles.map(async (file) => ({
+      primaryFiles.map(async file => ({
         name: definition.family,
         data: await readLocalFontFile(file.path),
         weight: toOgFontWeight(file.weight),
@@ -148,11 +144,13 @@ async function loadLocalFallbackFonts(
   const fallback = resolveOgFontDefinition(definition.fallbackKey);
 
   if (!fallback.localFiles || fallback.localFiles.length === 0) {
-    throw new Error(`No local fallback files configured for ${definition.family}`);
+    throw new Error(
+      `No local fallback files configured for ${definition.family}`,
+    );
   }
 
   return Promise.all(
-    fallback.localFiles.map(async (file) => ({
+    fallback.localFiles.map(async file => ({
       name: definition.family,
       data: await readLocalFontFile(file.path),
       weight: toOgFontWeight(file.weight),
@@ -169,9 +167,11 @@ async function getGoogleFontCss(definition: OgFontDefinition): Promise<string> {
     return cached;
   }
 
-  const request = fetch(url).then(async (response) => {
+  const request = fetch(url).then(async response => {
     if (!response.ok) {
-      throw new Error(`Google Fonts CSS request failed for ${definition.family}`);
+      throw new Error(
+        `Google Fonts CSS request failed for ${definition.family}`,
+      );
     }
 
     return response.text();
@@ -188,7 +188,7 @@ async function getFontArrayBuffer(url: string): Promise<ArrayBuffer> {
     return cached;
   }
 
-  const request = fetch(url).then(async (response) => {
+  const request = fetch(url).then(async response => {
     if (!response.ok) {
       throw new Error(`Font download failed for ${url}`);
     }
@@ -201,7 +201,9 @@ async function getFontArrayBuffer(url: string): Promise<ArrayBuffer> {
 }
 
 async function readLocalFontFile(file: string): Promise<ArrayBuffer> {
-  const buffer = await readFile(path.join(process.cwd(), 'src/assets/fonts', file));
+  const buffer = await readFile(
+    path.join(process.cwd(), 'src/assets/fonts', file),
+  );
   return buffer.buffer.slice(
     buffer.byteOffset,
     buffer.byteOffset + buffer.byteLength,
@@ -210,7 +212,9 @@ async function readLocalFontFile(file: string): Promise<ArrayBuffer> {
 
 function buildGoogleFontCssUrl(definition: OgFontDefinition): string {
   const family = definition.family.replaceAll(' ', '+');
-  const weights = [...new Set(definition.weights)].toSorted((left, right) => left - right);
+  const weights = [...new Set(definition.weights)].toSorted(
+    (left, right) => left - right,
+  );
   const familyQuery = `${family}:wght@${weights.join(';')}`;
 
   return `https://fonts.googleapis.com/css2?family=${familyQuery}&display=swap`;
@@ -241,17 +245,9 @@ function normalizeFontFormat(
 }
 
 function isOgFontWeight(value: number): value is OgFontWeight {
-  return [
-    100,
-    200,
-    300,
-    400,
-    500,
-    600,
-    700,
-    800,
-    900,
-  ].includes(value as OgFontWeight);
+  return [100, 200, 300, 400, 500, 600, 700, 800, 900].includes(
+    value as OgFontWeight,
+  );
 }
 
 function toOgFontWeight(value: number): OgFontWeight {

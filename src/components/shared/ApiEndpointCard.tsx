@@ -1,6 +1,6 @@
-import { ExternalLink } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { CopyButton } from "@/components/shared/CopyButton";
+import {CopyButton} from '@/components/shared/CopyButton';
+import {Badge} from '@/components/ui/badge';
+import {ExternalLink} from 'lucide-react';
 
 interface ParamRow {
   name: string;
@@ -11,21 +11,33 @@ interface ParamRow {
 }
 
 interface ApiEndpointCardProps {
-  id:           string;
-  path:         string;
+  id: string;
+  path: string;
   description?: string;
-  params:       ParamRow[];
-  exampleUrl:   string;
+  params: ParamRow[];
+  exampleUrl: string;
   previewAspect?: string; // e.g. "220/36" for badges
 }
 
-export function ApiEndpointCard({ id, path, description, params, exampleUrl, previewAspect }: ApiEndpointCardProps) {
+export function ApiEndpointCard({
+  id,
+  path,
+  description,
+  params,
+  exampleUrl,
+  previewAspect,
+}: ApiEndpointCardProps) {
   return (
-    <section id={id} className="experience-card mechanical-corners rounded-lg border border-border bg-card overflow-hidden">
+    <section
+      id={id}
+      className="experience-card mechanical-corners rounded-lg border border-border bg-card overflow-hidden"
+    >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border builder-panel px-6 py-4">
         <div className="flex items-center gap-3">
-          <Badge variant="default" className="font-mono text-xs">GET</Badge>
+          <Badge variant="default" className="font-mono text-xs">
+            GET
+          </Badge>
           <code className="font-mono text-sm text-primary">{path}</code>
         </div>
         <a
@@ -40,7 +52,9 @@ export function ApiEndpointCard({ id, path, description, params, exampleUrl, pre
 
       {/* Description */}
       {description && (
-        <div className="border-b border-border px-6 py-3 text-sm text-muted-fg">{description}</div>
+        <div className="border-b border-border px-6 py-3 text-sm text-muted-fg">
+          {description}
+        </div>
       )}
 
       {/* Preview */}
@@ -50,7 +64,11 @@ export function ApiEndpointCard({ id, path, description, params, exampleUrl, pre
           src={exampleUrl}
           alt={`${id} example`}
           className="max-w-full rounded shimmer-track"
-          style={previewAspect ? { aspectRatio: previewAspect.replace("/", " / ") } : undefined}
+          style={
+            previewAspect
+              ? {aspectRatio: previewAspect.replace('/', ' / ')}
+              : undefined
+          }
           loading="lazy"
         />
       </div>
@@ -68,14 +86,27 @@ export function ApiEndpointCard({ id, path, description, params, exampleUrl, pre
           </thead>
           <tbody>
             {params.map((p, i) => (
-              <tr key={p.name} className={i % 2 === 0 ? "bg-card" : "bg-muted/20"}>
+              <tr
+                key={p.name}
+                className={i % 2 === 0 ? 'bg-card' : 'bg-muted/20'}
+              >
                 <td className="px-6 py-3">
                   <code className="terminal-prompt text-xs">{p.name}</code>
-                  {p.required && <span className="ml-1.5 text-xs text-red-400">*</span>}
+                  {p.required && (
+                    <span className="ml-1.5 text-xs text-red-400">*</span>
+                  )}
                 </td>
-                <td className="px-6 py-3"><Badge variant="muted" className="text-xs font-mono">{p.type}</Badge></td>
-                <td className="px-6 py-3 text-xs text-muted-fg font-mono">{p.defaultValue ?? "—"}</td>
-                <td className="px-6 py-3 text-xs text-muted-fg">{p.description}</td>
+                <td className="px-6 py-3">
+                  <Badge variant="muted" className="text-xs font-mono">
+                    {p.type}
+                  </Badge>
+                </td>
+                <td className="px-6 py-3 text-xs text-muted-fg font-mono">
+                  {p.defaultValue ?? '—'}
+                </td>
+                <td className="px-6 py-3 text-xs text-muted-fg">
+                  {p.description}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -89,7 +120,9 @@ export function ApiEndpointCard({ id, path, description, params, exampleUrl, pre
           Example URL
         </p>
         <div className="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-3 py-2">
-          <code className="flex-1 terminal-prompt text-xs break-all">{exampleUrl}</code>
+          <code className="flex-1 terminal-prompt text-xs break-all">
+            {exampleUrl}
+          </code>
           <CopyButton text={exampleUrl} />
         </div>
       </div>

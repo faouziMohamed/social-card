@@ -1,33 +1,33 @@
 export type ThemeName = 'dark' | 'light' | 'auto';
 
 export type ThemePalette = {
-  bg:          string;
+  bg: string;
   bgSecondary: string;
-  text:        string;
-  textMuted:   string;
-  border:      string;
-  tagBg:       string;
-  tagText:     string;
+  text: string;
+  textMuted: string;
+  border: string;
+  tagBg: string;
+  tagText: string;
 };
 
 export const themes: Record<Exclude<ThemeName, 'auto'>, ThemePalette> = {
   dark: {
-    bg:          '#0f0f0f',
+    bg: '#0f0f0f',
     bgSecondary: '#1a1a1a',
-    text:        '#ffffff',
-    textMuted:   '#a1a1aa',
-    border:      '#27272a',
-    tagBg:       '#27272a',
-    tagText:     '#e4e4e7',
+    text: '#ffffff',
+    textMuted: '#a1a1aa',
+    border: '#27272a',
+    tagBg: '#27272a',
+    tagText: '#e4e4e7',
   },
   light: {
-    bg:          '#ffffff',
+    bg: '#ffffff',
     bgSecondary: '#f4f4f5',
-    text:        '#09090b',
-    textMuted:   '#52525b',
-    border:      '#e4e4e7',
-    tagBg:       '#f4f4f5',
-    tagText:     '#3f3f46',
+    text: '#09090b',
+    textMuted: '#52525b',
+    border: '#e4e4e7',
+    tagBg: '#f4f4f5',
+    tagText: '#3f3f46',
   },
 };
 
