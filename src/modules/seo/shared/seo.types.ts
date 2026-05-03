@@ -1,6 +1,7 @@
 export type {
   AppleTouchIconParams,
   FaviconParams,
+  ImageWorkflowParams,
   JsonLdParams,
   JsonLdType,
   ManifestIconParams,

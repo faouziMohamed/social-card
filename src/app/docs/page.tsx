@@ -146,6 +146,12 @@ const SEO_EXAMPLES: Record<
     description:
       'Copy-ready HTML meta snippet route for canonical + OG + Twitter.',
   },
+  'image-workflow': {
+    qs: 'sourceImage=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475&siteName=OG+Graph&title=Open+Graph+Generator&description=Generate+SEO+image+variants+from+one+source',
+    aspect: '1/1',
+    description:
+      'Workflow helper that generates OG + favicon + Apple + manifest + Twitter image URLs from one source image.',
+  },
 };
 
 // ─── Section header ───────────────────────────────────────────────────────────
@@ -220,6 +226,7 @@ export default function DocsPage() {
   const ogNavItems = templates.map(t => ({href: `#${t}`, name: t}));
   const badgeNavItems = badges.map(b => ({href: `#badge-${b}`, name: b}));
   const seoNavItems = seoAssets.map(s => ({href: `#seo-${s}`, name: s}));
+  const inspectorNavItems = [{href: '#seo-inspector', name: 'inspect'}];
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -300,6 +307,10 @@ export default function DocsPage() {
 
             <NavGroup label="SEO Assets" items={seoNavItems} />
 
+            <div className="section-divider mb-4" />
+
+            <NavGroup label="Inspector" items={inspectorNavItems} />
+
             <div className="section-divider my-4" />
 
             <Link
@@ -372,7 +383,8 @@ export default function DocsPage() {
           <div className="flex flex-col gap-10 mb-16">
             {seoAssets.map(asset => {
               const ex = SEO_EXAMPLES[asset];
-              const exampleUrl = `${base}${SEO_ROUTES[asset]}?${ex.qs}`;
+              const route = SEO_ROUTES[asset]!;
+              const exampleUrl = `${base}${route}?${ex.qs}`;
               const previewText = isImageSeoTemplate(asset)
                 ? undefined
                 : buildSeoSnippet(
@@ -384,7 +396,7 @@ export default function DocsPage() {
                 <ApiEndpointCard
                   key={asset}
                   id={`seo-${asset}`}
-                  path={SEO_ROUTES[asset]}
+                  path={route}
                   description={ex.description}
                   params={getSeoParamDescriptors(asset)}
                   exampleUrl={exampleUrl}
@@ -394,6 +406,57 @@ export default function DocsPage() {
               );
             })}
           </div>
+
+          <SectionHeader
+            id="seo-inspector"
+            icon="🧪"
+            title="SEO Inspector API"
+            subtitle="Server-side single-page SEO analyzer with diagnostics and recommendations."
+            count={1}
+          />
+          <section className="experience-card mechanical-corners overflow-hidden rounded-xl border border-border/60 bg-card/60 shadow-sm mb-16">
+            <div className="flex items-center justify-between border-b border-border/50 bg-card/80 px-6 py-4">
+              <div className="flex items-center gap-3">
+                <span className="rounded-md border border-primary/40 bg-primary/10 px-2 py-0.5 font-mono text-xs text-primary">
+                  POST
+                </span>
+                <code className="font-mono text-sm text-primary">
+                  /api/seo/inspect
+                </code>
+              </div>
+              <Link
+                href={ROUTES.seoInspector}
+                className="text-xs text-muted-fg hover:text-primary transition-colors"
+              >
+                Open Inspector UI
+              </Link>
+            </div>
+            <div className="px-6 py-4 text-sm text-muted-fg">
+              Submit a URL and receive core SEO tags, Open Graph/Twitter data,
+              heading/image checks, JSON-LD info, and actionable findings.
+            </div>
+            <div className="border-t border-border/50 bg-background/30 px-6 py-4 space-y-4">
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
+                  Request
+                </p>
+                <pre className="rounded-md border border-border bg-muted/30 px-3 py-2 font-mono text-xs text-foreground/80 whitespace-pre-wrap">{`POST ${base}/api/seo/inspect
+Content-Type: application/json
+
+{
+  "url": "https://example.com"
+}`}</pre>
+              </div>
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
+                  cURL
+                </p>
+                <pre className="rounded-md border border-border bg-muted/30 px-3 py-2 font-mono text-xs text-foreground/80 whitespace-pre-wrap">{String.raw`curl -X POST "${base}/api/seo/inspect" \
+  -H "content-type: application/json" \
+  -d '{"url":"https://example.com"}'`}</pre>
+              </div>
+            </div>
+          </section>
 
           {/* Response codes */}
           <div className="mechanical-corners rounded-lg border border-border builder-panel p-6 text-sm text-muted-fg">

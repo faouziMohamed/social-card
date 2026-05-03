@@ -8,7 +8,7 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 // ─── Validation ──────────────────────────────────────────────────────────────
 
-const VALID_SEO = new Set(Object.keys(SEO_ROUTES) as SeoTemplateName[]);
+const VALID_SEO = new Set(Object.keys(TEMPLATE_SECTIONS) as SeoTemplateName[]);
 
 function toValidSeo(value: unknown): SeoTemplateName {
   return typeof value === 'string' && VALID_SEO.has(value as SeoTemplateName)
@@ -96,7 +96,9 @@ export function useSeoBuilderState(): SeoBuilderState {
 
   const buildUrl = useCallback(
     (tmpl: SeoTemplateName, p: Record<string, string>) => {
-      const base = `${env.deploymentURL}${SEO_ROUTES[tmpl]}`;
+      const route = SEO_ROUTES[tmpl];
+      if (!route) return '';
+      const base = `${env.deploymentURL}${route}`;
       const entries = Object.entries(p).filter(([, v]) => v !== '') as [
         string,
         string,

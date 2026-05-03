@@ -128,6 +128,12 @@ export default function HomePage() {
                 Open Builder <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
               <Link
+                href={ROUTES.seoInspector}
+                className={buttonVariants({variant: 'outline', size: 'lg'})}
+              >
+                Open Inspector
+              </Link>
+              <Link
                 href={ROUTES.docs}
                 className={buttonVariants({variant: 'outline', size: 'lg'})}
               >
@@ -171,9 +177,10 @@ export default function HomePage() {
               </div>
               <div className="mechanical-corners rounded-lg border border-border bg-card p-5">
                 <Search className="mb-3 h-5 w-5 text-primary" />
-                <p className="font-semibold">4 SEO Assets</p>
+                <p className="font-semibold">SEO Assets + Inspector</p>
                 <p className="mt-1 text-sm text-muted-fg">
-                  Favicon, Apple touch icon, PWA manifest icon, Twitter card.
+                  Generate icons/cards and audit any page with server-side SEO
+                  diagnostics.
                 </p>
               </div>
               <div className="rounded-lg border border-border bg-card p-5">

@@ -183,6 +183,25 @@ export const metaPackSchema = z.object({
   keywords: z.string().optional().describe('Comma-separated keyword list'),
 });
 
+export const imageWorkflowSchema = z.object({
+  sourceImage: z
+    .string()
+    .url()
+    .describe('Source image URL used to derive SEO assets'),
+  siteName: z.string().optional().describe('Brand or site name'),
+  title: z.string().optional().describe('OG/Twitter title'),
+  description: z.string().optional().describe('OG/Twitter description'),
+  accentColor: hex.default('#6366f1').describe('Accent color for generated cards'),
+  theme: z
+    .enum(['dark', 'light'])
+    .default('dark')
+    .describe("Color theme: 'dark' | 'light'"),
+  bgStyle: z
+    .string()
+    .default('gradient+grid')
+    .describe("Background style tokens e.g. 'gradient+grid'"),
+});
+
 // ─── Schema registry ─────────────────────────────────────────────────────────
 
 export const SEO_SCHEMAS = {
@@ -193,6 +212,7 @@ export const SEO_SCHEMAS = {
   'json-ld': jsonLdSchema,
   'robots-txt': robotsTxtSchema,
   'meta-pack': metaPackSchema,
+  'image-workflow': imageWorkflowSchema,
 } as const;
 
 export type SeoTemplateName = keyof typeof SEO_SCHEMAS;
@@ -204,3 +224,4 @@ export type TwitterCardParams = z.infer<typeof twitterCardSchema>;
 export type JsonLdParams = z.infer<typeof jsonLdSchema>;
 export type RobotsTxtParams = z.infer<typeof robotsTxtSchema>;
 export type MetaPackParams = z.infer<typeof metaPackSchema>;
+export type ImageWorkflowParams = z.infer<typeof imageWorkflowSchema>;

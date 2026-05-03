@@ -36,6 +36,12 @@ export function Navbar() {
             SEO
           </Link>
           <Link
+            href={ROUTES.seoInspector}
+            className={buttonVariants({variant: 'ghost', size: 'sm'})}
+          >
+            Inspector
+          </Link>
+          <Link
             href={ROUTES.docs}
             className={buttonVariants({variant: 'ghost', size: 'sm'})}
           >

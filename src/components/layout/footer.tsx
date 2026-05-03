@@ -22,6 +22,12 @@ export function Footer() {
           >
             Docs
           </Link>
+          <Link
+            href={ROUTES.seoInspector}
+            className="hover:text-primary transition-colors"
+          >
+            Inspector
+          </Link>
           <a
             href="https://github.com"
             target="_blank"

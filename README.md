@@ -21,6 +21,7 @@ badge types, and SEO asset variants. Developers paste one URL into their `<meta>
   - [SEO Assets](#seo-assets)
 - [Template Parameters](#template-parameters)
 - [Background Styles](#background-styles)
+- [SEO Inspector](#seo-inspector)
 - [Getting Started](#getting-started)
 - [Development](#development)
 - [Module Architecture](#module-architecture)
@@ -185,6 +186,71 @@ Embed directly in HTML, Markdown, or any `<img>` tag.
 
 > **Tip:** use the [visual builder](https://placard.mfaouzi.com/builder) to configure any template and copy the
 > ready-made URL — no guessing query params.
+
+---
+
+## SEO Inspector
+
+OG Graph now includes a server-side SEO inspector:
+
+- UI: `/seo-inspector`
+- API: `POST /api/seo/inspect`
+
+The endpoint inspects one page URL and returns core SEO tags, OG/Twitter tags, JSON-LD summary, heading/image checks,
+and prioritized recommendations.
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as /seo-inspector
+    participant API as POST /api/seo/inspect
+    participant Target as Target Website
+
+    User->>UI: Enter URL
+    UI->>API: { "url": "https://example.com" }
+    API->>Target: Fetch HTML (server-side)
+    API-->>UI: Parsed report + findings
+    UI-->>User: Issues + recommendations + previews
+```
+
+### API usage
+
+```bash
+curl -X POST "https://placard.mfaouzi.com/api/seo/inspect" \
+  -H "content-type: application/json" \
+  -d '{"url":"https://example.com"}'
+```
+
+### Response shape (excerpt)
+
+```json
+{
+  "url": "https://example.com",
+  "statusCode": 200,
+  "title": "Example Domain",
+  "og": {"title": "", "image": ""},
+  "twitter": {"card": "", "image": ""},
+  "findings": [
+    {
+      "severity": "warning",
+      "title": "Missing og:image",
+      "recommendation": "Set og:image to a 1200x630 image URL."
+    }
+  ]
+}
+```
+
+### Builder image workflow
+
+In `/builder/seo`, use the **Image Workflow** template to input one source image and generate:
+
+- OG image URL
+- Twitter card URL
+- Favicon URL
+- Apple touch icon URL
+- Manifest 192 / 512 URLs
+
+Each asset now has live preview + copy/open actions.
 
 ---
 

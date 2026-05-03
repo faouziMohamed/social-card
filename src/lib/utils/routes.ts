@@ -7,6 +7,7 @@ export const ROUTES = {
     seo: '/builder/seo',
   },
   docs: '/docs',
+  seoInspector: '/seo-inspector',
   api: {
     og: {
       general: '/api/og/general',

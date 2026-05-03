@@ -1,6 +1,6 @@
 import type {SeoTemplateName} from './seo-schemas';
 
-export const SEO_ROUTES: Record<SeoTemplateName, string> = {
+export const SEO_ROUTES: Partial<Record<SeoTemplateName, string>> = {
   favicon: '/api/seo/favicon',
   'apple-touch-icon': '/api/seo/apple-touch-icon',
   'manifest-icon': '/api/seo/manifest-icon',

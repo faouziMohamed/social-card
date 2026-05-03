@@ -17,7 +17,11 @@ import {JsonLdEditor} from '@/modules/seo/client/components/json-ld-editor';
 import {SeoSnippetPanel} from '@/modules/seo/client/components/seo-snippet-panel';
 import {useSeoBuilderState} from '@/modules/seo/client/hooks/use-seo-builder-state';
 import {
+  ImageWorkflowPreview,
+} from '@/modules/seo/client/components/image-workflow-preview';
+import {
   buildJsonLdObject,
+  buildImageWorkflowUrls,
   buildSeoSnippet,
   isImageSeoTemplate,
 } from '@/modules/seo/shared/seo-snippets';
@@ -453,6 +457,8 @@ function SeoBuilder() {
   );
   const jsonLdText = params['jsonRaw']?.trim() ? params['jsonRaw'] : schemaJson;
   const snippet = buildSeoSnippet(template, seoUrl, params);
+  const imageWorkflowUrls =
+    template === 'image-workflow' ? buildImageWorkflowUrls(seoUrl, params) : null;
   const setSeoParam = (key: string, value: string) => {
     setParam(key, value);
     if (template === 'json-ld' && key !== 'jsonRaw') {
@@ -537,6 +543,15 @@ function SeoBuilder() {
 
         {/* Preview + snippets */}
         <div className="flex min-w-0 flex-col gap-4">
+          <div className="rounded-xl border border-border/30 bg-card/20 p-3">
+            <a
+              href={ROUTES.seoInspector}
+              className="text-xs font-medium text-primary hover:underline"
+            >
+              Open SEO Inspector →
+            </a>
+          </div>
+
           {isImageTemplate && (
             <div
               className={cn(
@@ -554,6 +569,10 @@ function SeoBuilder() {
               initialJson={jsonLdText}
               onJsonChange={next => setParam('jsonRaw', next)}
             />
+          )}
+
+          {template === 'image-workflow' && imageWorkflowUrls && (
+            <ImageWorkflowPreview urls={imageWorkflowUrls} />
           )}
 
           <div className="rounded-xl border border-border/30 bg-card/20 p-4">

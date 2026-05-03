@@ -66,6 +66,13 @@ export const TEMPLATE_META: SeoTemplateMeta[] = [
     color: '#8b5cf6',
     icon: '✦',
   },
+  {
+    name: 'image-workflow',
+    label: 'Image Workflow',
+    desc: 'Generate all SEO image URLs from one source',
+    color: '#f97316',
+    icon: '◍',
+  },
 ];
 
 // ─── Template sections ────────────────────────────────────────────────────────
@@ -440,6 +447,55 @@ export const TEMPLATE_SECTIONS: Record<SeoTemplateName, FormSection[]> = {
       ],
     },
   ],
+  'image-workflow': [
+    {
+      title: 'Source Image',
+      fields: [
+        {
+          key: 'sourceImage',
+          label: 'Source image URL',
+          type: 'url',
+          placeholder: 'https://example.com/brand-image.png',
+        },
+        {
+          key: 'siteName',
+          label: 'Site name',
+          type: 'text',
+          placeholder: 'My Site',
+        },
+      ],
+    },
+    {
+      title: 'Card Content',
+      fields: [
+        {
+          key: 'title',
+          label: 'Title',
+          type: 'text',
+          placeholder: 'Open Graph Generator',
+        },
+        {
+          key: 'description',
+          label: 'Description',
+          type: 'text',
+          placeholder: 'Generate OG images and SEO assets',
+        },
+      ],
+    },
+    {
+      title: 'Card Style',
+      fields: [
+        {key: 'accentColor', label: 'Accent', type: 'color'},
+        {key: 'theme', label: 'Theme', type: 'select', options: ['dark', 'light']},
+        {
+          key: 'bgStyle',
+          label: 'BG style',
+          type: 'text',
+          placeholder: 'gradient+grid',
+        },
+      ],
+    },
+  ],
 };
 
 // ─── Demo params ──────────────────────────────────────────────────────────────
@@ -479,5 +535,10 @@ export const DEMO_PARAMS: {template: SeoTemplateName; params: string}[] = [
     template: 'meta-pack',
     params:
       'title=OG+Graph&description=Generate+OG+images+and+SEO+assets&canonical=https%3A%2F%2Fexample.com&robots=index%2Cfollow%2Cmax-image-preview%3Alarge&ogType=website&ogImage=https%3A%2F%2Fexample.com%2Fog.png&twitterCard=summary_large_image',
+  },
+  {
+    template: 'image-workflow',
+    params:
+      'sourceImage=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475&siteName=OG+Graph&title=Open+Graph+Generator&description=Generate+SEO+image+variants+from+one+input&accentColor=%236366f1&theme=dark&bgStyle=gradient%2Bgrid',
   },
 ];

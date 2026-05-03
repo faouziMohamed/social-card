@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: ['/', '/builder', '/docs'],
+        allow: ['/', '/builder', '/docs', '/seo-inspector'],
         // API routes are dynamic image generators — nothing useful for crawlers
         disallow: ['/api/'],
       },
