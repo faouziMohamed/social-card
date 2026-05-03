@@ -331,8 +331,11 @@ export const OG_FONT_CATALOG = createCatalog([
     'Monaspace Xenon',
     'Monaspace Xenon',
     'mono',
-    [400],
-    [{path: 'monaspace-xenon-400.otf', weight: 400}],
+    [400, 700],
+    [
+      {path: 'monaspace-xenon-400.otf', weight: 400},
+      {path: 'monaspace-xenon-400.otf', weight: 700},
+    ],
     {ligatures: true},
   ),
   createLocalFont(
@@ -421,22 +424,44 @@ export const OG_FONT_CATALOG = createCatalog([
 
 export type OgFontKey = keyof typeof OG_FONT_CATALOG;
 
+const UNSUPPORTED_OG_FONT_KEYS = new Set<OgFontKey>([
+  'commit-mono',
+  'monaspace-neon',
+  'monaspace-argon',
+  'monaspace-krypton',
+  'monaspace-xenon',
+  'monaspace-radon',
+]);
+
 export const FONT_FAMILY_KEYS = Object.keys(OG_FONT_CATALOG) as OgFontKey[];
 export const FONT_FAMILY_VALUES = FONT_FAMILY_KEYS as [
   OgFontKey,
   ...OgFontKey[],
 ];
-export const FONT_FAMILY_OPTIONS = FONT_FAMILY_KEYS.map(key => ({
-  value: key,
-  label: OG_FONT_CATALOG[key].displayName,
-}));
+export const FONT_FAMILY_OPTIONS = FONT_FAMILY_KEYS.filter(
+  key => !UNSUPPORTED_OG_FONT_KEYS.has(key),
+).map(key => ({value: key, label: OG_FONT_CATALOG[key].displayName}));
+export const FONT_FAMILY_GROUPS = createFontFamilyGroups();
 
 export function resolveFontFamilyName(fontFamily: string): string {
   return resolveOgFontDefinition(fontFamily).family;
 }
 
 export function resolveOgFontDefinition(fontFamily: string): OgFontDefinition {
-  return OG_FONT_CATALOG[fontFamily as OgFontKey] ?? OG_FONT_CATALOG.geist;
+  const definition = OG_FONT_CATALOG[fontFamily as OgFontKey];
+
+  if (!definition) {
+    return OG_FONT_CATALOG.geist;
+  }
+
+  if (UNSUPPORTED_OG_FONT_KEYS.has(definition.key)) {
+    return (
+      OG_FONT_CATALOG[definition.fallbackKey as OgFontKey] ??
+      OG_FONT_CATALOG.geist
+    );
+  }
+
+  return definition;
 }
 
 export function supportsOgLigatures(fontFamily: string): boolean {
@@ -448,6 +473,44 @@ export function isOgFontCategory(
   category: OgFontCategory,
 ): boolean {
   return resolveOgFontDefinition(fontFamily).category === category;
+}
+
+function createFontFamilyGroups(): Array<{
+  key: OgFontCategory;
+  label: string;
+  options: Array<{value: OgFontKey; label: string}>;
+}> {
+  const groupLabels: Record<OgFontCategory, string> = {
+    sans: 'Sans',
+    serif: 'Serif',
+    mono: 'Mono',
+    display: 'Cursive / Display',
+  };
+  const groups: Record<
+    OgFontCategory,
+    Array<{value: OgFontKey; label: string}>
+  > = {
+    sans: [],
+    serif: [],
+    mono: [],
+    display: [],
+  };
+
+  for (const key of FONT_FAMILY_KEYS) {
+    const definition = OG_FONT_CATALOG[key];
+    groups[definition.category].push({
+      value: key,
+      label: definition.displayName,
+    });
+  }
+
+  return (Object.keys(groups) as OgFontCategory[])
+    .map(category => ({
+      key: category,
+      label: groupLabels[category],
+      options: groups[category],
+    }))
+    .filter(group => group.options.length > 0);
 }
 
 function createCatalog<T extends readonly OgFontDefinition[]>(

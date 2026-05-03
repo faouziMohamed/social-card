@@ -1,6 +1,7 @@
 import {
   inspectSeo,
   seoInspectRequestSchema,
+  toSeoInspectorApiResponse,
 } from '@/modules/seo/server/seo-inspector.server';
 import {NextResponse} from 'next/server';
 
@@ -16,7 +17,7 @@ export async function POST(req: Request): Promise<Response> {
     }
 
     const result = await inspectSeo(parsed.data.url);
-    return NextResponse.json(result);
+    return NextResponse.json(toSeoInspectorApiResponse(result));
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unexpected error';
     return NextResponse.json(

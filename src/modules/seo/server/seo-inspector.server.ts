@@ -55,6 +55,24 @@ export interface SeoInspectorResult {
   findings: SeoInspectorFinding[];
 }
 
+export interface SeoInspectorApiResponse {
+  success: true;
+  inspectedAt: string;
+  summary: {
+    score: number;
+    totalFindings: number;
+    errors: number;
+    warnings: number;
+    infos: number;
+  };
+  findingsBySeverity: {
+    error: SeoInspectorFinding[];
+    warning: SeoInspectorFinding[];
+    info: SeoInspectorFinding[];
+  };
+  data: SeoInspectorResult;
+}
+
 export async function inspectSeo(url: string): Promise<SeoInspectorResult> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10_000);
@@ -102,7 +120,9 @@ export async function inspectSeo(url: string): Promise<SeoInspectorResult> {
     stripHtml(m[1]).trim(),
   );
   const imageMatches = [...html.matchAll(/<img\b[^>]*>/gi)];
-  const missingAlt = imageMatches.filter(tag => !/\salt\s*=/i.test(tag[0])).length;
+  const missingAlt = imageMatches.filter(
+    tag => !/\salt\s*=/i.test(tag[0]),
+  ).length;
   const jsonLdScripts = [
     ...html.matchAll(
       /<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\S\s]*?)<\/script>/gi,
@@ -149,6 +169,32 @@ export async function inspectSeo(url: string): Promise<SeoInspectorResult> {
 
   result.findings = buildFindings(result);
   return result;
+}
+
+export function toSeoInspectorApiResponse(
+  result: SeoInspectorResult,
+): SeoInspectorApiResponse {
+  const grouped = {
+    error: result.findings.filter(finding => finding.severity === 'error'),
+    warning: result.findings.filter(finding => finding.severity === 'warning'),
+    info: result.findings.filter(finding => finding.severity === 'info'),
+  };
+  const penalty = grouped.error.length * 20 + grouped.warning.length * 8;
+  const score = Math.max(0, 100 - penalty);
+
+  return {
+    success: true,
+    inspectedAt: new Date().toISOString(),
+    summary: {
+      score,
+      totalFindings: result.findings.length,
+      errors: grouped.error.length,
+      warnings: grouped.warning.length,
+      infos: grouped.info.length,
+    },
+    findingsBySeverity: grouped,
+    data: result,
+  };
 }
 
 function buildFindings(result: SeoInspectorResult): SeoInspectorFinding[] {
@@ -237,7 +283,9 @@ function buildFindings(result: SeoInspectorResult): SeoInspectorFinding[] {
 }
 
 function getTagContent(html: string, tag: string): string {
-  const match = html.match(new RegExp(String.raw`<${tag}[^>]*>([\s\S]*?)<\/${tag}>`, 'i'));
+  const match = html.match(
+    new RegExp(String.raw`<${tag}[^>]*>([\s\S]*?)<\/${tag}>`, 'i'),
+  );
   return match?.[1]?.trim() ?? '';
 }
 
@@ -253,7 +301,11 @@ function getMetaProperty(html: string, prop: string): string {
   return getMetaByAttr(html, 'property', prop);
 }
 
-function getMetaByAttr(html: string, attr: 'name' | 'property', value: string): string {
+function getMetaByAttr(
+  html: string,
+  attr: 'name' | 'property',
+  value: string,
+): string {
   const regex = new RegExp(
     String.raw`<meta\b[^>]*${attr}\s*=\s*["']${escapeRegExp(value)}["'][^>]*>`,
     'i',
@@ -280,7 +332,9 @@ function getLinkHrefByRel(html: string, relValues: string[]): string {
 }
 
 function getAttr(tag: string, attr: string): string {
-  const match = tag.match(new RegExp(String.raw`${attr}\s*=\s*["']([^"']+)["']`, 'i'));
+  const match = tag.match(
+    new RegExp(String.raw`${attr}\s*=\s*["']([^"']+)["']`, 'i'),
+  );
   return match?.[1]?.trim() ?? '';
 }
 

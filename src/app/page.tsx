@@ -8,119 +8,87 @@ import {ROUTES} from '@/lib/utils/routes';
 import {HomepageTabs} from '@/modules/og/client/components/homepage-tabs';
 import {
   ArrowRight,
+  CheckCircle2,
+  CircleGauge,
   Code2,
-  Globe,
-  Image,
-  Layers,
-  Search,
+  Gem,
+  ImageIcon,
+  ShieldCheck,
+  Sparkles,
   Tag,
-  Zap,
+  WandSparkles,
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
-const QUICK_START = [
+const TRUST_POINTS = [
+  'Node runtime compatible',
+  'Self-hostable',
+  'Zod-validated query inputs',
+  'Predictable content-types',
+] as const;
+
+const BUILDER_STEPS = [
   {
-    lang: 'HTML',
-    code: `<meta property="og:image"\n  content="https://og.yourdomain.com/api/og/general\n           ?title=Hello+World&theme=dark" />`,
+    title: 'Pick a surface',
+    body: 'Choose OG image, SVG badge, or SEO endpoint depending on where the visual will be consumed.',
   },
   {
-    lang: 'Next.js',
-    code: `export async function generateMetadata() {\n  const url = new URL('/api/og/general', process.env.NEXT_PUBLIC_DEPLOYMENT_URL);\n  url.searchParams.set('title', 'Hello World');\n  return { openGraph: { images: [url.toString()] } };\n}`,
+    title: 'Tune style in seconds',
+    body: 'Adjust layout, fonts, palettes, and metadata in Builder with live output and copy-ready URLs.',
   },
   {
-    lang: 'cURL',
-    code: `curl -G "https://og.yourdomain.com/api/og/general" \\\n  --data-urlencode "title=Hello World" -o image.png`,
-  },
-  {
-    lang: 'Python',
-    code: `import requests\nresp = requests.get(\n  "https://og.yourdomain.com/api/og/general",\n  params={"title": "Hello World", "theme": "dark"},\n)\nopen("image.png", "wb").write(resp.content)`,
+    title: 'Ship as URL',
+    body: 'Drop endpoint URLs into metadata tags, markdown, CI docs, release notes, and product pages.',
   },
 ] as const;
 
 export default function HomePage() {
   const base = env.deploymentURL;
+  const heroImage = `${base}/api/og/product?productName=OG+Graph&tagline=Production+ready+social+visuals&feature1=11+OG+templates&feature2=8+badge+endpoints&cta=API-first+and+self-hostable&theme=dark&fontFamily=space&accentColor=%2322d3ee&bgStyle=aurora%2Bgrid`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'WebApplication',
-        '@id': `${base}/#app`,
-        name: 'OG Graph',
-        url: base,
-        description:
-          'Self-hostable, API-first Open Graph image generator. 11 templates, 8 SVG badges, 4 SEO assets. Drop a URL, get a social card.',
-        applicationCategory: 'DeveloperApplication',
-        operatingSystem: 'Any',
-        offers: {
-          '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
-        },
-        featureList: [
-          '11 Open Graph image templates',
-          '8 SVG badge types',
-          '4 SEO asset types (favicon, apple-touch-icon, manifest icon, twitter card)',
-          'No signup required',
-          'Self-hostable',
-          'Zod-validated query parameters',
-          '4 target size presets (OG, Twitter, LinkedIn)',
-        ],
-        screenshot: `${base}/api/og/general?siteName=OG+Graph&title=Open+Graph+Image+Generator&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid`,
-        author: {'@id': `${base}/#author`},
-        creator: {'@id': `${base}/#author`},
-        sameAs: [`${base}`],
-      },
-      {
-        '@type': 'Person',
-        '@id': `${base}/#author`,
-        name: 'Faouzi Mohamed',
-        url: 'https://mfaouzi.com',
-        sameAs: [
-          'https://mfaouzi.com',
-          'https://dev.mfaouzi.com',
-          'https://github.com/faouziMohamed',
-          'https://linkedin.com/in/mohamed-faouzi',
-          'https://twitter.com/fz_faouzi',
-          'https://facebook.com/faouzi.mohamed.97',
-          'https://instagram.com/faouzi_m_',
-        ],
-      },
-    ],
+    '@type': 'WebApplication',
+    name: 'OG Graph',
+    url: base,
+    applicationCategory: 'DeveloperApplication',
+    description:
+      'API platform for Open Graph cards, dynamic SVG badges, and SEO assets with live builder and docs.',
+    offers: {'@type': 'Offer', price: '0', priceCurrency: 'USD'},
+    screenshot: heroImage,
   };
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="flex min-h-full flex-col [--background:oklch(0.09_0.015_250)] [--foreground:oklch(0.96_0.005_250)] [--primary:oklch(0.75_0.15_195)] [--primary-fg:oklch(0.09_0.015_250)] [--secondary:oklch(0.7_0.18_35)] [--secondary-fg:oklch(0.09_0.015_250)] [--muted:oklch(0.15_0.015_250)] [--muted-fg:oklch(0.6_0.02_250)] [--border:oklch(0.22_0.015_250)] [--card:oklch(0.12_0.015_250)] [--card-fg:oklch(0.96_0.005_250)] [--popover:oklch(0.13_0.015_250)] [--popover-fg:oklch(0.96_0.005_250)] [--accent:oklch(0.18_0.015_250)] [--accent-fg:oklch(0.96_0.005_250)] bg-[radial-gradient(circle_at_10%_-10%,oklch(0.8_0.18_220/.2),transparent_35%),radial-gradient(circle_at_90%_0%,oklch(0.74_0.18_40/.16),transparent_32%),linear-gradient(to_bottom,oklch(0.09_0.018_250),oklch(0.11_0.02_250))] text-[oklch(0.96_0.005_250)]">
       <JsonLd data={jsonLd} />
       <Navbar />
 
       <main className="flex-1">
-        {/* Hero */}
-        <section className="relative overflow-hidden py-24 sm:py-32">
-          <div className="circuit-pattern absolute inset-0 opacity-40" />
-          <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+        <section className="relative mx-auto grid w-full max-w-7xl gap-10 px-4 pb-14 pt-16 text-foreground sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8 lg:pt-20">
+          <div>
             <Badge
               variant="outline"
-              className="mb-6 border-primary/40 text-primary"
+              className="mb-6 border-primary/55 bg-[oklch(0.12_0.015_250/.6)] text-primary backdrop-blur-sm"
             >
-              <span className="status-indicator status-success mr-1.5" />
-              API-first · 11 OG · 8 Badges · 4 SEO
+              <WandSparkles className="mr-1.5 h-3.5 w-3.5" />
+              Premium Visual API
             </Badge>
 
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-              Social assets, <span className="text-primary">on demand</span>
+            <h1 className="text-4xl font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+              Build polished social assets
+              <span className="block bg-linear-to-r from-primary via-secondary to-terminal-green bg-clip-text text-transparent">
+                from pure URLs
+              </span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-fg">
-              Self-hostable image generator for OG cards, SVG badges, and SEO
-              icons. Drop a URL into your{' '}
-              <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-primary">
-                &lt;meta&gt;
-              </code>{' '}
-              tags and get beautiful, on-demand assets — no signup, no SDK.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-fg sm:text-lg">
+              OG Graph is a production-grade endpoint layer for Open Graph
+              cards, SVG badges, and SEO visuals. It helps engineering teams
+              ship consistent brand presentation without design bottlenecks.
             </p>
 
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href={ROUTES.builder}
                 className={buttonVariants({size: 'lg'})}
@@ -128,116 +96,186 @@ export default function HomePage() {
                 Open Builder <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
               <Link
-                href={ROUTES.seoInspector}
+                href={ROUTES.docs}
                 className={buttonVariants({variant: 'outline', size: 'lg'})}
               >
-                Open Inspector
+                Read Docs
+              </Link>
+            </div>
+
+            <div className="mt-8 grid max-w-2xl grid-cols-2 gap-2 sm:grid-cols-4">
+              {TRUST_POINTS.map(point => (
+                <div
+                  key={point}
+                  className="rounded-xl border border-border/70 bg-card/55 px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-muted-fg backdrop-blur-sm"
+                >
+                  {point}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-border/80 bg-card/70 p-4 shadow-[0_30px_60px_oklch(0.1_0.02_250/.35)] backdrop-blur-sm">
+            <div className="mb-3 flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-terminal-green" />
+              <span className="h-2.5 w-2.5 rounded-full bg-terminal-amber" />
+              <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+              <span className="ml-2 font-mono text-xs text-muted-fg">
+                live /api/og/product
+              </span>
+            </div>
+            <Image
+              src={heroImage}
+              alt="OG Graph generated product template preview"
+              width={1200}
+              height={630}
+              className="w-full rounded-2xl border border-border/50"
+              priority
+            />
+          </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              {
+                icon: ImageIcon,
+                title: 'Open Graph Cards',
+                copy: 'Launch cards, product promos, portfolio shots, and editorial previews in multiple layout styles.',
+              },
+              {
+                icon: Tag,
+                title: 'Dynamic Badges',
+                copy: 'Status, score, progress, socials, availability, and stack badges that stay current and embeddable.',
+              },
+              {
+                icon: CircleGauge,
+                title: 'SEO Assets + Inspector',
+                copy: 'Generate icons and cards, then audit metadata quality with a single inspection request.',
+              },
+            ].map(item => (
+              <article
+                key={item.title}
+                className="group rounded-2xl border border-border/60 bg-card/70 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-[0_20px_42px_oklch(0.1_0.02_250/.3)]"
+              >
+                <item.icon className="mb-3 h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110" />
+                <h2 className="text-lg font-semibold">{item.title}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted-fg">
+                  {item.copy}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="py-14 sm:py-18">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-10 text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/90">
+                Interactive Playground
+              </p>
+              <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
+                Preview Real Endpoints Instantly
+              </h2>
+              <p className="mx-auto mt-3 max-w-2xl text-muted-fg">
+                Move between OG templates, badge variants, and SEO routes with
+                generated output and copy-ready links.
+              </p>
+            </div>
+          </div>
+          <HomepageTabs base={base} />
+        </section>
+
+        <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-border/70 bg-card/65 p-6 backdrop-blur-sm sm:p-8">
+            <div className="mb-8 flex items-center gap-3">
+              <Gem className="h-5 w-5 text-primary" />
+              <h2 className="text-2xl font-bold sm:text-3xl">
+                How Teams Use It
+              </h2>
+            </div>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {BUILDER_STEPS.map((step, index) => (
+                <article
+                  key={step.title}
+                  className="rounded-2xl border border-border/55 bg-background/45 p-5"
+                >
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                    Step {index + 1}
+                  </p>
+                  <h3 className="font-semibold">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-fg">
+                    {step.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href={ROUTES.builder}
+                className={buttonVariants({size: 'lg'})}
+              >
+                Start Building <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
               <Link
                 href={ROUTES.docs}
                 className={buttonVariants({variant: 'outline', size: 'lg'})}
               >
-                View Docs
+                Explore Endpoints
+              </Link>
+              <Link
+                href={ROUTES.seoInspector}
+                className={buttonVariants({variant: 'outline', size: 'lg'})}
+              >
+                Inspect SEO
               </Link>
             </div>
           </div>
         </section>
 
-        {/* Three-tab feature showcase */}
-        <section className="py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-10 text-center text-3xl font-bold">
-              23 Ready-Made Assets
-            </h2>
-          </div>
-          <HomepageTabs base={base} />
-        </section>
+        <section className="mx-auto w-full max-w-5xl px-4 pb-24 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-3xl border border-primary/35 bg-gradient-to-br from-card/92 via-card/86 to-primary/12 p-8 shadow-[0_22px_56px_oklch(0.1_0.02_250/.38)] sm:p-12">
+            <div className="pointer-events-none absolute -left-16 bottom-0 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
+            <div className="pointer-events-none absolute -right-14 top-0 h-44 w-44 rounded-full bg-secondary/20 blur-3xl" />
 
-        {/* Feature grid */}
-        <section className="py-20 bg-muted/30">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-12 text-center text-3xl font-bold">
-              Everything you need
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="mechanical-corners rounded-lg border border-border bg-card p-5">
-                <Image className="mb-3 h-5 w-5 text-primary" />
-                <p className="font-semibold">11 OG Templates</p>
-                <p className="mt-1 text-sm text-muted-fg">
-                  Blog, product, portfolio, event, launch and more at 1200×630.
-                </p>
-              </div>
-              <div className="mechanical-corners rounded-lg border border-border bg-card p-5">
-                <Tag className="mb-3 h-5 w-5 text-primary" />
-                <p className="font-semibold">8 SVG Badges</p>
-                <p className="mt-1 text-sm text-muted-fg">
-                  Label, stat, status, progress, score, socials, tech-stack,
-                  availability.
-                </p>
-              </div>
-              <div className="mechanical-corners rounded-lg border border-border bg-card p-5">
-                <Search className="mb-3 h-5 w-5 text-primary" />
-                <p className="font-semibold">SEO Assets + Inspector</p>
-                <p className="mt-1 text-sm text-muted-fg">
-                  Generate icons/cards and audit any page with server-side SEO
-                  diagnostics.
-                </p>
-              </div>
-              <div className="rounded-lg border border-border bg-card p-5">
-                <div className="flex flex-col gap-3 h-full justify-center">
-                  {[
-                    {Icon: Zap, text: 'Zero signup'},
-                    {Icon: Layers, text: '4 size presets'},
-                    {Icon: Code2, text: 'Zod validation'},
-                    {Icon: Globe, text: 'CORS-enabled'},
-                  ].map(({Icon, text}) => (
-                    <div
-                      key={text}
-                      className="flex items-center gap-2 text-sm text-muted-fg"
-                    >
-                      <Icon className="h-4 w-4 text-primary" />
-                      {text}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quick-start */}
-        <section className="py-20">
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-4 text-center text-3xl font-bold">Quick Start</h2>
-            <p className="mb-10 text-center text-muted-fg">
-              Paste the URL directly — no SDK, no signup.
+            <p className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              <Sparkles className="h-3.5 w-3.5" />
+              Ready for Production
             </p>
-
-            <div className="rounded-lg border border-border bg-card overflow-hidden">
-              <div className="flex items-center gap-2 border-b border-border bg-muted px-4 py-3">
-                {[0, 1, 2].map(i => (
-                  <span key={i} className="h-3 w-3 rounded-full bg-border" />
-                ))}
-                <span className="ml-2 font-mono text-xs terminal-prompt">
-                  quick-start
-                </span>
-              </div>
-
-              {QUICK_START.map(({lang, code}) => (
-                <div
-                  key={lang}
-                  className="border-b border-border last:border-0"
-                >
-                  <div className="px-4 pt-3 pb-1">
-                    <Badge variant="muted" className="text-xs">
-                      {lang}
-                    </Badge>
-                  </div>
-                  <pre className="overflow-x-auto p-4 text-sm font-mono text-terminal-green leading-relaxed">
-                    <code>{code}</code>
-                  </pre>
-                </div>
-              ))}
+            <h2 className="text-3xl font-bold leading-tight sm:text-5xl">
+              Give every shared link a premium finish
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-fg sm:text-lg">
+              OG Graph helps your content look intentional everywhere it appears
+              so launches, docs, and posts feel cohesive and high quality.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link
+                href={ROUTES.builder}
+                className={buttonVariants({size: 'lg'})}
+              >
+                Build First Asset <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+              <Link
+                href={ROUTES.docs}
+                className={buttonVariants({variant: 'outline', size: 'lg'})}
+              >
+                API Reference
+              </Link>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-4 text-sm text-muted-fg">
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-terminal-green" />
+                No signup required
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4 text-terminal-green" />
+                Self-hostable
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Code2 className="h-4 w-4 text-terminal-green" />
+                URL-first integration
+              </span>
             </div>
           </div>
         </section>

@@ -1,3 +1,4 @@
+import {OG_ROUTES} from '@/modules/og/shared/og-routes';
 import type {
   Article,
   FAQPage,
@@ -9,7 +10,6 @@ import type {
   WithContext,
 } from 'schema-dts';
 import type {JsonLdParams, JsonLdType, SeoTemplateName} from './seo-schemas';
-import {OG_ROUTES} from '@/modules/og/shared/og-routes';
 
 export const IMAGE_SEO_TEMPLATES = [
   'favicon',
@@ -39,7 +39,8 @@ export function buildSeoSnippet(
   if (template === 'json-ld') return buildJsonLdScript(params);
   if (template === 'robots-txt') return buildRobotsTxt(params);
   if (template === 'meta-pack') return buildMetaPackSnippet(params);
-  if (template === 'image-workflow') return buildImageWorkflowSnippet(seoUrl, params);
+  if (template === 'image-workflow')
+    return buildImageWorkflowSnippet(seoUrl, params);
   return buildSeoImageSnippet(template, seoUrl);
 }
 

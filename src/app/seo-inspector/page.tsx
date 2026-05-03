@@ -31,7 +31,8 @@ export default function SeoInspectorPage() {
           <div className="mb-6">
             <h1 className="text-2xl font-bold">SEO Inspector</h1>
             <p className="text-sm text-muted-fg mt-1">
-              Inspect one URL and get SEO findings with concrete recommendations.
+              Inspect one URL and get SEO findings with concrete
+              recommendations.
             </p>
           </div>
           <SeoInspectorClient />

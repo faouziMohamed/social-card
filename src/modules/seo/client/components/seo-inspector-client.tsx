@@ -2,7 +2,10 @@
 
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
-import type {SeoInspectorResult} from '@/modules/seo/server/seo-inspector.server';
+import type {
+  SeoInspectorApiResponse,
+  SeoInspectorResult,
+} from '@/modules/seo/server/seo-inspector.server';
 import {useState} from 'react';
 
 export function SeoInspectorClient() {
@@ -21,14 +24,19 @@ export function SeoInspectorClient() {
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({url}),
       });
-      const data = (await res.json()) as SeoInspectorResult | {error: string};
+      const data = (await res.json()) as
+        | SeoInspectorApiResponse
+        | SeoInspectorResult
+        | {error: string};
       if (!res.ok || 'error' in data) {
         setError('error' in data ? data.error : 'Inspection failed');
         return;
       }
-      setResult(data);
+      setResult('data' in data ? data.data : data);
     } catch (fetchError) {
-      setError(fetchError instanceof Error ? fetchError.message : 'Request failed');
+      setError(
+        fetchError instanceof Error ? fetchError.message : 'Request failed',
+      );
     } finally {
       setLoading(false);
     }
@@ -177,9 +185,7 @@ function InspectorImagePreview({
   return (
     <div className="rounded-lg border border-border/30 bg-card/30 p-3">
       <p className="mb-2 text-xs font-medium text-foreground/80">{label}</p>
-      {!url ? (
-        <p className="text-xs text-muted-fg">No image URL found.</p>
-      ) : (
+      {url ? (
         <div
           className="overflow-hidden rounded border border-border/30 bg-background/30"
           style={{aspectRatio: aspect}}
@@ -191,6 +197,8 @@ function InspectorImagePreview({
             loading="lazy"
           />
         </div>
+      ) : (
+        <p className="text-xs text-muted-fg">No image URL found.</p>
       )}
     </div>
   );

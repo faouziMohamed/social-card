@@ -7,11 +7,14 @@ import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
 import {cn} from '@/lib/utils/cn';
+import {FONT_FAMILY_GROUPS} from '@/modules/og/shared/og-font-catalog';
 import type {
   FieldDef,
   FormSection,
@@ -447,15 +450,30 @@ function FieldCell({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {field.options.map(opt => {
-              const v = typeof opt === 'string' ? opt : opt.value;
-              const l = typeof opt === 'string' ? opt : opt.label;
-              return (
-                <SelectItem key={v} value={v} className="text-xs">
-                  {l}
-                </SelectItem>
-              );
-            })}
+            {field.key === 'fontFamily'
+              ? FONT_FAMILY_GROUPS.map(group => (
+                  <SelectGroup key={group.key}>
+                    <SelectLabel>{group.label}</SelectLabel>
+                    {group.options.map(font => (
+                      <SelectItem
+                        key={font.value}
+                        value={font.value}
+                        className="text-xs"
+                      >
+                        {font.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                ))
+              : field.options.map(opt => {
+                  const v = typeof opt === 'string' ? opt : opt.value;
+                  const l = typeof opt === 'string' ? opt : opt.label;
+                  return (
+                    <SelectItem key={v} value={v} className="text-xs">
+                      {l}
+                    </SelectItem>
+                  );
+                })}
           </SelectContent>
         </Select>
       </FieldShell>

@@ -486,7 +486,12 @@ export const TEMPLATE_SECTIONS: Record<SeoTemplateName, FormSection[]> = {
       title: 'Card Style',
       fields: [
         {key: 'accentColor', label: 'Accent', type: 'color'},
-        {key: 'theme', label: 'Theme', type: 'select', options: ['dark', 'light']},
+        {
+          key: 'theme',
+          label: 'Theme',
+          type: 'select',
+          options: ['dark', 'light'],
+        },
         {
           key: 'bgStyle',
           label: 'BG style',

@@ -13,15 +13,13 @@ import {
   TEMPLATE_META as OG_TEMPLATE_META,
   TEMPLATE_SECTIONS as OG_TEMPLATE_SECTIONS,
 } from '@/modules/og/shared/og-template-registry';
+import {ImageWorkflowPreview} from '@/modules/seo/client/components/image-workflow-preview';
 import {JsonLdEditor} from '@/modules/seo/client/components/json-ld-editor';
 import {SeoSnippetPanel} from '@/modules/seo/client/components/seo-snippet-panel';
 import {useSeoBuilderState} from '@/modules/seo/client/hooks/use-seo-builder-state';
 import {
-  ImageWorkflowPreview,
-} from '@/modules/seo/client/components/image-workflow-preview';
-import {
-  buildJsonLdObject,
   buildImageWorkflowUrls,
+  buildJsonLdObject,
   buildSeoSnippet,
   isImageSeoTemplate,
 } from '@/modules/seo/shared/seo-snippets';
@@ -458,7 +456,9 @@ function SeoBuilder() {
   const jsonLdText = params['jsonRaw']?.trim() ? params['jsonRaw'] : schemaJson;
   const snippet = buildSeoSnippet(template, seoUrl, params);
   const imageWorkflowUrls =
-    template === 'image-workflow' ? buildImageWorkflowUrls(seoUrl, params) : null;
+    template === 'image-workflow'
+      ? buildImageWorkflowUrls(seoUrl, params)
+      : null;
   const setSeoParam = (key: string, value: string) => {
     setParam(key, value);
     if (template === 'json-ld' && key !== 'jsonRaw') {

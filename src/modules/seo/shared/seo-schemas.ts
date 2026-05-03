@@ -191,7 +191,9 @@ export const imageWorkflowSchema = z.object({
   siteName: z.string().optional().describe('Brand or site name'),
   title: z.string().optional().describe('OG/Twitter title'),
   description: z.string().optional().describe('OG/Twitter description'),
-  accentColor: hex.default('#6366f1').describe('Accent color for generated cards'),
+  accentColor: hex
+    .default('#6366f1')
+    .describe('Accent color for generated cards'),
   theme: z
     .enum(['dark', 'light'])
     .default('dark')

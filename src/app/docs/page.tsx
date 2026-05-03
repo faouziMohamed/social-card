@@ -1,25 +1,20 @@
 import {Footer} from '@/components/layout/footer';
 import {Navbar} from '@/components/layout/navbar';
-import {ApiEndpointCard} from '@/components/shared/api-endpoint-card';
+import {CollapsibleJson} from '@/components/shared/collapsible-json';
 import {JsonLd} from '@/components/shared/json-ld';
+import {Badge} from '@/components/ui/badge';
 import {env} from '@/lib/env';
 import {ROUTES} from '@/lib/utils/routes';
-import {getBadgeParamDescriptors} from '@/modules/badge/shared/badge-docs';
 import {BADGE_ROUTES} from '@/modules/badge/shared/badge-routes';
 import type {BadgeName} from '@/modules/badge/shared/badge-schemas';
-import {EndpointCard} from '@/modules/og/client/components/endpoint-card';
-import {getParamDescriptors} from '@/modules/og/shared/og-docs';
+import {FONT_FAMILY_OPTIONS} from '@/modules/og/shared/og-font-catalog';
 import {OG_ROUTES} from '@/modules/og/shared/og-routes';
-import {EXAMPLE_PARAMS} from '@/modules/og/shared/og-template-registry';
 import type {TemplateName} from '@/modules/og/shared/og.types';
+import {DocsInteractiveSections} from '@/modules/seo/client/components/docs-interactive-sections';
 import {DocsMobileNav} from '@/modules/seo/client/components/docs-mobile-nav';
-import {getSeoParamDescriptors} from '@/modules/seo/shared/seo-docs';
+import {DocsSidebarNav} from '@/modules/seo/client/components/docs-sidebar-nav';
 import {SEO_ROUTES} from '@/modules/seo/shared/seo-routes';
 import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
-import {
-  buildSeoSnippet,
-  isImageSeoTemplate,
-} from '@/modules/seo/shared/seo-snippets';
 import type {Metadata} from 'next';
 import Link from 'next/link';
 
@@ -154,6 +149,58 @@ const SEO_EXAMPLES: Record<
   },
 };
 
+const OG_RESPONSE_SPEC = {
+  contentType: 'image/png',
+  bodyShape: `Binary PNG image bytes (1200x630 by default; target override supported).`,
+};
+
+const BADGE_RESPONSE_SPEC = {
+  contentType: 'image/svg+xml; charset=utf-8',
+  bodyShape: `UTF-8 SVG markup string.`,
+};
+
+const SEO_RESPONSE_SPECS: Partial<
+  Record<SeoTemplateName, {contentType: string; bodyShape: string}>
+> = {
+  favicon: {
+    contentType: 'image/png',
+    bodyShape: `Binary PNG image bytes (32x32).`,
+  },
+  'apple-touch-icon': {
+    contentType: 'image/png',
+    bodyShape: `Binary PNG image bytes (180x180).`,
+  },
+  'manifest-icon': {
+    contentType: 'image/png',
+    bodyShape: `Binary PNG image bytes (192x192 or 512x512 via ?size=192|512).`,
+  },
+  'twitter-card': {
+    contentType: 'image/png',
+    bodyShape: `Binary PNG image bytes (800x418).`,
+  },
+  'json-ld': {
+    contentType: 'application/ld+json; charset=utf-8',
+    bodyShape: `JSON object payload (or script body in raw response). Example:
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "OG Graph"
+}`,
+  },
+  'robots-txt': {
+    contentType: 'text/plain; charset=utf-8',
+    bodyShape: `Plain text robots.txt content.`,
+  },
+  'meta-pack': {
+    contentType: 'text/plain; charset=utf-8',
+    bodyShape: `Plain text HTML tags snippet (<title>, <meta>, <link>).`,
+  },
+  'image-workflow': {
+    contentType: 'text/plain; charset=utf-8',
+    bodyShape: `Plain text snippet containing generated OG/Twitter/icon URLs.`,
+  },
+};
+
 // ─── Section header ───────────────────────────────────────────────────────────
 
 function SectionHeader({
@@ -182,36 +229,6 @@ function SectionHeader({
       </div>
       <p className="text-sm text-muted-fg mb-3">{subtitle}</p>
       <div className="section-divider" />
-    </div>
-  );
-}
-
-// ─── Sidebar nav link group ───────────────────────────────────────────────────
-
-function NavGroup({
-  label,
-  items,
-}: {
-  label: string;
-  items: {href: string; name: string}[];
-}) {
-  return (
-    <div className="mb-6">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg/80">
-        {label}
-      </p>
-      <ul className="space-y-1">
-        {items.map(item => (
-          <li key={item.href}>
-            <a
-              href={item.href}
-              className="block rounded-md border border-transparent px-2 py-1 text-xs text-foreground/75 hover:border-border/50 hover:bg-card/60 hover:text-primary transition-colors font-mono truncate"
-            >
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
@@ -257,6 +274,46 @@ export default function DocsPage() {
       url: 'https://mfaouzi.com',
     },
   };
+  const inspectorResponseExample = {
+    success: true,
+    inspectedAt: '2026-05-03T15:00:00.000Z',
+    summary: {
+      score: 84,
+      totalFindings: 3,
+      errors: 0,
+      warnings: 2,
+      infos: 1,
+    },
+    findingsBySeverity: {
+      error: [],
+      warning: [
+        {
+          id: 'missing-og-image',
+          title: 'Missing og:image',
+          detail: 'Open Graph image is missing.',
+          recommendation: 'Set og:image to a 1200x630 image URL.',
+          severity: 'warning',
+        },
+      ],
+      info: [],
+    },
+    data: {
+      url: 'https://example.com',
+      finalUrl: 'https://example.com/',
+      statusCode: 200,
+      title: 'Example Domain',
+      metaDescription: '',
+      canonical: '',
+      robots: '',
+      og: {title: '', description: '', image: '', url: '', type: ''},
+      twitter: {card: '', title: '', description: '', image: '', site: ''},
+      icons: {favicon: '', appleTouchIcon: '', manifest: ''},
+      headings: {h1Count: 1, h1: ['Example Domain']},
+      images: {total: 2, missingAlt: 1},
+      jsonLd: {count: 0, invalidCount: 0, types: []},
+      findings: [],
+    },
+  };
 
   return (
     <div className="flex min-h-full flex-col">
@@ -291,121 +348,36 @@ export default function DocsPage() {
       <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-10 flex-1">
         {/* ── Sidebar ──────────────────────────────────────────────────────── */}
         <aside className="hidden lg:block lg:w-56 shrink-0">
-          <nav className="lg:sticky lg:top-6 rounded-xl border border-border/60 bg-card/40 shadow-sm p-4 scrollbar-hide lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
-            <p className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-fg/90 flex items-center gap-2">
-              <span className="status-indicator status-info" />
-              Navigation
-            </p>
-
-            <NavGroup label="OG Templates" items={ogNavItems} />
-
-            <div className="section-divider mb-4" />
-
-            <NavGroup label="SVG Badges" items={badgeNavItems} />
-
-            <div className="section-divider mb-4" />
-
-            <NavGroup label="SEO Assets" items={seoNavItems} />
-
-            <div className="section-divider mb-4" />
-
-            <NavGroup label="Inspector" items={inspectorNavItems} />
-
-            <div className="section-divider my-4" />
-
-            <Link
-              href={ROUTES.builder}
-              className="block text-center rounded border border-primary/30 px-3 py-1.5 text-xs terminal-prompt hover:bg-primary/10 transition-colors"
-            >
-              → Open Builder
-            </Link>
-          </nav>
+          <DocsSidebarNav
+            ogItems={ogNavItems}
+            badgeItems={badgeNavItems}
+            seoItems={seoNavItems}
+            inspectorItems={inspectorNavItems}
+          />
         </aside>
 
         {/* ── Main content ─────────────────────────────────────────────────── */}
         <main className="flex-1 min-w-0">
-          {/* OG Templates */}
           <SectionHeader
-            id="og"
-            icon="🖼️"
-            title="OG Image Templates"
-            subtitle="Returns PNG images sized 1200×630. Cache: max-age=3600."
-            count={templates.length}
+            id="fonts"
+            icon="🔤"
+            title="Available Font Families"
+            subtitle="Use the dropdown on each OG example to preview any supported family."
+            count={FONT_FAMILY_OPTIONS.length}
           />
-          <div className="flex flex-col gap-10 mb-16">
-            {templates.map(template => {
-              const params = getParamDescriptors(template);
-              const exampleUrl = `${base}${OG_ROUTES[template]}?${EXAMPLE_PARAMS[template]}`;
-              return (
-                <EndpointCard
-                  key={template}
-                  template={template}
-                  params={params}
-                  exampleUrl={exampleUrl}
-                />
-              );
-            })}
+          <div className="mb-16 flex flex-wrap gap-2">
+            {FONT_FAMILY_OPTIONS.map(font => (
+              <Badge
+                key={font.value}
+                variant="muted"
+                className="px-2.5 py-1 font-mono text-[11px]"
+              >
+                {font.label}
+              </Badge>
+            ))}
           </div>
 
-          {/* SVG Badges */}
-          <SectionHeader
-            id="badges"
-            icon="🏷️"
-            title="SVG Badges"
-            subtitle="Returns image/svg+xml. Embed with <img> or Markdown. Cache: max-age=3600."
-            count={badges.length}
-          />
-          <div className="flex flex-col gap-10 mb-16">
-            {badges.map(badge => {
-              const ex = BADGE_EXAMPLES[badge];
-              return (
-                <ApiEndpointCard
-                  key={badge}
-                  id={`badge-${badge}`}
-                  path={BADGE_ROUTES[badge]}
-                  description={ex.description}
-                  params={getBadgeParamDescriptors(badge)}
-                  exampleUrl={`${base}${BADGE_ROUTES[badge]}?${ex.qs}`}
-                  previewAspect={ex.aspect}
-                />
-              );
-            })}
-          </div>
-
-          {/* SEO Assets */}
-          <SectionHeader
-            id="seo"
-            icon="🔍"
-            title="SEO Assets"
-            subtitle="Includes image assets and text-first developer endpoints (JSON-LD, robots.txt, and meta pack)."
-            count={seoAssets.length}
-          />
-          <div className="flex flex-col gap-10 mb-16">
-            {seoAssets.map(asset => {
-              const ex = SEO_EXAMPLES[asset];
-              const route = SEO_ROUTES[asset]!;
-              const exampleUrl = `${base}${route}?${ex.qs}`;
-              const previewText = isImageSeoTemplate(asset)
-                ? undefined
-                : buildSeoSnippet(
-                    asset,
-                    exampleUrl,
-                    Object.fromEntries(new URLSearchParams(ex.qs).entries()),
-                  );
-              return (
-                <ApiEndpointCard
-                  key={asset}
-                  id={`seo-${asset}`}
-                  path={route}
-                  description={ex.description}
-                  params={getSeoParamDescriptors(asset)}
-                  exampleUrl={exampleUrl}
-                  previewAspect={ex.aspect}
-                  previewText={previewText}
-                />
-              );
-            })}
-          </div>
+          <DocsInteractiveSections base={base} />
 
           <SectionHeader
             id="seo-inspector"
@@ -454,6 +426,12 @@ Content-Type: application/json
                 <pre className="rounded-md border border-border bg-muted/30 px-3 py-2 font-mono text-xs text-foreground/80 whitespace-pre-wrap">{String.raw`curl -X POST "${base}/api/seo/inspect" \
   -H "content-type: application/json" \
   -d '{"url":"https://example.com"}'`}</pre>
+              </div>
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
+                  Response JSON (shape)
+                </p>
+                <CollapsibleJson data={inspectorResponseExample} />
               </div>
             </div>
           </section>
