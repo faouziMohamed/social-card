@@ -73,9 +73,11 @@ export function useBadgeBuilderState(): BadgeBuilderState {
     if (!persisted) return;
     const tmpl = toValidBadge(persisted.current);
     const slot = persisted.templates[tmpl];
+    // Intentional: initialising state from localStorage on first mount
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTemplateRaw(tmpl);
+     
     setParams(slot?.params ?? {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [previewUrl, setPreviewUrl] = useState('');

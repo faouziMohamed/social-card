@@ -109,6 +109,8 @@ export function SheetContent({
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
+    // Hydration guard — intentional setState in effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 

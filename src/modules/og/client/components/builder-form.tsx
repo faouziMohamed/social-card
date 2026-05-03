@@ -59,11 +59,11 @@ function computeFullWidthSet(fields: FieldDef[]): Set<string> {
         immediateNext &&
         !isFullWidth(immediateNext) &&
         !isBgOverlays(immediateNext);
-      if (!partnerExists) {
+      if (partnerExists) {
+        col = 1;
+      } else {
         result.add(field.key);
         col = 0;
-      } else {
-        col = 1;
       }
     } else {
       col = 0;

@@ -1,16 +1,17 @@
 import {createClientLogger} from '@/lib/logger';
+import {resolveCacheControl} from '@/modules/og/server/og-render.server';
 import type {NextRequest} from 'next/server';
 import type {ZodSchema} from 'zod';
 
 const log = createClientLogger('badge/handler');
-
-const BADGE_CACHE = 'public, max-age=3600, stale-while-revalidate=86400';
 
 export type BadgeRenderer<TParams> = (params: TParams) => string;
 
 /**
  * Factory that creates a Next.js GET handler for any badge type.
  * Returns image/svg+xml — no Satori dependency.
+ *
+ * Pass `?bust=<any>` to bypass caching (useful after content changes).
  *
  * Usage:
  *   export const GET = createBadgeHandler(labelSchema, labelRenderer);
@@ -33,7 +34,7 @@ export function createBadgeHandler<TParams>(
       return new Response(svg, {
         headers: {
           'Content-Type': 'image/svg+xml',
-          'Cache-Control': BADGE_CACHE,
+          'Cache-Control': resolveCacheControl(rawParams),
           'X-Content-Type-Options': 'nosniff',
         },
       });

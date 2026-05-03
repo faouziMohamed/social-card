@@ -1,4 +1,4 @@
-import {ThemeToggle} from '@/components/shared/ThemeToggle';
+import {ThemeToggle} from '@/components/shared/theme-toggle';
 import {buttonVariants} from '@/components/ui/button';
 import {ROUTES} from '@/lib/utils/routes';
 import {GitBranch} from 'lucide-react';

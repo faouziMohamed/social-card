@@ -106,7 +106,7 @@ export function launchRenderer(
             fontWeight: 800,
             color: theme.text,
             textAlign: 'center',
-            lineHeight: 1.0,
+            lineHeight: 1,
             letterSpacing: '-0.03em',
           }}
         >

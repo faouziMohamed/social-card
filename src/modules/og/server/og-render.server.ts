@@ -4,6 +4,29 @@ import React from 'react';
 export const CACHE_CONTROL =
   'public, max-age=86400, stale-while-revalidate=604800';
 
+// Cache-control value used when the caller passes ?bust=<any>
+export const NO_CACHE = 'no-store, no-cache, must-revalidate, proxy-revalidate';
+
+/**
+ * Resolve the Cache-Control header value for a response.
+ *
+ * When the caller passes the `bust` query param (any value), the response is
+ * not cached — useful for forcing a fresh render during development or after
+ * content changes.  The param value is irrelevant; even `?bust=1` works.
+ * Changing the value (e.g. a timestamp) also causes CDN/browser cache misses
+ * because the URL itself changes.
+ *
+ * Examples:
+ *   /api/og/general?title=Hello              → cached for 24 h
+ *   /api/og/general?title=Hello&bust=1       → no-store
+ *   /api/og/general?title=Hello&bust=1714500 → no-store (timestamp variant)
+ */
+export function resolveCacheControl(
+  rawParams: Record<string, string>,
+): string {
+  return 'bust' in rawParams ? NO_CACHE : CACHE_CONTROL;
+}
+
 // CSS webkit line-clamp helper for Satori JSX
 export function clampStyle(lines: number): React.CSSProperties {
   return {
@@ -23,11 +46,13 @@ export function hexToRgba(hex: string, alpha: number): string {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+// Linearise an sRGB channel value for WCAG luminance calculation
+const toLinear = (c: number) =>
+  c <= 0.040_45 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+
 // WCAG relative luminance → returns '#111111' for light backgrounds, '#ffffff' for dark
 export function getContrastColor(hex: string): '#111111' | '#ffffff' {
   const h = hex.replace('#', '');
-  const toLinear = (c: number) =>
-    c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
   const r = toLinear(
     Number.parseInt(h.length === 3 ? h[0] + h[0] : h.slice(0, 2), 16) / 255,
   );

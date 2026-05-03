@@ -52,6 +52,19 @@ interface PersistedState {
   templates: Partial<Record<TemplateName, TemplateSlot>>;
 }
 
+interface InitialBuilderSlot {
+  template: TemplateName;
+  params: Record<string, string>;
+  target: TargetKey;
+}
+
+export function resolveInitialTemplateName(
+  templateFromUrl: string | null,
+  persisted: PersistedState | null,
+): TemplateName {
+  return toValidTemplate(templateFromUrl ?? persisted?.current ?? 'general');
+}
+
 function load(): PersistedState | null {
   if (typeof window === 'undefined') return null;
   try {
@@ -71,6 +84,17 @@ function save(state: PersistedState): void {
   }
 }
 
+function resolveInitialBuilderSlot(templateFromUrl: string | null): InitialBuilderSlot {
+  const persisted = load();
+  const template = resolveInitialTemplateName(templateFromUrl, persisted);
+  const slot = persisted?.templates[template];
+  return {
+    template,
+    params: slot?.params ?? {},
+    target: toValidTarget(slot?.target),
+  };
+}
+
 // ─── Hook ────────────────────────────────────────────────────────────────────
 
 export function useBuilderState(): BuilderState {
@@ -78,34 +102,18 @@ export function useBuilderState(): BuilderState {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Resolve initial template from URL only (safe for SSR — no localStorage)
-  const initialTemplate = useMemo<TemplateName>(() => {
-    return toValidTemplate(searchParams.get('template'));
+  const initialTemplateFromUrl = useMemo<string | null>(() => {
+    return searchParams.get('template');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const initialSlot = useMemo(
+    () => resolveInitialBuilderSlot(initialTemplateFromUrl),
+    [initialTemplateFromUrl],
+  );
 
-  const [template, setTemplateRaw] = useState<TemplateName>(initialTemplate);
-  const [params, setParams] = useState<Record<string, string>>({});
-  const [target, setTargetRaw] = useState<TargetKey>('og');
-
-  // Restore persisted state client-side after hydration to avoid SSR mismatch.
-  // localStorage is only available in the browser, so this must run in an effect.
-  const hydratedRef = useRef(false);
-  useEffect(() => {
-    if (hydratedRef.current) return;
-    hydratedRef.current = true;
-    const persisted = load();
-    if (!persisted) return;
-    // If no template was in the URL, also restore the last-used template
-    const tmpl = toValidTemplate(
-      searchParams.get('template') ?? persisted.current ?? initialTemplate,
-    );
-    const slot = persisted.templates[tmpl];
-    setTemplateRaw(tmpl);
-    setParams(slot?.params ?? {});
-    setTargetRaw(toValidTarget(slot?.target));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [template, setTemplateRaw] = useState<TemplateName>(initialSlot.template);
+  const [params, setParams] = useState<Record<string, string>>(initialSlot.params);
+  const [target, setTargetRaw] = useState<TargetKey>(initialSlot.target);
 
   const [previewSrc, setPreviewSrc] = useState('');
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -115,7 +123,7 @@ export function useBuilderState(): BuilderState {
       const base = `${env.deploymentURL}${OG_ROUTES[tmpl]}`;
       const allParams = {
         ...p,
-        ...(t !== 'og' ? {target: t as string} : {}),
+        ...(t === 'og' ? {} : {target: t as string}),
       } as Record<string, string>;
       const query = new URLSearchParams(
         Object.entries(allParams).filter(([, v]) => v !== ''),
@@ -144,7 +152,6 @@ export function useBuilderState(): BuilderState {
     router.replace(`${pathname}?template=${encodeURIComponent(template)}`, {
       scroll: false,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [template, pathname, router]);
 
   // Persist current template slot whenever params / target change
@@ -165,7 +172,7 @@ export function useBuilderState(): BuilderState {
     const slot = persisted?.templates[t];
     setTemplateRaw(t);
     setParams(slot?.params ?? {});
-    setTargetRaw(slot?.target ?? 'og');
+    setTargetRaw(toValidTarget(slot?.target));
   };
 
   const setParam = useCallback((key: string, value: string) => {

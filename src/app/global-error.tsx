@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 
 // global-error replaces the root layout — must be fully standalone with <html><body>
@@ -98,6 +99,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Critical Error — OG Graph</title>
+        {/* eslint-disable-next-line react/no-danger */}
         <style dangerouslySetInnerHTML={{ __html: STYLES }} />
       </head>
       <body
@@ -305,6 +307,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             }}
           >
             <button
+              type="button"
               className="reset-btn"
               onClick={reset}
               style={{
@@ -321,7 +324,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             >
               ↺ try again
             </button>
-            <a
+            <Link
               className="home-link"
               href="/"
               style={{
@@ -340,7 +343,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               }}
             >
               ← back to home
-            </a>
+            </Link>
           </div>
 
           <p

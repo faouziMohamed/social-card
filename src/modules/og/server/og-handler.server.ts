@@ -6,7 +6,7 @@ import type {ZodSchema} from 'zod';
 import {createClientLogger} from '@/lib/logger';
 import {TARGET_SIZES} from '../shared/og-schemas';
 import {resolveOgFonts} from './og-fonts.server';
-import {CACHE_CONTROL} from './og-render.server';
+import {resolveCacheControl} from './og-render.server';
 import {resolveTheme, type ThemePalette} from './og-themes.server';
 
 const log = createClientLogger('og/handler');
@@ -66,7 +66,7 @@ export function createOgHandler<TParams>(
         width,
         height,
         fonts,
-        headers: {'Cache-Control': CACHE_CONTROL},
+        headers: {'Cache-Control': resolveCacheControl(rawParams)},
       });
     } catch (error) {
       const err = error as Error;

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect } from "react";
+import Link from 'next/link';
+import {useEffect} from 'react';
 
 const STYLES = `
   @keyframes draw-circle {
@@ -95,18 +95,19 @@ const STYLES = `
 `;
 
 interface ErrorProps {
-  error: Error & { digest?: string };
+  error: Error & {digest?: string};
   reset: () => void;
 }
 
-export default function ErrorPage({ error, reset }: ErrorProps) {
+export default function ErrorPage({error, reset}: ErrorProps) {
   useEffect(() => {
-    console.error("[OG Graph] Runtime error:", error);
+    console.error('[OG Graph] Runtime error:', error);
   }, [error]);
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: STYLES }} />
+      {/* eslint-disable-next-line react/no-danger */}
+      <style dangerouslySetInnerHTML={{__html: STYLES}} />
 
       <div
         className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background p-6"
@@ -114,28 +115,30 @@ export default function ErrorPage({ error, reset }: ErrorProps) {
         aria-live="assertive"
       >
         {/* Background layers */}
-        <div className="circuit-pattern absolute inset-0 opacity-20" aria-hidden />
+        <div
+          className="circuit-pattern absolute inset-0 opacity-20"
+          aria-hidden
+        />
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
           style={{
             background:
-              "radial-gradient(ellipse 55% 45% at 50% 42%, oklch(0.65 0.25 25 / 0.06) 0%, transparent 70%)",
+              'radial-gradient(ellipse 55% 45% at 50% 42%, oklch(0.65 0.25 25 / 0.06) 0%, transparent 70%)',
           }}
         />
 
         <div className="relative z-10 w-full max-w-md text-center">
-
           {/* ── Icon ──────────────────────────────────────────────────── */}
           <div className="fade-1 mx-auto mb-8 w-fit" aria-hidden>
             <div
               className="err-btn-warn relative rounded-full"
-              style={{ width: 88, height: 88 }}
+              style={{width: 88, height: 88}}
             >
               {/* Breathing ring */}
               <div
                 className="err-ring absolute inset-0 rounded-full border-2"
-                style={{ borderColor: "oklch(0.65 0.25 25 / 0.4)" }}
+                style={{borderColor: 'oklch(0.65 0.25 25 / 0.4)'}}
               />
 
               <svg
@@ -169,7 +172,7 @@ export default function ErrorPage({ error, reset }: ErrorProps) {
                   r="3"
                   fill="oklch(0.65 0.25 25)"
                   className="err-dot"
-                  style={{ opacity: 0 }}
+                  style={{opacity: 0}}
                 />
               </svg>
             </div>
@@ -179,7 +182,7 @@ export default function ErrorPage({ error, reset }: ErrorProps) {
           <div className="fade-2 mb-3">
             <h1
               className="err-title text-3xl font-bold text-foreground"
-              style={{ letterSpacing: "-0.02em" }}
+              style={{letterSpacing: '-0.02em'}}
             >
               Render Failed
             </h1>
@@ -195,14 +198,14 @@ export default function ErrorPage({ error, reset }: ErrorProps) {
           {error.message && (
             <div
               className="builder-panel err-flicker fade-3 mb-8 rounded-lg p-4 text-left"
-              style={{ opacity: 0 }}
+              style={{opacity: 0}}
             >
               <p className="mb-1.5 font-mono text-xs text-muted-fg">
                 error.message
               </p>
               <p
                 className="break-all font-mono text-xs leading-relaxed"
-                style={{ color: "oklch(0.7 0.22 25)" }}
+                style={{color: 'oklch(0.7 0.22 25)'}}
               >
                 {error.message}
               </p>
@@ -217,15 +220,16 @@ export default function ErrorPage({ error, reset }: ErrorProps) {
           {/* ── CTAs ──────────────────────────────────────────────────── */}
           <div
             className="fade-4 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
-            style={{ opacity: 0 }}
+            style={{opacity: 0}}
           >
             <button
+              type="button"
               onClick={reset}
               className="inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 font-mono text-sm font-medium transition-all sm:w-auto"
               style={{
-                background: "oklch(0.65 0.25 25 / 0.14)",
-                border: "1px solid oklch(0.65 0.25 25 / 0.45)",
-                color: "oklch(0.72 0.22 25)",
+                background: 'oklch(0.65 0.25 25 / 0.14)',
+                border: '1px solid oklch(0.65 0.25 25 / 0.45)',
+                color: 'oklch(0.72 0.22 25)',
               }}
             >
               ↺ try again
@@ -246,4 +250,3 @@ export default function ErrorPage({ error, reset }: ErrorProps) {
     </>
   );
 }
-

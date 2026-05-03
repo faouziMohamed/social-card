@@ -77,16 +77,21 @@ const SEO_ASPECTS: Record<string, string> = {
 
 function getSeoSnippet(template: string, url: string): string {
   switch (template) {
-    case 'favicon':
+    case 'favicon': {
       return `<link rel="icon" type="image/png" href="${url}" />`;
-    case 'apple-touch-icon':
+    }
+    case 'apple-touch-icon': {
       return `<link rel="apple-touch-icon" href="${url}" />`;
-    case 'manifest-icon':
+    }
+    case 'manifest-icon': {
       return `{ "src": "${url}", "sizes": "192x192", "type": "image/png" }`;
-    case 'twitter-card':
+    }
+    case 'twitter-card': {
       return `<meta property="og:image" content="${url}" />\n<meta name="twitter:image" content="${url}" />`;
-    default:
+    }
+    default: {
       return url;
+    }
   }
 }
 

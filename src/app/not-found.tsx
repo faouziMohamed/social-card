@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 
 const STYLES = `
   @keyframes glitch-text {
@@ -105,6 +105,7 @@ const STYLES = `
 export default function NotFound() {
   return (
     <>
+      {/* eslint-disable-next-line react/no-danger */}
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
       <div className="flex min-h-full flex-col">

@@ -69,7 +69,7 @@ export function techStackRenderer(p: TechStackParams): string {
   let rowX = 0;
   let rowIndex = 0;
 
-  safeTags.forEach((tag, index) => {
+  for (const [index, tag] of safeTags.entries()) {
     const tagWidth = widths[index];
     if (rowX > 0 && rowX + tagWidth > usableWidth) {
       rowX = 0;
@@ -78,7 +78,7 @@ export function techStackRenderer(p: TechStackParams): string {
 
     rows.push({tag, width: tagWidth, x: rowX, row: rowIndex});
     rowX += tagWidth + gap;
-  });
+  }
 
   const rowCount = rowIndex + 1;
   const height = rowCount * (tagHeight + gap) - gap + outerPad * 2;

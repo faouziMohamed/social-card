@@ -1,11 +1,11 @@
-import {Footer} from '@/components/layout/Footer';
-import {Navbar} from '@/components/layout/Navbar';
-import {JsonLd} from '@/components/shared/JsonLd';
+import {Footer} from '@/components/layout/footer';
+import {Navbar} from '@/components/layout/navbar';
+import {JsonLd} from '@/components/shared/json-ld';
 import {Badge} from '@/components/ui/badge';
 import {buttonVariants} from '@/components/ui/button';
 import {env} from '@/lib/env';
 import {ROUTES} from '@/lib/utils/routes';
-import {HomepageTabs} from '@/modules/og/client/components/HomepageTabs';
+import {HomepageTabs} from '@/modules/og/client/components/homepage-tabs';
 import {
   ArrowRight,
   Code2,

@@ -4,7 +4,7 @@ import {env} from '@/lib/env';
 import {SEO_ROUTES} from '@/modules/seo/shared/seo-routes';
 import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 import {TEMPLATE_SECTIONS} from '@/modules/seo/shared/seo-template-registry';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 // ─── Validation ──────────────────────────────────────────────────────────────
 
@@ -39,6 +39,11 @@ interface PersistedState {
   templates: Partial<Record<SeoTemplateName, TemplateSlot>>;
 }
 
+interface InitialSeoSlot {
+  template: SeoTemplateName;
+  params: Record<string, string>;
+}
+
 function load(): PersistedState | null {
   if (typeof window === 'undefined') return null;
   try {
@@ -58,25 +63,28 @@ function save(state: PersistedState): void {
   }
 }
 
+function resolveInitialSeoSlot(): InitialSeoSlot {
+  const persisted = load();
+  if (!persisted) {
+    return {
+      template: 'favicon',
+      params: {},
+    };
+  }
+  const template = toValidSeo(persisted.current);
+  const slot = persisted.templates[template];
+  return {
+    template,
+    params: slot?.params ?? {},
+  };
+}
+
 // ─── Hook ────────────────────────────────────────────────────────────────────
 
 export function useSeoBuilderState(): SeoBuilderState {
-  const [template, setTemplateRaw] = useState<SeoTemplateName>('favicon');
-  const [params, setParams] = useState<Record<string, string>>({});
-
-  // Restore persisted state after hydration
-  const hydratedRef = useRef(false);
-  useEffect(() => {
-    if (hydratedRef.current) return;
-    hydratedRef.current = true;
-    const persisted = load();
-    if (!persisted) return;
-    const tmpl = toValidSeo(persisted.current);
-    const slot = persisted.templates[tmpl];
-    setTemplateRaw(tmpl);
-    setParams(slot?.params ?? {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const initialSlot = useMemo(() => resolveInitialSeoSlot(), []);
+  const [template, setTemplateRaw] = useState<SeoTemplateName>(initialSlot.template);
+  const [params, setParams] = useState<Record<string, string>>(initialSlot.params);
 
   const [previewUrl, setPreviewUrl] = useState('');
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);

@@ -12,11 +12,15 @@ export function hexToRgba(hex: string, alpha = 1): string {
           .map(c => c + c)
           .join('')
       : h;
-  const r = parseInt(full.slice(0, 2), 16);
-  const g = parseInt(full.slice(2, 4), 16);
-  const b = parseInt(full.slice(4, 6), 16);
+  const r = Number.parseInt(full.slice(0, 2), 16);
+  const g = Number.parseInt(full.slice(2, 4), 16);
+  const b = Number.parseInt(full.slice(4, 6), 16);
   return `rgba(${r},${g},${b},${alpha})`;
 }
+
+// Linearise an sRGB channel value for WCAG luminance calculation
+const toLinear = (c: number) =>
+  c <= 0.039_28 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
 
 /** WCAG relative luminance → black or white foreground. */
 export function getContrastColor(hex: string): '#111111' | '#ffffff' {
@@ -28,11 +32,9 @@ export function getContrastColor(hex: string): '#111111' | '#ffffff' {
           .map(c => c + c)
           .join('')
       : h;
-  const r = parseInt(full.slice(0, 2), 16) / 255;
-  const g = parseInt(full.slice(2, 4), 16) / 255;
-  const b = parseInt(full.slice(4, 6), 16) / 255;
-  const toLinear = (c: number) =>
-    c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  const r = Number.parseInt(full.slice(0, 2), 16) / 255;
+  const g = Number.parseInt(full.slice(2, 4), 16) / 255;
+  const b = Number.parseInt(full.slice(4, 6), 16) / 255;
   const L = 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
   return L > 0.179 ? '#111111' : '#ffffff';
 }
@@ -326,11 +328,11 @@ export function estimateTextWidth(text: string, fontSize: number): number {
 
 export function escapeXml(s: string): string {
   return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('\'', '&apos;');
 }
 
 function hexToRgb(hex: string): {r: number; g: number; b: number} {
@@ -344,9 +346,9 @@ function hexToRgb(hex: string): {r: number; g: number; b: number} {
       : h;
 
   return {
-    r: parseInt(full.slice(0, 2), 16),
-    g: parseInt(full.slice(2, 4), 16),
-    b: parseInt(full.slice(4, 6), 16),
+    r: Number.parseInt(full.slice(0, 2), 16),
+    g: Number.parseInt(full.slice(2, 4), 16),
+    b: Number.parseInt(full.slice(4, 6), 16),
   };
 }
 

@@ -1,4 +1,4 @@
-import {CopyButton} from '@/components/shared/CopyButton';
+import {CopyButton} from '@/components/shared/copy-button';
 import {Badge} from '@/components/ui/badge';
 import {ROUTES} from '@/lib/utils/routes';
 import type {TemplateName} from '@/modules/og/shared/og.types';
