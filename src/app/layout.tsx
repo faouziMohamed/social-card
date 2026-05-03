@@ -8,10 +8,10 @@ import {
   playfairDisplay,
   spaceGrotesk,
 } from '@/lib/fonts';
+import {Analytics} from '@vercel/analytics/next';
 import type {Metadata} from 'next';
 import {ThemeProvider} from 'next-themes';
 import './globals.css';
-
 // Shared icon params: indigo accent, dark bg, rounded shape
 const ICON_QS =
   'initial=O&accentColor=%236366f1&color=%230f0f0f&shape=rounded&theme=dark';
@@ -113,6 +113,7 @@ export default function RootLayout({
           storageKey="og-graph-theme"
         >
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
