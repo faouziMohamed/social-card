@@ -2,6 +2,7 @@
 
 import {Button} from '@/components/ui/button';
 import {cn} from '@/lib/utils/cn';
+import {ROUTES} from '@/lib/utils/routes';
 import {BadgeCopyOptions} from '@/modules/badge/client/components/badge-copy-options';
 import {useBadgeBuilderState} from '@/modules/badge/client/hooks/use-badge-builder-state';
 import {
@@ -12,13 +13,21 @@ import {
   TEMPLATE_META as OG_TEMPLATE_META,
   TEMPLATE_SECTIONS as OG_TEMPLATE_SECTIONS,
 } from '@/modules/og/shared/og-template-registry';
+import {JsonLdEditor} from '@/modules/seo/client/components/json-ld-editor';
+import {SeoSnippetPanel} from '@/modules/seo/client/components/seo-snippet-panel';
 import {useSeoBuilderState} from '@/modules/seo/client/hooks/use-seo-builder-state';
+import {
+  buildJsonLdObject,
+  buildSeoSnippet,
+  isImageSeoTemplate,
+} from '@/modules/seo/shared/seo-snippets';
 import {
   TEMPLATE_META as SEO_TEMPLATE_META,
   TEMPLATE_SECTIONS as SEO_TEMPLATE_SECTIONS,
 } from '@/modules/seo/shared/seo-template-registry';
 import {Check, Code2, Copy, ExternalLink, RotateCcw} from 'lucide-react';
-import {useState} from 'react';
+import Link from 'next/link';
+import {useMemo, useState} from 'react';
 import {useBuilderState, type TargetKey} from '../hooks/use-builder-state';
 import {BuilderForm} from './builder-form';
 import {PreviewPanel} from './preview-panel';
@@ -26,11 +35,11 @@ import {TemplateSelector} from './template-selector';
 
 // ─── Module tab type ─────────────────────────────────────────────────────────
 
-type ModuleTab = 'og' | 'badges' | 'seo';
+export type ModuleTab = 'og' | 'badge' | 'seo';
 
 const MODULE_TABS: {value: ModuleTab; label: string}[] = [
   {value: 'og', label: 'OG Images'},
-  {value: 'badges', label: 'Badges'},
+  {value: 'badge', label: 'Badge'},
   {value: 'seo', label: 'SEO'},
 ];
 
@@ -75,30 +84,14 @@ const SEO_ASPECTS: Record<string, string> = {
   'twitter-card': '800/418',
 };
 
-function getSeoSnippet(template: string, url: string): string {
-  switch (template) {
-    case 'favicon': {
-      return `<link rel="icon" type="image/png" href="${url}" />`;
-    }
-    case 'apple-touch-icon': {
-      return `<link rel="apple-touch-icon" href="${url}" />`;
-    }
-    case 'manifest-icon': {
-      return `{ "src": "${url}", "sizes": "192x192", "type": "image/png" }`;
-    }
-    case 'twitter-card': {
-      return `<meta property="og:image" content="${url}" />\n<meta name="twitter:image" content="${url}" />`;
-    }
-    default: {
-      return url;
-    }
-  }
-}
-
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export function BuilderIsland() {
-  const [activeModule, setActiveModule] = useState<ModuleTab>('og');
+export function BuilderIsland({activeModule}: {activeModule: ModuleTab}) {
+  const routeByModule: Record<ModuleTab, string> = {
+    og: ROUTES.builderTabs.og,
+    badge: ROUTES.builderTabs.badge,
+    seo: ROUTES.builderTabs.seo,
+  };
 
   return (
     <div className="flex min-w-0 flex-col gap-6">
@@ -107,26 +100,25 @@ export function BuilderIsland() {
         {MODULE_TABS.map(({value, label}) => {
           const active = activeModule === value;
           return (
-            <Button
+            <Link
               key={value}
-              variant="ghost"
-              onClick={() => setActiveModule(value)}
+              href={routeByModule[value]}
               className={cn(
-                'h-8 rounded-lg px-4 text-xs font-semibold transition-all duration-150',
+                'inline-flex h-8 items-center rounded-lg px-4 text-xs font-semibold transition-all duration-150',
                 active
                   ? 'bg-card text-foreground shadow-sm'
                   : 'text-muted-fg hover:text-foreground',
               )}
             >
               {label}
-            </Button>
+            </Link>
           );
         })}
       </div>
 
       {/* ── Module content ────────────────────────────────────────────────── */}
       {activeModule === 'og' && <OgBuilder />}
-      {activeModule === 'badges' && <BadgeBuilder />}
+      {activeModule === 'badge' && <BadgeBuilder />}
       {activeModule === 'seo' && <SeoBuilder />}
     </div>
   );
@@ -442,19 +434,30 @@ function SeoBuilder() {
     seoUrl,
     setTemplate,
     setParam,
+    removeParam,
     resetParams,
   } = useSeoBuilderState();
 
-  const [snippetCopied, setSnippetCopied] = useState(false);
-
   const currentTemplate = SEO_TEMPLATE_META.find(t => t.name === template);
+  const isImageTemplate = isImageSeoTemplate(template);
   const seoAspect = SEO_ASPECTS[template] ?? '1/1';
-  const snippet = getSeoSnippet(template, seoUrl);
+  const jsonParams = useMemo(() => {
+    const next = {...params};
+    delete next['jsonRaw'];
+    return next;
+  }, [params]);
 
-  const copySnippet = async () => {
-    await navigator.clipboard.writeText(snippet);
-    setSnippetCopied(true);
-    setTimeout(() => setSnippetCopied(false), 2000);
+  const schemaJson = useMemo(
+    () => JSON.stringify(buildJsonLdObject(jsonParams), null, 2),
+    [jsonParams],
+  );
+  const jsonLdText = params['jsonRaw']?.trim() ? params['jsonRaw'] : schemaJson;
+  const snippet = buildSeoSnippet(template, seoUrl, params);
+  const setSeoParam = (key: string, value: string) => {
+    setParam(key, value);
+    if (template === 'json-ld' && key !== 'jsonRaw') {
+      setParam('jsonRaw', '');
+    }
   };
 
   return (
@@ -526,59 +529,47 @@ function SeoBuilder() {
               key={template}
               sections={SEO_TEMPLATE_SECTIONS[template]}
               params={params}
-              onParamChange={setParam}
+              onParamChange={setSeoParam}
+              onParamDelete={removeParam}
             />
           </div>
         </aside>
 
-        {/* Preview + "How to use" */}
+        {/* Preview + snippets */}
         <div className="flex min-w-0 flex-col gap-4">
-          {/* Preview panel: square templates get a max-width cap */}
-          <div
-            className={cn(
-              'flex items-center justify-start rounded-xl border border-border/30 bg-card/20 p-4',
-              seoAspect === '1/1' && 'max-w-[200px]',
-            )}
-          >
-            <PreviewPanel src={previewUrl} aspectRatio={seoAspect} />
-          </div>
-
-          {/* How to use HTML snippet */}
-          <div className="rounded-xl border border-border/30 bg-card/20 p-4">
-            <div className="mb-2 flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <Code2 className="h-3.5 w-3.5 text-muted-fg/50" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-fg/50">
-                  How to use
-                </span>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={copySnippet}
-                className={cn(
-                  'h-6 gap-1 rounded-full px-2.5 text-[11px] font-medium transition-all',
-                  snippetCopied
-                    ? 'text-terminal-green hover:text-terminal-green'
-                    : 'text-muted-fg hover:text-foreground',
-                )}
-              >
-                {snippetCopied ? (
-                  <>
-                    <Check className="h-3 w-3" />
-                    <span>Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3 w-3 opacity-50" />
-                    <span>Copy</span>
-                  </>
-                )}
-              </Button>
+          {isImageTemplate && (
+            <div
+              className={cn(
+                'flex items-center justify-start rounded-xl border border-border/30 bg-card/20 p-4',
+                seoAspect === '1/1' && 'max-w-[200px]',
+              )}
+            >
+              <PreviewPanel src={previewUrl} aspectRatio={seoAspect} />
             </div>
-            <pre className="overflow-x-auto rounded-lg bg-card/60 p-3 font-mono text-[11px] text-muted-fg/80 whitespace-pre-wrap break-all">
-              {snippet}
-            </pre>
+          )}
+
+          {!isImageTemplate && template === 'json-ld' && (
+            <JsonLdEditor
+              key={jsonLdText}
+              initialJson={jsonLdText}
+              onJsonChange={next => setParam('jsonRaw', next)}
+            />
+          )}
+
+          <div className="rounded-xl border border-border/30 bg-card/20 p-4">
+            <div className="mb-2 flex items-center gap-1.5">
+              <Code2 className="h-3.5 w-3.5 text-muted-fg/50" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-fg/50">
+                Developer usage
+              </span>
+            </div>
+            <SeoSnippetPanel
+              snippet={snippet}
+              seoUrl={seoUrl}
+              title={
+                isImageTemplate ? 'How to use this asset' : 'Copy-ready output'
+              }
+            />
           </div>
         </div>
       </div>

@@ -301,7 +301,8 @@ export const changelogSchema = z
     change3: z.string().optional().describe('Third changelog item'),
     accentColor: z.string().default('#38bdf8').describe('Accent color'),
   })
-  .merge(baseSchema);
+  .merge(baseSchema)
+  .catchall(z.string().optional());
 
 export const eventSchema = z
   .object({

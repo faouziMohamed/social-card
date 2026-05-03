@@ -76,7 +76,7 @@ export function useBadgeBuilderState(): BadgeBuilderState {
     // Intentional: initialising state from localStorage on first mount
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTemplateRaw(tmpl);
-     
+
     setParams(slot?.params ?? {});
   }, []);
 

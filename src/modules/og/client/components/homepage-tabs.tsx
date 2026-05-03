@@ -17,6 +17,7 @@ import {
   DEMO_PARAMS as SEO_DEMO_PARAMS,
   TEMPLATE_META as SEO_TEMPLATE_META,
 } from '@/modules/seo/shared/seo-template-registry';
+import Image from 'next/image';
 import Link from 'next/link';
 
 // Badge aspect ratios keyed by template name
@@ -79,11 +80,12 @@ export function HomepageTabs({base}: HomepageTabsProps) {
                   key={template}
                   className="experience-card rounded-lg overflow-hidden bg-card border border-border"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={`${base}${OG_ROUTES[template as keyof typeof OG_ROUTES]}?${params}`}
                     alt={`${template} template preview`}
                     className="w-full aspect-[1200/630] object-cover"
+                    width={1200}
+                    height={630}
                     loading="lazy"
                   />
                   <p className="px-3 py-2 text-xs font-mono text-muted-fg capitalize">
@@ -143,10 +145,11 @@ export function HomepageTabs({base}: HomepageTabsProps) {
                     key={template}
                     className="experience-card rounded-lg overflow-hidden bg-card border border-border p-4 flex flex-col items-center gap-3"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={`${base}${BADGE_ROUTES[template as keyof typeof BADGE_ROUTES]}?${params}`}
                       alt={`${template} badge preview`}
+                      width={340}
+                      height={58}
                       style={{aspectRatio: aspect.replace('/', ' / ')}}
                       className="max-w-full object-contain"
                       loading="lazy"
@@ -211,10 +214,11 @@ export function HomepageTabs({base}: HomepageTabsProps) {
                     key={template}
                     className={`experience-card rounded-lg overflow-hidden bg-card border border-border${isWide ? ' sm:col-span-2' : ''}`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={`${base}${SEO_ROUTES[template as keyof typeof SEO_ROUTES]}?${params}`}
                       alt={`${template} SEO asset preview`}
+                      width={800}
+                      height={418}
                       style={{aspectRatio: aspect.replace('/', ' / ')}}
                       className="w-full object-contain"
                       loading="lazy"

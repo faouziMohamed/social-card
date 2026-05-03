@@ -23,6 +23,7 @@ export interface SeoBuilderState {
   seoUrl: string;
   setTemplate: (t: SeoTemplateName) => void;
   setParam: (key: string, value: string) => void;
+  removeParam: (key: string) => void;
   resetParams: () => void;
 }
 
@@ -83,8 +84,12 @@ function resolveInitialSeoSlot(): InitialSeoSlot {
 
 export function useSeoBuilderState(): SeoBuilderState {
   const initialSlot = useMemo(() => resolveInitialSeoSlot(), []);
-  const [template, setTemplateRaw] = useState<SeoTemplateName>(initialSlot.template);
-  const [params, setParams] = useState<Record<string, string>>(initialSlot.params);
+  const [template, setTemplateRaw] = useState<SeoTemplateName>(
+    initialSlot.template,
+  );
+  const [params, setParams] = useState<Record<string, string>>(
+    initialSlot.params,
+  );
 
   const [previewUrl, setPreviewUrl] = useState('');
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -133,6 +138,14 @@ export function useSeoBuilderState(): SeoBuilderState {
     setParams(prev => ({...prev, [key]: value}));
   }, []);
 
+  const removeParam = useCallback((key: string) => {
+    setParams(prev => {
+      const next = {...prev};
+      delete next[key];
+      return next;
+    });
+  }, []);
+
   const resetParams = useCallback(() => {
     const keys = TEMPLATE_SECTIONS[template].flatMap(s =>
       s.fields.map(f => f.key),
@@ -151,6 +164,7 @@ export function useSeoBuilderState(): SeoBuilderState {
     seoUrl,
     setTemplate,
     setParam,
+    removeParam,
     resetParams,
   };
 }

@@ -1,6 +1,11 @@
 export const ROUTES = {
   home: '/',
   builder: '/builder',
+  builderTabs: {
+    og: '/builder/og',
+    badge: '/builder/badge',
+    seo: '/builder/seo',
+  },
   docs: '/docs',
   api: {
     og: {
@@ -31,6 +36,9 @@ export const ROUTES = {
       'apple-touch-icon': '/api/seo/apple-touch-icon',
       'manifest-icon': '/api/seo/manifest-icon',
       'twitter-card': '/api/seo/twitter-card',
+      'json-ld': '/api/seo/json-ld',
+      'robots-txt': '/api/seo/robots-txt',
+      'meta-pack': '/api/seo/meta-pack',
     },
     logs: '/api/logs',
   },
@@ -39,3 +47,4 @@ export const ROUTES = {
 export type TemplateName = keyof typeof ROUTES.api.og;
 export type BadgeName = keyof typeof ROUTES.api.badge;
 export type SeoAssetName = keyof typeof ROUTES.api.seo;
+export type BuilderTabName = keyof typeof ROUTES.builderTabs;

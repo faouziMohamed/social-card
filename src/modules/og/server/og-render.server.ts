@@ -21,9 +21,7 @@ export const NO_CACHE = 'no-store, no-cache, must-revalidate, proxy-revalidate';
  *   /api/og/general?title=Hello&bust=1       → no-store
  *   /api/og/general?title=Hello&bust=1714500 → no-store (timestamp variant)
  */
-export function resolveCacheControl(
-  rawParams: Record<string, string>,
-): string {
+export function resolveCacheControl(rawParams: Record<string, string>): string {
   return 'bust' in rawParams ? NO_CACHE : CACHE_CONTROL;
 }
 

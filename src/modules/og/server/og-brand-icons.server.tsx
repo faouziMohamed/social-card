@@ -160,9 +160,12 @@ export function AtSignIcon({size = 20, color = 'currentColor'}: IconProps) {
  * Given a social handle string (e.g. "@johndoe", a URL like "https://github.com/...",
  * or plain text), return the matching brand icon component.
  */
-export function detectSocialIcon(handle: string): React.ComponentType<IconProps> {
+export function detectSocialIcon(
+  handle: string,
+): React.ComponentType<IconProps> {
   const lower = handle.toLowerCase();
-  if (lower.includes('github.com') || lower.startsWith('gh:')) return GitHubIcon;
+  if (lower.includes('github.com') || lower.startsWith('gh:'))
+    return GitHubIcon;
   if (
     lower.includes('twitter.com') ||
     lower.includes('x.com') ||
@@ -170,10 +173,13 @@ export function detectSocialIcon(handle: string): React.ComponentType<IconProps>
     lower.startsWith('x:')
   )
     return XTwitterIcon;
-  if (lower.includes('linkedin.com') || lower.startsWith('li:')) return LinkedInIcon;
-  if (lower.includes('instagram.com') || lower.startsWith('ig:')) return InstagramIcon;
-  if (lower.includes('youtube.com') || lower.startsWith('yt:')) return YouTubeIcon;
-  if (lower.includes('mastodon') || lower.startsWith('mt:')) return MastodonIcon;
+  if (lower.includes('linkedin.com') || lower.startsWith('li:'))
+    return LinkedInIcon;
+  if (lower.includes('instagram.com') || lower.startsWith('ig:'))
+    return InstagramIcon;
+  if (lower.includes('youtube.com') || lower.startsWith('yt:'))
+    return YouTubeIcon;
+  if (lower.includes('mastodon') || lower.startsWith('mt:'))
+    return MastodonIcon;
   return AtSignIcon;
 }
-

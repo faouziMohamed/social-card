@@ -1,12 +1,12 @@
 import React from 'react';
 import type {PortfolioParams} from '../../shared/og-schemas';
-import type {OgRendererContext} from '../og-handler.server';
 import {
   GitHubIcon,
   GlobeIcon,
   MapPinIcon,
   XTwitterIcon,
 } from '../og-brand-icons.server';
+import type {OgRendererContext} from '../og-handler.server';
 import {clampStyle, hexToRgba} from '../og-render.server';
 import {
   composeBackgroundStyleWithTone,
@@ -37,10 +37,15 @@ export function portfolioRenderer(
         .filter(Boolean)
         .slice(0, 6)
     : [];
-  type SocialIconComponent = React.ComponentType<{size?: number; color?: string}>;
+  type SocialIconComponent = React.ComponentType<{
+    size?: number;
+    color?: string;
+  }>;
   const socialItems: {Icon: SocialIconComponent; text: string}[] = [];
-  if (p.githubHandle) socialItems.push({Icon: GitHubIcon, text: p.githubHandle});
-  if (p.twitterHandle) socialItems.push({Icon: XTwitterIcon, text: p.twitterHandle});
+  if (p.githubHandle)
+    socialItems.push({Icon: GitHubIcon, text: p.githubHandle});
+  if (p.twitterHandle)
+    socialItems.push({Icon: XTwitterIcon, text: p.twitterHandle});
   if (p.websiteUrl)
     socialItems.push({Icon: GlobeIcon, text: stripDomain(p.websiteUrl)});
   if (p.location) socialItems.push({Icon: MapPinIcon, text: p.location});

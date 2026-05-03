@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import {Footer} from '@/components/layout/footer';
+import {Navbar} from '@/components/layout/navbar';
+import Link from 'next/link';
 
 const STYLES = `
   @keyframes glitch-text {
@@ -106,21 +106,23 @@ export default function NotFound() {
   return (
     <>
       {/* eslint-disable-next-line react/no-danger */}
-      <style dangerouslySetInnerHTML={{ __html: STYLES }} />
+      <style dangerouslySetInnerHTML={{__html: STYLES}} />
 
       <div className="flex min-h-full flex-col">
         <Navbar />
 
         <main className="relative flex flex-1 items-center justify-center overflow-hidden py-20">
-
           {/* ── Background layers ─────────────────────────────────────── */}
-          <div className="circuit-pattern absolute inset-0 opacity-[0.28]" aria-hidden />
+          <div
+            className="circuit-pattern absolute inset-0 opacity-[0.28]"
+            aria-hidden
+          />
           <div
             className="pointer-events-none absolute inset-0"
             aria-hidden
             style={{
               background:
-                "radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.75 0.15 195 / 0.05) 0%, transparent 70%)",
+                'radial-gradient(ellipse 60% 50% at 50% 40%, oklch(0.75 0.15 195 / 0.05) 0%, transparent 70%)',
             }}
           />
 
@@ -129,7 +131,7 @@ export default function NotFound() {
             className="pointer-events-none absolute inset-0 flex items-center justify-center"
             aria-hidden
           >
-            {[0, 1, 2].map((i) => (
+            {[0, 1, 2].map(i => (
               <div
                 key={i}
                 className="absolute rounded-full border border-primary/15"
@@ -148,20 +150,19 @@ export default function NotFound() {
             aria-hidden
             style={{
               background:
-                "linear-gradient(to bottom, transparent, oklch(0.75 0.15 195 / 0.04) 50%, transparent)",
+                'linear-gradient(to bottom, transparent, oklch(0.75 0.15 195 / 0.04) 50%, transparent)',
             }}
           />
 
           {/* ── Content ────────────────────────────────────────────────── */}
           <div className="relative z-10 mx-auto max-w-2xl px-4 text-center sm:px-6">
-
             {/* 404 number */}
             <div className="fade-up-1 mb-4 select-none" aria-label="Error 404">
               <span
                 className="glitch-num block font-bold leading-none text-foreground"
                 style={{
-                  fontSize: "clamp(110px, 20vw, 240px)",
-                  letterSpacing: "-0.04em",
+                  fontSize: 'clamp(110px, 20vw, 240px)',
+                  letterSpacing: '-0.04em',
                 }}
               >
                 404
@@ -169,7 +170,10 @@ export default function NotFound() {
             </div>
 
             {/* Broken OG card SVG */}
-            <div className="float-card-el fade-up-2 mx-auto mb-10 w-fit" aria-hidden>
+            <div
+              className="float-card-el fade-up-2 mx-auto mb-10 w-fit"
+              aria-hidden
+            >
               <svg
                 width="224"
                 height="118"
@@ -181,7 +185,13 @@ export default function NotFound() {
                   <clipPath id="card">
                     <rect width="224" height="118" rx="8" />
                   </clipPath>
-                  <filter id="static" x="-5%" y="-5%" width="110%" height="110%">
+                  <filter
+                    id="static"
+                    x="-5%"
+                    y="-5%"
+                    width="110%"
+                    height="110%"
+                  >
                     <feTurbulence
                       type="fractalNoise"
                       baseFrequency="0.72"
@@ -189,8 +199,18 @@ export default function NotFound() {
                       seed="2"
                       result="noise"
                     />
-                    <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
-                    <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blend" />
+                    <feColorMatrix
+                      type="saturate"
+                      values="0"
+                      in="noise"
+                      result="grayNoise"
+                    />
+                    <feBlend
+                      in="SourceGraphic"
+                      in2="grayNoise"
+                      mode="overlay"
+                      result="blend"
+                    />
                     <feComposite in="blend" in2="SourceGraphic" operator="in" />
                   </filter>
                 </defs>
@@ -244,7 +264,7 @@ export default function NotFound() {
                   strokeLinecap="round"
                   strokeDasharray="50"
                   strokeDashoffset="50"
-                  style={{ animation: "draw-path 0.5s ease 0.8s forwards" }}
+                  style={{animation: 'draw-path 0.5s ease 0.8s forwards'}}
                 />
                 <path
                   d="M125 31 L91 65"
@@ -253,7 +273,7 @@ export default function NotFound() {
                   strokeLinecap="round"
                   strokeDasharray="50"
                   strokeDashoffset="50"
-                  style={{ animation: "draw-path 0.5s ease 1.1s forwards" }}
+                  style={{animation: 'draw-path 0.5s ease 1.1s forwards'}}
                 />
 
                 {/* Glitch lines (SMIL animated) */}
@@ -323,7 +343,7 @@ export default function NotFound() {
                 />
 
                 {/* Signal dots bottom-left */}
-                {[0, 1, 2].map((i) => (
+                {[0, 1, 2].map(i => (
                   <circle
                     key={i}
                     cx={12 + i * 10}
@@ -331,8 +351,8 @@ export default function NotFound() {
                     r={2.5}
                     fill={
                       i === 0
-                        ? "oklch(0.65 0.25 25 / 0.8)"
-                        : "oklch(0.32 0.015 250)"
+                        ? 'oklch(0.65 0.25 25 / 0.8)'
+                        : 'oklch(0.32 0.015 250)'
                     }
                   >
                     {i === 0 && (
@@ -362,15 +382,15 @@ export default function NotFound() {
               <div className="mb-3.5 flex items-center gap-2 border-b border-border pb-3">
                 {(
                   [
-                    "oklch(0.65 0.25 25)",
-                    "oklch(0.78 0.18 80)",
-                    "oklch(0.72 0.22 145)",
+                    'oklch(0.65 0.25 25)',
+                    'oklch(0.78 0.18 80)',
+                    'oklch(0.72 0.22 145)',
                   ] as const
                 ).map((c, i) => (
                   <span
                     key={i}
                     className="h-2.5 w-2.5 rounded-full"
-                    style={{ background: c }}
+                    style={{background: c}}
                   />
                 ))}
                 <span className="ml-1.5 font-mono text-xs text-muted-fg">
@@ -379,23 +399,25 @@ export default function NotFound() {
               </div>
               <div className="space-y-2 font-mono text-sm">
                 <p>
-                  <span className="text-muted-fg">›</span>{" "}
+                  <span className="text-muted-fg">›</span>{' '}
                   <span className="text-terminal-amber">STATUS</span>
-                  <span className="text-muted-fg">  ······  </span>
-                  <span style={{ color: "oklch(0.65 0.25 25)" }}>
+                  <span className="text-muted-fg"> ······ </span>
+                  <span style={{color: 'oklch(0.65 0.25 25)'}}>
                     404 NOT FOUND
                   </span>
                 </p>
                 <p>
-                  <span className="text-muted-fg">›</span>{" "}
+                  <span className="text-muted-fg">›</span>{' '}
                   <span className="text-terminal-amber">SIGNAL</span>
-                  <span className="text-muted-fg">  ······  </span>
-                  <span className="text-foreground/65">lost · no route matched</span>
+                  <span className="text-muted-fg"> ······ </span>
+                  <span className="text-foreground/65">
+                    lost · no route matched
+                  </span>
                 </p>
                 <p>
-                  <span className="text-muted-fg">›</span>{" "}
+                  <span className="text-muted-fg">›</span>{' '}
                   <span className="text-terminal-amber">HINT</span>
-                  <span className="text-muted-fg">    ······  </span>
+                  <span className="text-muted-fg"> ······ </span>
                   <span className="text-foreground/65">
                     check the URL or navigate home
                   </span>
@@ -404,7 +426,7 @@ export default function NotFound() {
                   <span className="terminal-prompt text-xs">$</span>
                   <span
                     className="inline-block h-3.5 w-2 bg-primary align-middle"
-                    style={{ animation: "blink-cursor 1.1s step-end infinite" }}
+                    style={{animation: 'blink-cursor 1.1s step-end infinite'}}
                   />
                 </p>
               </div>
@@ -437,4 +459,3 @@ export default function NotFound() {
     </>
   );
 }
-

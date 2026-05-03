@@ -12,25 +12,30 @@ import {getParamDescriptors} from '@/modules/og/shared/og-docs';
 import {OG_ROUTES} from '@/modules/og/shared/og-routes';
 import {EXAMPLE_PARAMS} from '@/modules/og/shared/og-template-registry';
 import type {TemplateName} from '@/modules/og/shared/og.types';
+import {DocsMobileNav} from '@/modules/seo/client/components/docs-mobile-nav';
 import {getSeoParamDescriptors} from '@/modules/seo/shared/seo-docs';
 import {SEO_ROUTES} from '@/modules/seo/shared/seo-routes';
 import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
+import {
+  buildSeoSnippet,
+  isImageSeoTemplate,
+} from '@/modules/seo/shared/seo-snippets';
 import type {Metadata} from 'next';
 import Link from 'next/link';
 
 // general template — "API Reference" title
 const OG_QS =
-  'siteName=OG+Graph&title=API+Reference&description=11+OG+templates+%C2%B7+8+badges+%C2%B7+4+SEO+assets&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid';
+  'siteName=OG+Graph&title=API+Reference&description=11+OG+templates+%C2%B7+8+badges+%C2%B7+7+SEO+assets&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid';
 
 export const metadata: Metadata = {
   title: 'API Docs',
   description:
-    'Full API reference for OG Graph: 11 Open Graph image templates, 8 SVG badges, and 4 SEO asset endpoints. Query parameters, examples, and live previews.',
+    'Full API reference for OG Graph: 11 Open Graph image templates, 8 SVG badges, and 7 SEO endpoints. Query parameters, examples, and live previews.',
   alternates: {canonical: '/docs'},
   openGraph: {
     title: 'API Docs — OG Graph',
     description:
-      'Full API reference: 11 OG image templates, 8 SVG badges, and 4 SEO asset endpoints with live examples.',
+      'Full API reference: 11 OG image templates, 8 SVG badges, and 7 SEO endpoints with live examples.',
     url: '/docs',
     images: [
       {
@@ -45,7 +50,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'API Docs — OG Graph',
     description:
-      'Full API reference: 11 OG image templates, 8 SVG badges, and 4 SEO asset endpoints.',
+      'Full API reference: 11 OG image templates, 8 SVG badges, and 7 SEO endpoints.',
     images: [`/api/og/general?${OG_QS}`],
   },
 };
@@ -125,6 +130,22 @@ const SEO_EXAMPLES: Record<
     aspect: '800/418',
     description: '800×418 PNG Twitter summary card.',
   },
+  'json-ld': {
+    qs: 'schemaType=SoftwareApplication&name=OG+Graph&description=Generate+OG+images+and+SEO+assets&url=https%3A%2F%2Fexample.com',
+    aspect: '1/1',
+    description: 'Structured data script route (application/ld+json).',
+  },
+  'robots-txt': {
+    qs: 'userAgent=*&allow=%2F&disallow=%2Fprivate&sitemap=https%3A%2F%2Fexample.com%2Fsitemap.xml&aiCrawlerPolicy=allow',
+    aspect: '1/1',
+    description: 'Robots.txt helper route with optional AI crawler policy.',
+  },
+  'meta-pack': {
+    qs: 'title=OG+Graph&description=Generate+OG+images+and+SEO+assets&canonical=https%3A%2F%2Fexample.com&ogType=website',
+    aspect: '1/1',
+    description:
+      'Copy-ready HTML meta snippet route for canonical + OG + Twitter.',
+  },
 };
 
 // ─── Section header ───────────────────────────────────────────────────────────
@@ -170,7 +191,7 @@ function NavGroup({
 }) {
   return (
     <div className="mb-6">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg/80">
         {label}
       </p>
       <ul className="space-y-1">
@@ -178,7 +199,7 @@ function NavGroup({
           <li key={item.href}>
             <a
               href={item.href}
-              className="block rounded px-2 py-1 text-xs text-muted-fg hover:bg-muted/40 hover:text-primary transition-colors font-mono truncate"
+              className="block rounded-md border border-transparent px-2 py-1 text-xs text-foreground/75 hover:border-border/50 hover:bg-card/60 hover:text-primary transition-colors font-mono truncate"
             >
               {item.name}
             </a>
@@ -196,13 +217,16 @@ export default function DocsPage() {
   const templates = Object.keys(OG_ROUTES) as TemplateName[];
   const badges = Object.keys(BADGE_ROUTES) as BadgeName[];
   const seoAssets = Object.keys(SEO_ROUTES) as SeoTemplateName[];
+  const ogNavItems = templates.map(t => ({href: `#${t}`, name: t}));
+  const badgeNavItems = badges.map(b => ({href: `#badge-${b}`, name: b}));
+  const seoNavItems = seoAssets.map(s => ({href: `#seo-${s}`, name: s}));
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
     headline: 'OG Graph API Reference',
     description:
-      'Full API reference for OG Graph: 11 Open Graph image templates, 8 SVG badges, and 4 SEO asset endpoints.',
+      'Full API reference for OG Graph: 11 Open Graph image templates, 8 SVG badges, and 7 SEO endpoints.',
     url: `${base}/docs`,
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -246,36 +270,35 @@ export default function DocsPage() {
             Three services: OG images (PNG), SVG badges, and SEO assets. Base
             URL: <code className="terminal-prompt text-xs">{base}</code>
           </p>
+
+          <div className="mt-4 lg:hidden">
+            <DocsMobileNav
+              ogItems={ogNavItems}
+              badgeItems={badgeNavItems}
+              seoItems={seoNavItems}
+            />
+          </div>
         </div>
       </header>
 
       <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-10 flex-1">
         {/* ── Sidebar ──────────────────────────────────────────────────────── */}
-        <aside className="lg:w-56 shrink-0">
-          <nav className="lg:sticky lg:top-6 builder-panel rounded-lg border border-border p-4 scrollbar-hide lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
-            <p className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-fg flex items-center gap-2">
+        <aside className="hidden lg:block lg:w-56 shrink-0">
+          <nav className="lg:sticky lg:top-6 rounded-xl border border-border/60 bg-card/40 shadow-sm p-4 scrollbar-hide lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
+            <p className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-fg/90 flex items-center gap-2">
               <span className="status-indicator status-info" />
               Navigation
             </p>
 
-            <NavGroup
-              label="OG Templates"
-              items={templates.map(t => ({href: `#${t}`, name: t}))}
-            />
+            <NavGroup label="OG Templates" items={ogNavItems} />
 
             <div className="section-divider mb-4" />
 
-            <NavGroup
-              label="SVG Badges"
-              items={badges.map(b => ({href: `#badge-${b}`, name: b}))}
-            />
+            <NavGroup label="SVG Badges" items={badgeNavItems} />
 
             <div className="section-divider mb-4" />
 
-            <NavGroup
-              label="SEO Assets"
-              items={seoAssets.map(s => ({href: `#seo-${s}`, name: s}))}
-            />
+            <NavGroup label="SEO Assets" items={seoNavItems} />
 
             <div className="section-divider my-4" />
 
@@ -343,12 +366,20 @@ export default function DocsPage() {
             id="seo"
             icon="🔍"
             title="SEO Assets"
-            subtitle="Returns PNG images sized to platform spec. Cache: max-age=86400."
+            subtitle="Includes image assets and text-first developer endpoints (JSON-LD, robots.txt, and meta pack)."
             count={seoAssets.length}
           />
           <div className="flex flex-col gap-10 mb-16">
             {seoAssets.map(asset => {
               const ex = SEO_EXAMPLES[asset];
+              const exampleUrl = `${base}${SEO_ROUTES[asset]}?${ex.qs}`;
+              const previewText = isImageSeoTemplate(asset)
+                ? undefined
+                : buildSeoSnippet(
+                    asset,
+                    exampleUrl,
+                    Object.fromEntries(new URLSearchParams(ex.qs).entries()),
+                  );
               return (
                 <ApiEndpointCard
                   key={asset}
@@ -356,8 +387,9 @@ export default function DocsPage() {
                   path={SEO_ROUTES[asset]}
                   description={ex.description}
                   params={getSeoParamDescriptors(asset)}
-                  exampleUrl={`${base}${SEO_ROUTES[asset]}?${ex.qs}`}
+                  exampleUrl={exampleUrl}
                   previewAspect={ex.aspect}
+                  previewText={previewText}
                 />
               );
             })}
@@ -372,7 +404,9 @@ export default function DocsPage() {
             <ul className="space-y-2">
               <li className="flex items-center gap-3">
                 <code className="terminal-prompt text-xs w-8">200</code>
-                <span>Image (PNG or SVG)</span>
+                <span>
+                  Image (PNG/SVG) or text payload (robots/meta/json-ld)
+                </span>
               </li>
               <li className="flex items-center gap-3">
                 <code className="font-mono text-xs w-8 text-terminal-amber">

@@ -95,7 +95,13 @@ export interface SelectOption {
 }
 
 export type FieldDef =
-  | {key: string; label: string; type: 'text' | 'url'; placeholder?: string}
+  | {
+      key: string;
+      label: string;
+      type: 'text' | 'url';
+      placeholder?: string;
+      options?: (string | SelectOption)[];
+    }
   | {key: string; label: string; type: 'color'}
   | {
       key: string;

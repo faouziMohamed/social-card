@@ -3,6 +3,7 @@ import {Badge} from '@/components/ui/badge';
 import {ROUTES} from '@/lib/utils/routes';
 import type {TemplateName} from '@/modules/og/shared/og.types';
 import {ExternalLink} from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface ParamRow {
@@ -29,10 +30,10 @@ export function EndpointCard({
   return (
     <section
       id={template}
-      className="experience-card mechanical-corners rounded-lg border border-border bg-card overflow-hidden"
+      className="experience-card mechanical-corners overflow-hidden rounded-xl border border-border/60 bg-card/60 shadow-sm"
     >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border builder-panel px-6 py-4">
+      <div className="flex items-center justify-between border-b border-border/50 bg-card/80 px-6 py-4">
         <div className="flex items-center gap-3">
           <Badge variant="default" className="font-mono text-xs">
             GET
@@ -58,12 +59,13 @@ export function EndpointCard({
       </div>
 
       {/* Preview */}
-      <div className="preview-canvas flex items-center justify-center p-6 border-b border-border">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+      <div className="preview-canvas flex items-center justify-center border-b border-border/40 bg-background/40 p-6">
+        <Image
           src={exampleUrl}
           alt={`${template} template example`}
           className="mx-auto max-w-lg rounded w-full object-cover shimmer-track"
+          width={1200}
+          height={630}
           style={{aspectRatio: '1200 / 630'}}
           loading="lazy"
         />
@@ -110,7 +112,7 @@ export function EndpointCard({
       </div>
 
       {/* Example URL */}
-      <div className="border-t border-border px-6 py-4">
+      <div className="border-t border-border/50 bg-background/30 px-6 py-4">
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
           <span className="status-indicator status-success mr-2" />
           Example URL

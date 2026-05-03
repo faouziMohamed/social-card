@@ -1,6 +1,7 @@
 import {CopyButton} from '@/components/shared/copy-button';
 import {Badge} from '@/components/ui/badge';
 import {ExternalLink} from 'lucide-react';
+import Image from 'next/image';
 
 interface ParamRow {
   name: string;
@@ -17,6 +18,7 @@ interface ApiEndpointCardProps {
   params: ParamRow[];
   exampleUrl: string;
   previewAspect?: string; // e.g. "220/36" for badges
+  previewText?: string;
 }
 
 export function ApiEndpointCard({
@@ -26,14 +28,15 @@ export function ApiEndpointCard({
   params,
   exampleUrl,
   previewAspect,
+  previewText,
 }: ApiEndpointCardProps) {
   return (
     <section
       id={id}
-      className="experience-card mechanical-corners rounded-lg border border-border bg-card overflow-hidden"
+      className="experience-card mechanical-corners overflow-hidden rounded-xl border border-border/60 bg-card/60 shadow-sm"
     >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-border builder-panel px-6 py-4">
+      <div className="flex items-center justify-between border-b border-border/50 bg-card/80 px-6 py-4">
         <div className="flex items-center gap-3">
           <Badge variant="default" className="font-mono text-xs">
             GET
@@ -58,19 +61,26 @@ export function ApiEndpointCard({
       )}
 
       {/* Preview */}
-      <div className="preview-canvas flex items-center justify-center p-6 border-b border-border min-h-24">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={exampleUrl}
-          alt={`${id} example`}
-          className="max-w-full rounded shimmer-track"
-          style={
-            previewAspect
-              ? {aspectRatio: previewAspect.replace('/', ' / ')}
-              : undefined
-          }
-          loading="lazy"
-        />
+      <div className="preview-canvas flex min-h-24 items-center justify-center border-b border-border/40 bg-background/40 p-6">
+        {previewText ? (
+          <pre className="w-full overflow-auto rounded border border-border/30 bg-card/50 p-3 text-left font-mono text-[11px] text-muted-fg/90 whitespace-pre-wrap">
+            {previewText}
+          </pre>
+        ) : (
+          <Image
+            src={exampleUrl}
+            alt={`${id} example`}
+            className="max-w-full rounded shimmer-track"
+            width={1200}
+            height={630}
+            style={
+              previewAspect
+                ? {aspectRatio: previewAspect.replace('/', ' / ')}
+                : undefined
+            }
+            loading="lazy"
+          />
+        )}
       </div>
 
       {/* Params table */}
@@ -114,7 +124,7 @@ export function ApiEndpointCard({
       </div>
 
       {/* Example URL */}
-      <div className="border-t border-border px-6 py-4">
+      <div className="border-t border-border/50 bg-background/30 px-6 py-4">
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
           <span className="status-indicator status-success mr-2" />
           Example URL

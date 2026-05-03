@@ -1,6 +1,7 @@
 'use client';
 
 import {cn} from '@/lib/utils/cn';
+import Image from 'next/image';
 import {useEffect, useRef, useState} from 'react';
 
 interface PreviewPanelProps {
@@ -56,11 +57,12 @@ export function PreviewPanel({
       )}
 
       {displaySrc && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           ref={imgRef}
           src={displaySrc}
           alt="OG image preview"
+          fill
+          sizes="100vw"
           className={cn(
             'h-full w-full object-contain transition-opacity duration-500',
             loaded ? 'opacity-100' : 'opacity-0',

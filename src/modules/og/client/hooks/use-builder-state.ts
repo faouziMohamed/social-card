@@ -12,7 +12,12 @@ export type TargetKey = 'og' | 'twitter-large' | 'twitter-small' | 'linkedin';
 // ─── Validation ──────────────────────────────────────────────────────────────
 
 const VALID_TEMPLATES = new Set(Object.keys(OG_ROUTES) as TemplateName[]);
-const VALID_TARGETS = new Set<TargetKey>(['og', 'twitter-large', 'twitter-small', 'linkedin']);
+const VALID_TARGETS = new Set<TargetKey>([
+  'og',
+  'twitter-large',
+  'twitter-small',
+  'linkedin',
+]);
 
 function toValidTemplate(value: unknown): TemplateName {
   return typeof value === 'string' && VALID_TEMPLATES.has(value as TemplateName)
@@ -84,7 +89,9 @@ function save(state: PersistedState): void {
   }
 }
 
-function resolveInitialBuilderSlot(templateFromUrl: string | null): InitialBuilderSlot {
+function resolveInitialBuilderSlot(
+  templateFromUrl: string | null,
+): InitialBuilderSlot {
   const persisted = load();
   const template = resolveInitialTemplateName(templateFromUrl, persisted);
   const slot = persisted?.templates[template];
@@ -111,8 +118,12 @@ export function useBuilderState(): BuilderState {
     [initialTemplateFromUrl],
   );
 
-  const [template, setTemplateRaw] = useState<TemplateName>(initialSlot.template);
-  const [params, setParams] = useState<Record<string, string>>(initialSlot.params);
+  const [template, setTemplateRaw] = useState<TemplateName>(
+    initialSlot.template,
+  );
+  const [params, setParams] = useState<Record<string, string>>(
+    initialSlot.params,
+  );
   const [target, setTargetRaw] = useState<TargetKey>(initialSlot.target);
 
   const [previewSrc, setPreviewSrc] = useState('');

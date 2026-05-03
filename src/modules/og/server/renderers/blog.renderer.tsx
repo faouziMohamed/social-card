@@ -1,7 +1,7 @@
 import React from 'react';
 import type {BlogParams} from '../../shared/og-schemas';
-import type {OgRendererContext} from '../og-handler.server';
 import {detectSocialIcon} from '../og-brand-icons.server';
+import type {OgRendererContext} from '../og-handler.server';
 import {clampStyle} from '../og-render.server';
 import {
   composeBackgroundStyleWithTone,

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect } from "react";
+import Link from 'next/link';
+import {useEffect} from 'react';
 
 // global-error replaces the root layout — must be fully standalone with <html><body>
 
@@ -84,37 +84,37 @@ const STYLES = `
 `;
 
 interface GlobalErrorProps {
-  error: Error & { digest?: string };
+  error: Error & {digest?: string};
   reset: () => void;
 }
 
-export default function GlobalError({ error, reset }: GlobalErrorProps) {
+export default function GlobalError({error, reset}: GlobalErrorProps) {
   useEffect(() => {
-    console.error("[OG Graph] Global error:", error);
+    console.error('[OG Graph] Global error:', error);
   }, [error]);
 
   return (
-    <html lang="en" style={{ colorScheme: "dark" }}>
+    <html lang="en" style={{colorScheme: 'dark'}}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Critical Error — OG Graph</title>
         {/* eslint-disable-next-line react/no-danger */}
-        <style dangerouslySetInnerHTML={{ __html: STYLES }} />
+        <style dangerouslySetInnerHTML={{__html: STYLES}} />
       </head>
       <body
         style={{
-          minHeight: "100dvh",
-          backgroundColor: "#080808",
-          color: "#f0f0f0",
+          minHeight: '100dvh',
+          backgroundColor: '#080808',
+          color: '#f0f0f0',
           fontFamily:
             "'Geist Mono', 'Cascadia Code', 'Fira Code', ui-monospace, monospace",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "24px",
-          position: "relative",
-          overflow: "hidden",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '24px',
+          position: 'relative',
+          overflow: 'hidden',
         }}
         role="alert"
         aria-live="assertive"
@@ -123,12 +123,12 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
         <div
           aria-hidden
           style={{
-            position: "absolute",
+            position: 'absolute',
             inset: 0,
             backgroundImage:
-              "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)",
-            backgroundSize: "38px 38px",
-            pointerEvents: "none",
+              'radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)',
+            backgroundSize: '38px 38px',
+            pointerEvents: 'none',
           }}
         />
 
@@ -136,47 +136,47 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
         <div
           aria-hidden
           style={{
-            position: "absolute",
+            position: 'absolute',
             inset: 0,
             background:
-              "radial-gradient(ellipse 55% 50% at 50% 45%, rgba(200, 40, 40, 0.07) 0%, transparent 70%)",
-            pointerEvents: "none",
+              'radial-gradient(ellipse 55% 50% at 50% 45%, rgba(200, 40, 40, 0.07) 0%, transparent 70%)',
+            pointerEvents: 'none',
           }}
         />
 
         {/* Content */}
         <div
           style={{
-            position: "relative",
+            position: 'relative',
             zIndex: 10,
-            width: "100%",
-            maxWidth: "460px",
-            textAlign: "center",
+            width: '100%',
+            maxWidth: '460px',
+            textAlign: 'center',
           }}
         >
           {/* Icon */}
           <div
-            style={{ margin: "0 auto 32px", width: "fit-content" }}
+            style={{margin: '0 auto 32px', width: 'fit-content'}}
             aria-hidden
           >
-            <div style={{ position: "relative", width: 96, height: 96 }}>
+            <div style={{position: 'relative', width: 96, height: 96}}>
               {/* Expanding rings */}
               <div
                 className="ring-exp"
                 style={{
-                  position: "absolute",
+                  position: 'absolute',
                   inset: 0,
-                  borderRadius: "50%",
-                  border: "1.5px solid rgba(200,50,50,0.35)",
+                  borderRadius: '50%',
+                  border: '1.5px solid rgba(200,50,50,0.35)',
                 }}
               />
               <div
                 className="ring-exp-d"
                 style={{
-                  position: "absolute",
+                  position: 'absolute',
                   inset: 0,
-                  borderRadius: "50%",
-                  border: "1.5px solid rgba(200,50,50,0.2)",
+                  borderRadius: '50%',
+                  border: '1.5px solid rgba(200,50,50,0.2)',
                 }}
               />
 
@@ -220,11 +220,11 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           <h1
             className="title-el"
             style={{
-              fontSize: "clamp(22px, 5vw, 30px)",
+              fontSize: 'clamp(22px, 5vw, 30px)',
               fontWeight: 700,
-              letterSpacing: "-0.025em",
-              marginBottom: "10px",
-              color: "#f0f0f0",
+              letterSpacing: '-0.025em',
+              marginBottom: '10px',
+              color: '#f0f0f0',
               opacity: 0,
             }}
           >
@@ -234,10 +234,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           <p
             className="sub-el"
             style={{
-              fontSize: "13px",
-              color: "rgba(255,255,255,0.38)",
+              fontSize: '13px',
+              color: 'rgba(255,255,255,0.38)',
               lineHeight: 1.6,
-              marginBottom: "28px",
+              marginBottom: '28px',
               opacity: 0,
             }}
           >
@@ -251,31 +251,31 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             <div
               className="detail-el"
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: "8px",
-                padding: "14px 16px",
-                textAlign: "left",
-                marginBottom: "28px",
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                borderRadius: '8px',
+                padding: '14px 16px',
+                textAlign: 'left',
+                marginBottom: '28px',
                 opacity: 0,
               }}
             >
               <p
                 style={{
-                  fontSize: "10px",
-                  color: "rgba(255,255,255,0.25)",
-                  marginBottom: "6px",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
+                  fontSize: '10px',
+                  color: 'rgba(255,255,255,0.25)',
+                  marginBottom: '6px',
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
                 }}
               >
                 Error message
               </p>
               <p
                 style={{
-                  fontSize: "12px",
-                  color: "rgba(220, 85, 85, 0.9)",
-                  wordBreak: "break-all",
+                  fontSize: '12px',
+                  color: 'rgba(220, 85, 85, 0.9)',
+                  wordBreak: 'break-all',
                   lineHeight: 1.6,
                 }}
               >
@@ -284,9 +284,9 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               {error.digest && (
                 <p
                   style={{
-                    fontSize: "10px",
-                    color: "rgba(255,255,255,0.18)",
-                    marginTop: "8px",
+                    fontSize: '10px',
+                    color: 'rgba(255,255,255,0.18)',
+                    marginTop: '8px',
                   }}
                 >
                   digest · {error.digest}
@@ -299,10 +299,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           <div
             className="cta-el"
             style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              alignItems: 'center',
               opacity: 0,
             }}
           >
@@ -311,15 +311,15 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               className="reset-btn"
               onClick={reset}
               style={{
-                width: "100%",
-                maxWidth: "300px",
-                padding: "12px 24px",
-                borderRadius: "8px",
-                border: "1px solid rgba(210,55,55,0.42)",
-                background: "rgba(210,55,55,0.12)",
-                color: "rgba(220,90,90,1)",
-                fontSize: "13px",
-                fontFamily: "inherit",
+                width: '100%',
+                maxWidth: '300px',
+                padding: '12px 24px',
+                borderRadius: '8px',
+                border: '1px solid rgba(210,55,55,0.42)',
+                background: 'rgba(210,55,55,0.12)',
+                color: 'rgba(220,90,90,1)',
+                fontSize: '13px',
+                fontFamily: 'inherit',
               }}
             >
               ↺ try again
@@ -328,18 +328,18 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               className="home-link"
               href="/"
               style={{
-                width: "100%",
-                maxWidth: "300px",
-                padding: "12px 24px",
-                borderRadius: "8px",
-                border: "1px solid rgba(255,255,255,0.09)",
-                background: "rgba(255,255,255,0.03)",
-                color: "rgba(255,255,255,0.38)",
-                fontSize: "13px",
-                fontFamily: "inherit",
-                textDecoration: "none",
-                display: "block",
-                transition: "color 0.2s, border-color 0.2s",
+                width: '100%',
+                maxWidth: '300px',
+                padding: '12px 24px',
+                borderRadius: '8px',
+                border: '1px solid rgba(255,255,255,0.09)',
+                background: 'rgba(255,255,255,0.03)',
+                color: 'rgba(255,255,255,0.38)',
+                fontSize: '13px',
+                fontFamily: 'inherit',
+                textDecoration: 'none',
+                display: 'block',
+                transition: 'color 0.2s, border-color 0.2s',
               }}
             >
               ← back to home
@@ -349,9 +349,9 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           <p
             className="brand-el"
             style={{
-              marginTop: "40px",
-              fontSize: "11px",
-              color: "rgba(255,255,255,0.12)",
+              marginTop: '40px',
+              fontSize: '11px',
+              color: 'rgba(255,255,255,0.12)',
               opacity: 0,
             }}
           >
@@ -362,4 +362,3 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
     </html>
   );
 }
-

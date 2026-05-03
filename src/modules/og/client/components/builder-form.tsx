@@ -23,6 +23,7 @@ export interface BuilderFormProps {
   sections: FormSection[];
   params: Record<string, string>;
   onParamChange: (key: string, value: string) => void;
+  onParamDelete?: (key: string) => void;
 }
 
 // Returns true for fields that always occupy the full row (2 columns)
@@ -78,11 +79,66 @@ export function BuilderForm({
   sections,
   params,
   onParamChange,
+  onParamDelete,
 }: BuilderFormProps) {
+  const schemaType = normalizeJsonLdSchemaType(params.schemaType);
+
   return (
     <div className="flex flex-col divide-y divide-border/20">
       {sections.map(section => {
+        if (isChangelogReleaseSection(section, params)) {
+          return (
+            <div key={section.title}>
+              <div className="sticky top-0 z-10 border-b border-border/20 bg-card/90 px-4 py-2 backdrop-blur-sm">
+                <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-muted-fg/40">
+                  {section.title}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-x-3 gap-y-3 px-4 py-3">
+                {section.fields
+                  .filter(field => !isChangelogChangeField(field.key))
+                  .map(field => (
+                    <FieldCell
+                      key={field.key}
+                      field={field}
+                      params={params}
+                      forceFullWidth={false}
+                      onChange={val => onParamChange(field.key, val)}
+                      onParamChange={onParamChange}
+                    />
+                  ))}
+                <div className="col-span-2">
+                  <ChangelogFieldList
+                    params={params}
+                    onParamChange={onParamChange}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        if (section.title === 'FAQ' && schemaType === 'faqpage') {
+          return (
+            <div key={section.title}>
+              <div className="sticky top-0 z-10 border-b border-border/20 bg-card/90 px-4 py-2 backdrop-blur-sm">
+                <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-muted-fg/40">
+                  {section.title}
+                </span>
+              </div>
+              <div className="px-4 py-3">
+                <FaqFieldList
+                  params={params}
+                  onParamChange={onParamChange}
+                  onParamDelete={onParamDelete}
+                />
+              </div>
+            </div>
+          );
+        }
+
         const visibleFields = section.fields.filter(f => {
+          if (!shouldShowJsonLdField(f.key, schemaType, params)) return false;
           if (f.key === 'bgCustomColor' && params.bgTone !== 'custom')
             return false;
           const {base} = parseBgStyle(params.bgStyle ?? 'gradient+grid');
@@ -123,6 +179,86 @@ export function BuilderForm({
       })}
 
       <div className="h-2" />
+    </div>
+  );
+}
+
+function FaqFieldList({
+  params,
+  onParamChange,
+  onParamDelete,
+}: {
+  params: Record<string, string>;
+  onParamChange: (key: string, value: string) => void;
+  onParamDelete?: (key: string) => void;
+}) {
+  const entries = getFaqEntries(params);
+
+  const addEntry = () => {
+    const lastIndex = entries.at(-1)?.index ?? 0;
+    const nextIndex = lastIndex + 1;
+    onParamChange(`faqQuestion${nextIndex}`, '');
+    onParamChange(`faqAnswer${nextIndex}`, '');
+  };
+
+  const removeEntry = (index: number) => {
+    const target = index + 1;
+    if (onParamDelete) {
+      onParamDelete(`faqQuestion${target}`);
+      onParamDelete(`faqAnswer${target}`);
+      return;
+    }
+    onParamChange(`faqQuestion${target}`, '');
+    onParamChange(`faqAnswer${target}`, '');
+  };
+
+  return (
+    <div className="flex flex-col gap-3">
+      {entries.map((entry, index) => (
+        <div
+          key={entry.index}
+          className="rounded-lg border border-border/30 p-3"
+        >
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-[10px] font-medium text-muted-fg/50">
+              FAQ {index + 1}
+            </span>
+            {entries.length > 1 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => removeEntry(index)}
+                className="h-7 px-2 text-[10px]"
+              >
+                Remove
+              </Button>
+            )}
+          </div>
+          <div className="grid gap-2">
+            <Input
+              type="text"
+              value={entry.question}
+              onChange={e =>
+                onParamChange(`faqQuestion${entry.index}`, e.target.value)
+              }
+              placeholder="Question"
+              className="h-8 w-full text-xs"
+            />
+            <Input
+              type="text"
+              value={entry.answer}
+              onChange={e =>
+                onParamChange(`faqAnswer${entry.index}`, e.target.value)
+              }
+              placeholder="Answer"
+              className="h-8 w-full text-xs"
+            />
+          </div>
+        </div>
+      ))}
+      <Button variant="outline" onClick={addEntry} className="h-8 text-xs">
+        Add FAQ
+      </Button>
     </div>
   );
 }
@@ -247,6 +383,48 @@ function FieldCell({
   }
 
   if (field.type === 'multi-select') return null;
+
+  if (field.key === 'schemaType' && field.type === 'text') {
+    const presetOptions = (field.options ?? []).map(opt =>
+      typeof opt === 'string' ? opt : opt.value,
+    );
+    const selectedValue = presetOptions.includes(value) ? value : '__custom__';
+    return (
+      <div className="col-span-2 flex flex-col gap-1.5">
+        <span className="text-[10px] font-medium text-muted-fg/50">
+          {field.label}
+        </span>
+        <Select
+          value={selectedValue || '__custom__'}
+          onValueChange={next => {
+            if (next === '__custom__') return;
+            onChange(next);
+          }}
+        >
+          <SelectTrigger className="h-8 w-full text-xs">
+            <SelectValue placeholder="Pick schema type" />
+          </SelectTrigger>
+          <SelectContent>
+            {presetOptions.map(opt => (
+              <SelectItem key={opt} value={opt} className="text-xs">
+                {opt}
+              </SelectItem>
+            ))}
+            <SelectItem value="__custom__" className="text-xs">
+              Custom
+            </SelectItem>
+          </SelectContent>
+        </Select>
+        <Input
+          type="text"
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder={'placeholder' in field ? field.placeholder : ''}
+          className="h-8 w-full text-xs"
+        />
+      </div>
+    );
+  }
 
   if (field.type === 'select') {
     const first = field.options[0];
@@ -373,4 +551,213 @@ function parseBgStyle(value: string): {base: string; overlays: string[]} {
 
 function serializeBgStyle(base: string, overlays: string[]): string {
   return [base, ...overlays].join('+');
+}
+
+function normalizeJsonLdSchemaType(value?: string): string {
+  return (value ?? 'Article').trim().toLowerCase();
+}
+
+function ChangelogFieldList({
+  params,
+  onParamChange,
+}: {
+  params: Record<string, string>;
+  onParamChange: (key: string, value: string) => void;
+}) {
+  const entries = getChangelogEntries(params);
+
+  const addEntry = () => {
+    const nextIndex = (entries.at(-1)?.index ?? 0) + 1;
+    onParamChange(`change${nextIndex}`, '');
+  };
+
+  const removeEntry = (index: number) => {
+    onParamChange(`change${index}`, '');
+  };
+
+  return (
+    <div className="flex flex-col gap-3">
+      <span className="text-[10px] font-medium text-muted-fg/50">Changes</span>
+      {entries.map((entry, index) => (
+        <div
+          key={entry.index}
+          className="rounded-lg border border-border/30 p-3"
+        >
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-[10px] font-medium text-muted-fg/50">
+              Change {index + 1}
+            </span>
+            {entries.length > 1 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => removeEntry(entry.index)}
+                className="h-7 px-2 text-[10px]"
+              >
+                Remove
+              </Button>
+            )}
+          </div>
+          <Input
+            type="text"
+            value={entry.value}
+            onChange={e =>
+              onParamChange(`change${entry.index}`, e.target.value)
+            }
+            placeholder="Describe the release change"
+            className="h-8 w-full text-xs"
+          />
+        </div>
+      ))}
+      <Button variant="outline" onClick={addEntry} className="h-8 text-xs">
+        Add Change
+      </Button>
+    </div>
+  );
+}
+
+function getChangelogEntries(params: Record<string, string>) {
+  const values = Object.entries(params)
+    .map(([key, value]) => {
+      const match = key.match(/^change(\d+)$/);
+      if (!match) return null;
+      return {
+        index: Number(match[1]),
+        value: value ?? '',
+      };
+    })
+    .filter(item => item !== null)
+    .toSorted((a, b) => a.index - b.index);
+
+  const nonEmpty = values.filter(entry => entry.value.trim().length > 0);
+  if (nonEmpty.length > 0) return values;
+
+  return [{index: 1, value: params.change1 ?? ''}];
+}
+
+function isChangelogReleaseSection(
+  section: FormSection,
+  params: Record<string, string>,
+): boolean {
+  if (section.title !== 'Release') return false;
+  const hasChangeField = section.fields.some(field =>
+    isChangelogChangeField(field.key),
+  );
+  return (
+    hasChangeField || Object.keys(params).some(key => /^change\d+$/.test(key))
+  );
+}
+
+function isChangelogChangeField(key: string): boolean {
+  return /^change\d+$/.test(key);
+}
+
+function getFaqEntries(params: Record<string, string>) {
+  const indices = new Set<number>();
+  for (const key of Object.keys(params)) {
+    const questionMatch = key.match(/^faqQuestion(\d+)$/);
+    if (questionMatch) indices.add(Number(questionMatch[1]));
+    const answerMatch = key.match(/^faqAnswer(\d+)$/);
+    if (answerMatch) indices.add(Number(answerMatch[1]));
+  }
+
+  if (indices.size === 0) {
+    indices.add(1);
+    indices.add(2);
+  }
+
+  return [...indices]
+    .filter(index => Number.isFinite(index) && index > 0)
+    .toSorted((a, b) => a - b)
+    .map(index => ({
+      index,
+      question: params[`faqQuestion${index}`] ?? '',
+      answer: params[`faqAnswer${index}`] ?? '',
+    }));
+}
+
+function shouldShowJsonLdField(
+  key: string,
+  schemaType: string,
+  params: Record<string, string>,
+): boolean {
+  const jsonLdFieldKeys = new Set([
+    'schemaType',
+    'name',
+    'headline',
+    'description',
+    'url',
+    'image',
+    'authorName',
+    'publisherName',
+    'datePublished',
+    'dateModified',
+    'price',
+    'priceCurrency',
+    'applicationCategory',
+    'operatingSystem',
+    'faqQuestion1',
+    'faqAnswer1',
+    'faqQuestion2',
+    'faqAnswer2',
+    'sameAs1',
+    'sameAs2',
+    'sameAs3',
+    'jsonRaw',
+  ]);
+  if (!jsonLdFieldKeys.has(key)) return true;
+
+  const resolvedSchemaType =
+    !params.schemaType && key !== 'schemaType' ? 'article' : schemaType;
+
+  const always = new Set([
+    'schemaType',
+    'name',
+    'description',
+    'url',
+    'image',
+    'jsonRaw',
+  ]);
+  if (always.has(key)) return true;
+
+  if (resolvedSchemaType === 'article') {
+    return (
+      key === 'headline' ||
+      key === 'authorName' ||
+      key === 'publisherName' ||
+      key === 'datePublished' ||
+      key === 'dateModified'
+    );
+  }
+
+  if (resolvedSchemaType === 'product') {
+    return key === 'price' || key === 'priceCurrency';
+  }
+
+  if (resolvedSchemaType === 'faqpage') {
+    return (
+      key === 'faqQuestion1' ||
+      key === 'faqAnswer1' ||
+      key === 'faqQuestion2' ||
+      key === 'faqAnswer2'
+    );
+  }
+
+  if (
+    resolvedSchemaType === 'organization' ||
+    resolvedSchemaType === 'localbusiness'
+  ) {
+    return key === 'sameAs1' || key === 'sameAs2' || key === 'sameAs3';
+  }
+
+  if (resolvedSchemaType === 'softwareapplication') {
+    return (
+      key === 'applicationCategory' ||
+      key === 'operatingSystem' ||
+      key === 'price' ||
+      key === 'priceCurrency'
+    );
+  }
+
+  return false;
 }

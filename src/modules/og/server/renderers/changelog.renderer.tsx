@@ -21,7 +21,7 @@ export function changelogRenderer(
     p.bgGradientFrom,
     p.bgGradientTo,
   );
-  const items = [p.change1, p.change2, p.change3].filter(Boolean) as string[];
+  const items = getChangeItems(p);
 
   return (
     <div
@@ -127,10 +127,25 @@ export function changelogRenderer(
               color: theme.textMuted,
             }}
           >
-            Ship notes ready. Add change1/change2/change3 params.
+            Ship notes ready. Add change1/change2/change3 (or more) params.
           </span>
         )}
       </div>
     </div>
   );
+}
+
+function getChangeItems(params: ChangelogParams): string[] {
+  const entries = Object.entries(params)
+    .map(([key, value]) => {
+      const match = key.match(/^change(\d+)$/);
+      if (!match || typeof value !== 'string' || value.trim().length === 0) {
+        return null;
+      }
+      return {index: Number(match[1]), value: value.trim()};
+    })
+    .filter(item => item !== null)
+    .toSorted((a, b) => a.index - b.index);
+
+  return entries.map(item => item.value);
 }

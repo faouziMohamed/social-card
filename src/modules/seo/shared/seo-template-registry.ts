@@ -45,6 +45,27 @@ export const TEMPLATE_META: SeoTemplateMeta[] = [
     color: '#14b8a6',
     icon: '▤',
   },
+  {
+    name: 'json-ld',
+    label: 'JSON-LD',
+    desc: 'Structured data script generator',
+    color: '#f59e0b',
+    icon: '⌘',
+  },
+  {
+    name: 'robots-txt',
+    label: 'Robots.txt',
+    desc: 'Crawler policy helper',
+    color: '#22c55e',
+    icon: '⚙',
+  },
+  {
+    name: 'meta-pack',
+    label: 'Meta Pack',
+    desc: 'Canonical + OG + Twitter tags',
+    color: '#8b5cf6',
+    icon: '✦',
+  },
 ];
 
 // ─── Template sections ────────────────────────────────────────────────────────
@@ -141,6 +162,284 @@ export const TEMPLATE_SECTIONS: Record<SeoTemplateName, FormSection[]> = {
     },
     SHARED_THEME,
   ],
+  'json-ld': [
+    {
+      title: 'Preset',
+      fields: [
+        {
+          key: 'schemaType',
+          label: 'Schema type',
+          type: 'text',
+          placeholder: 'Article, Product, FAQPage, Event, JobPosting…',
+          options: [
+            'Article',
+            'Product',
+            'FAQPage',
+            'Organization',
+            'LocalBusiness',
+            'SoftwareApplication',
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Core',
+      fields: [
+        {
+          key: 'name',
+          label: 'Name',
+          type: 'text',
+          placeholder: 'OG Graph',
+        },
+        {
+          key: 'headline',
+          label: 'Headline',
+          type: 'text',
+          placeholder: 'How to scale your metadata pipeline',
+        },
+        {
+          key: 'description',
+          label: 'Description',
+          type: 'text',
+          placeholder: 'Short summary',
+        },
+        {
+          key: 'url',
+          label: 'Canonical URL',
+          type: 'url',
+          placeholder: 'https://example.com/blog/post',
+        },
+        {
+          key: 'image',
+          label: 'Image URL',
+          type: 'url',
+          placeholder: 'https://example.com/og.png',
+        },
+      ],
+    },
+    {
+      title: 'People and Publishing',
+      fields: [
+        {
+          key: 'authorName',
+          label: 'Author',
+          type: 'text',
+          placeholder: 'Jane Doe',
+        },
+        {
+          key: 'publisherName',
+          label: 'Publisher',
+          type: 'text',
+          placeholder: 'Acme Inc',
+        },
+        {key: 'datePublished', label: 'Published', type: 'date'},
+        {key: 'dateModified', label: 'Modified', type: 'date'},
+      ],
+    },
+    {
+      title: 'Social Profiles',
+      fields: [
+        {
+          key: 'sameAs1',
+          label: 'Social URL 1',
+          type: 'url',
+          placeholder: 'https://x.com/your-brand',
+        },
+        {
+          key: 'sameAs2',
+          label: 'Social URL 2',
+          type: 'url',
+          placeholder: 'https://www.linkedin.com/company/your-brand',
+        },
+        {
+          key: 'sameAs3',
+          label: 'Social URL 3',
+          type: 'url',
+          placeholder: 'https://github.com/your-org',
+        },
+      ],
+    },
+    {
+      title: 'Commerce and App',
+      fields: [
+        {
+          key: 'price',
+          label: 'Price',
+          type: 'text',
+          placeholder: '49.00',
+        },
+        {
+          key: 'priceCurrency',
+          label: 'Currency',
+          type: 'text',
+          placeholder: 'USD',
+        },
+        {
+          key: 'applicationCategory',
+          label: 'App category',
+          type: 'text',
+          placeholder: 'DeveloperApplication',
+        },
+        {
+          key: 'operatingSystem',
+          label: 'Operating system',
+          type: 'text',
+          placeholder: 'Web',
+        },
+      ],
+    },
+    {
+      title: 'FAQ',
+      fields: [
+        {
+          key: 'faqQuestion1',
+          label: 'Question 1',
+          type: 'text',
+          placeholder: 'What does this tool do?',
+        },
+        {
+          key: 'faqAnswer1',
+          label: 'Answer 1',
+          type: 'text',
+          placeholder: 'It helps generate OG images and SEO assets.',
+        },
+        {
+          key: 'faqQuestion2',
+          label: 'Question 2',
+          type: 'text',
+          placeholder: 'Can I self-host this?',
+        },
+        {
+          key: 'faqAnswer2',
+          label: 'Answer 2',
+          type: 'text',
+          placeholder: 'Yes, deploy it on your own infrastructure.',
+        },
+      ],
+    },
+  ],
+  'robots-txt': [
+    {
+      title: 'Crawler Rules',
+      fields: [
+        {key: 'userAgent', label: 'User-agent', type: 'text', placeholder: '*'},
+        {key: 'allow', label: 'Allow', type: 'text', placeholder: '/'},
+        {
+          key: 'disallow',
+          label: 'Disallow',
+          type: 'text',
+          placeholder: '/admin',
+        },
+        {
+          key: 'crawlDelay',
+          label: 'Crawl delay',
+          type: 'text',
+          placeholder: '10',
+        },
+      ],
+    },
+    {
+      title: 'Sitemap and AI crawlers',
+      fields: [
+        {
+          key: 'sitemap',
+          label: 'Sitemap URL',
+          type: 'url',
+          placeholder: 'https://example.com/sitemap.xml',
+        },
+        {
+          key: 'aiCrawlerPolicy',
+          label: 'AI crawler policy',
+          type: 'select',
+          options: ['allow', 'disallow'],
+        },
+      ],
+    },
+  ],
+  'meta-pack': [
+    {
+      title: 'Core Meta',
+      fields: [
+        {
+          key: 'title',
+          label: 'Title',
+          type: 'text',
+          placeholder: 'OG Graph',
+        },
+        {
+          key: 'description',
+          label: 'Description',
+          type: 'text',
+          placeholder: 'Generate OG images and SEO assets',
+        },
+        {
+          key: 'canonical',
+          label: 'Canonical URL',
+          type: 'url',
+          placeholder: 'https://example.com',
+        },
+        {
+          key: 'robots',
+          label: 'Robots',
+          type: 'text',
+          placeholder: 'index,follow,max-image-preview:large',
+        },
+      ],
+    },
+    {
+      title: 'Open Graph',
+      fields: [
+        {
+          key: 'ogType',
+          label: 'OG type',
+          type: 'text',
+          placeholder: 'website',
+        },
+        {
+          key: 'siteName',
+          label: 'Site name',
+          type: 'text',
+          placeholder: 'OG Graph',
+        },
+        {
+          key: 'locale',
+          label: 'Locale',
+          type: 'text',
+          placeholder: 'en_US',
+        },
+        {
+          key: 'ogImage',
+          label: 'OG image URL',
+          type: 'url',
+          placeholder: 'https://example.com/og.png',
+        },
+      ],
+    },
+    {
+      title: 'Twitter and extras',
+      fields: [
+        {
+          key: 'twitterCard',
+          label: 'Twitter card',
+          type: 'select',
+          options: ['summary_large_image', 'summary'],
+        },
+        {
+          key: 'twitterSite',
+          label: 'Twitter handle',
+          type: 'text',
+          placeholder: '@og_graph',
+        },
+        {key: 'themeColor', label: 'Theme color', type: 'color'},
+        {
+          key: 'keywords',
+          label: 'Keywords',
+          type: 'text',
+          placeholder: 'og image,seo,open graph',
+        },
+      ],
+    },
+  ],
 };
 
 // ─── Demo params ──────────────────────────────────────────────────────────────
@@ -165,5 +464,20 @@ export const DEMO_PARAMS: {template: SeoTemplateName; params: string}[] = [
     template: 'twitter-card',
     params:
       'title=Open+Graph+Generator&description=Self-hostable+social+card+generator&siteName=og-graph&accentColor=%236366f1&bgStyle=gradient%2Bgrid&theme=dark',
+  },
+  {
+    template: 'json-ld',
+    params:
+      'schemaType=SoftwareApplication&name=OG+Graph&description=Generate+OG+images%2C+badges%2C+and+SEO+assets&url=https%3A%2F%2Fog-graph.dev&applicationCategory=DeveloperApplication&operatingSystem=Web',
+  },
+  {
+    template: 'robots-txt',
+    params:
+      'userAgent=*&allow=%2F&disallow=%2Fprivate&sitemap=https%3A%2F%2Fexample.com%2Fsitemap.xml&aiCrawlerPolicy=allow',
+  },
+  {
+    template: 'meta-pack',
+    params:
+      'title=OG+Graph&description=Generate+OG+images+and+SEO+assets&canonical=https%3A%2F%2Fexample.com&robots=index%2Cfollow%2Cmax-image-preview%3Alarge&ogType=website&ogImage=https%3A%2F%2Fexample.com%2Fog.png&twitterCard=summary_large_image',
   },
 ];

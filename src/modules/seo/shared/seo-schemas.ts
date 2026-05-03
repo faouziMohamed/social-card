@@ -11,6 +11,15 @@ export const SEO_SIZES = {
 } as const;
 
 export type SeoSizeKey = keyof typeof SEO_SIZES;
+export const JSON_LD_TYPES = [
+  'Article',
+  'Product',
+  'FAQPage',
+  'Organization',
+  'LocalBusiness',
+  'SoftwareApplication',
+] as const;
+export type JsonLdType = (typeof JSON_LD_TYPES)[number];
 
 // ─── Shared icon schema ───────────────────────────────────────────────────────
 
@@ -78,6 +87,102 @@ export const twitterCardSchema = z.object({
     .describe("Background style tokens e.g. 'gradient+grid'"),
 });
 
+export const jsonLdSchema = z
+  .object({
+    schemaType: z
+      .string()
+      .default('Article')
+      .describe(
+        "Schema.org type, e.g. 'Article', 'Product', 'FAQPage', 'Event', 'JobPosting'",
+      ),
+    name: z
+      .string()
+      .default('OG Graph')
+      .describe('Primary entity or page name'),
+    headline: z.string().optional().describe('Headline for article/content'),
+    description: z.string().optional().describe('Short summary (1-2 lines)'),
+    url: z.string().url().optional().describe('Canonical URL'),
+    image: z.string().url().optional().describe('Primary image URL'),
+    datePublished: z
+      .string()
+      .optional()
+      .describe('ISO 8601 date e.g. 2026-05-03'),
+    dateModified: z
+      .string()
+      .optional()
+      .describe('ISO 8601 date e.g. 2026-05-03'),
+    authorName: z.string().optional().describe('Author / creator name'),
+    publisherName: z
+      .string()
+      .optional()
+      .describe('Publisher / organization name'),
+    sameAs1: z.string().url().optional().describe('Social profile URL 1'),
+    sameAs2: z.string().url().optional().describe('Social profile URL 2'),
+    sameAs3: z.string().url().optional().describe('Social profile URL 3'),
+    price: z.string().optional().describe('Product price e.g. 49.00'),
+    priceCurrency: z
+      .string()
+      .default('USD')
+      .describe('ISO currency code e.g. USD'),
+    applicationCategory: z
+      .string()
+      .optional()
+      .describe('App category e.g. DeveloperApplication'),
+    operatingSystem: z.string().optional().describe('OS target e.g. Web'),
+    faqQuestion1: z.string().optional().describe('FAQ first question'),
+    faqAnswer1: z.string().optional().describe('FAQ first answer'),
+    faqQuestion2: z.string().optional().describe('FAQ second question'),
+    faqAnswer2: z.string().optional().describe('FAQ second answer'),
+    jsonRaw: z
+      .string()
+      .optional()
+      .describe('Advanced JSON-LD object payload (overrides generated fields)'),
+  })
+  .catchall(z.string().optional());
+
+export const robotsTxtSchema = z.object({
+  userAgent: z.string().default('*').describe('Primary User-agent'),
+  allow: z.string().default('/').describe('Allow path'),
+  disallow: z.string().optional().describe('Disallow path'),
+  sitemap: z.string().url().optional().describe('Absolute sitemap URL'),
+  crawlDelay: z
+    .string()
+    .optional()
+    .describe('Crawl delay in seconds (optional)'),
+  aiCrawlerPolicy: z
+    .enum(['allow', 'disallow'])
+    .default('allow')
+    .describe('AI crawler policy for GPTBot / Google-Extended / PerplexityBot'),
+});
+
+export const metaPackSchema = z.object({
+  title: z.string().default('OG Graph').describe('Page title'),
+  description: z
+    .string()
+    .default('Generate OG images, badges, and SEO assets in one place.')
+    .describe('Meta description'),
+  canonical: z.string().url().optional().describe('Canonical page URL'),
+  robots: z
+    .string()
+    .default('index,follow,max-image-preview:large')
+    .describe('Meta robots content'),
+  ogType: z.string().default('website').describe('Open Graph type'),
+  ogImage: z.string().url().optional().describe('Open Graph image URL'),
+  siteName: z.string().optional().describe('Open Graph site name'),
+  locale: z.string().default('en_US').describe('Open Graph locale'),
+  twitterCard: z
+    .enum(['summary', 'summary_large_image'])
+    .default('summary_large_image')
+    .describe('Twitter card type'),
+  twitterSite: z.string().optional().describe('Twitter handle e.g. @og_graph'),
+  themeColor: z
+    .string()
+    .regex(/^#([\dA-Fa-f]{3}|[\dA-Fa-f]{6})$/)
+    .default('#0f0f0f')
+    .describe('Browser UI color'),
+  keywords: z.string().optional().describe('Comma-separated keyword list'),
+});
+
 // ─── Schema registry ─────────────────────────────────────────────────────────
 
 export const SEO_SCHEMAS = {
@@ -85,6 +190,9 @@ export const SEO_SCHEMAS = {
   'apple-touch-icon': appleTouchIconSchema,
   'manifest-icon': manifestIconSchema,
   'twitter-card': twitterCardSchema,
+  'json-ld': jsonLdSchema,
+  'robots-txt': robotsTxtSchema,
+  'meta-pack': metaPackSchema,
 } as const;
 
 export type SeoTemplateName = keyof typeof SEO_SCHEMAS;
@@ -93,3 +201,6 @@ export type FaviconParams = z.infer<typeof faviconSchema>;
 export type AppleTouchIconParams = z.infer<typeof appleTouchIconSchema>;
 export type ManifestIconParams = z.infer<typeof manifestIconSchema>;
 export type TwitterCardParams = z.infer<typeof twitterCardSchema>;
+export type JsonLdParams = z.infer<typeof jsonLdSchema>;
+export type RobotsTxtParams = z.infer<typeof robotsTxtSchema>;
+export type MetaPackParams = z.infer<typeof metaPackSchema>;

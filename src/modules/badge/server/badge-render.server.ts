@@ -332,7 +332,7 @@ export function escapeXml(s: string): string {
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
-    .replaceAll('\'', '&apos;');
+    .replaceAll("'", '&apos;');
 }
 
 function hexToRgb(hex: string): {r: number; g: number; b: number} {
