@@ -8,7 +8,7 @@ the relevant guide in `node_modules/next/dist/docs/` before writing any code. He
 ## Project structure
 
 | Path                      | What it is                                                                                          |
-|---------------------------|---------------------------------------------------------------------------------------------------|
+|---------------------------|-----------------------------------------------------------------------------------------------------|
 | `src/app/`                | App Router entry points and global UI shell: `layout.tsx`, `page.tsx`, `globals.css`, `favicon.ico` |
 | `src/app/api/`            | API route handlers (`og/`, `badge/`, `seo/`)                                                        |
 | `src/app/builder/`        | Interactive OG/badge/SEO builder UI (`/builder` page)                                               |
@@ -22,7 +22,7 @@ the relevant guide in `node_modules/next/dist/docs/` before writing any code. He
 | `src/components/ui/`      | shadcn/ui component library — add/modify components here                                            |
 | `src/components/shared/`  | Cross-module reusable React components                                                              |
 | `public/`                 | Static assets used by the app                                                                       |
-| `sdk/`                   | **Social Card TypeScript SDK** — npm package for programmatic API access (`sdk/`)                |
+| `sdk/`                    | **Social Card TypeScript SDK** — npm package for programmatic API access (`sdk/`)                   |
 | `ops/scripts/`            | Repo automation scripts (`bootstrap.sh`, `download-fonts.py`)                                       |
 | `package.json`            | Project scripts and dependency manifest                                                             |
 | `next.config.ts`          | Next.js config; currently only `reactCompiler: true`                                                |

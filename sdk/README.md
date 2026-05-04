@@ -1,6 +1,7 @@
 # Social Card SDK
 
-TypeScript SDK for [Social Card](https://social-card.mfaouzi.com) — generate Open Graph images, SVG badges, and SEO assets
+TypeScript SDK for [Social Card](https://social-card.mfaouzi.com) — generate Open Graph images, SVG badges, and SEO
+assets
 programmatically.
 
 [![npm](https://img.shields.io/npm/v/social-card-sdk)](https://www.npmjs.com/package/social-card-sdk)

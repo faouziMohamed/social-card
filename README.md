@@ -2,14 +2,16 @@
 
 **Self-hostable Open Graph image & badge generator — drop a URL, get a 1200×630 PNG.**
 
-Social Card is a Next.js application that exposes a REST API for generating social card images across 11 templates, 8 SVG
+Social Card is a Next.js application that exposes a REST API for generating social card images across 11 templates, 8
+SVG
 badge types, and SEO asset variants. Developers paste one URL into their `<meta>` tags and ship.
 
 🌐 **Live website:** [social-card.mfaouzi.com](https://social-card.mfaouzi.com)  
 📚 **Live docs:** [social-card.mfaouzi.com/docs](https://social-card.mfaouzi.com/docs)
-📦 **TypeScript SDK:** [`social-card-sdk`](https://www.npmjs.com/package/social-card-sdk) · [SDK README](./sdk/README.md) · [Live SDK docs](https://social-card.mfaouzi.com/docs#sdk)
+📦 **TypeScript SDK:** [
+`social-card-sdk`](https://www.npmjs.com/package/social-card-sdk) · [SDK README](./sdk/README.md) · [Live SDK docs](https://social-card.mfaouzi.com/docs#sdk)
 
----
+--- 
 
 ## Table of Contents
 
@@ -20,9 +22,9 @@ badge types, and SEO asset variants. Developers paste one URL into their `<meta>
 - [Development](#development)
 - [Project Structure](#project-structure)
 - [API Reference](#api-reference)
-  - [OG Image Templates](#og-image-templates)
-  - [Badge API](#badge-api)
-  - [SEO Assets](#seo-assets)
+    - [OG Image Templates](#og-image-templates)
+    - [Badge API](#badge-api)
+    - [SEO Assets](#seo-assets)
 - [Template Parameters](#template-parameters)
 - [Background Styles](#background-styles)
 - [SEO Inspector](#seo-inspector)
@@ -66,8 +68,8 @@ yarn add social-card-sdk
 
 Only one variable is supported — everything else works out of the box.
 
-| Variable                     | Required    | Description                                                                                                 |
-| ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------- |
+| Variable                     | Required   | Description                                                                                                 |
+|------------------------------|------------|-------------------------------------------------------------------------------------------------------------|
 | `NEXT_PUBLIC_DEPLOYMENT_URL` | ❌ optional | Canonical app URL. Falls back to `NEXT_PUBLIC_VERCEL_URL` (auto-set by Vercel) then `http://localhost:3000` |
 
 ### Running
@@ -96,7 +98,7 @@ graph LR
 Social Card solves the social preview problem in one HTTP request:
 
 | What you get          | How                                       |
-| --------------------- | ----------------------------------------- |
+|-----------------------|-------------------------------------------|
 | 11 OG image templates | `GET /api/og/<template>?params`           |
 | 8 SVG badge types     | `GET /api/badge/<type>?params`            |
 | SEO icon assets       | `GET /api/seo/<asset>?params`             |
@@ -107,7 +109,8 @@ Social Card solves the social preview problem in one HTTP request:
 
 ## Live Examples
 
-All previews below are generated live from **[social-card.mfaouzi.com](https://social-card.mfaouzi.com)** — no static assets,
+All previews below are generated live from **[social-card.mfaouzi.com](https://social-card.mfaouzi.com)** — no static
+assets,
 just URLs.
 
 ---
@@ -119,6 +122,7 @@ just URLs.
 [![OG General](https://social-card.mfaouzi.com/api/og/general?siteName=Social+Card&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)](https://social-card.mfaouzi.com/api/og/general?siteName=Social+Card&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)
 
 ```html
+
 <meta
   property="og:image"
   content="https://social-card.mfaouzi.com/api/og/general
@@ -150,6 +154,7 @@ export async function generateMetadata(): Promise<Metadata> {
 [![OG Blog](https://social-card.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)](https://social-card.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)
 
 ```html
+
 <meta
   property="og:image"
   content="https://social-card.mfaouzi.com/api/og/blog
@@ -167,6 +172,7 @@ export async function generateMetadata(): Promise<Metadata> {
 [![OG Product](https://social-card.mfaouzi.com/api/og/product?productName=Social+Card&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)](https://social-card.mfaouzi.com/api/og/product?productName=Social+Card&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)
 
 ```html
+
 <meta
   property="og:image"
   content="https://social-card.mfaouzi.com/api/og/product
@@ -184,6 +190,7 @@ export async function generateMetadata(): Promise<Metadata> {
 [![OG Portfolio](https://social-card.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)](https://social-card.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)
 
 ```html
+
 <meta
   property="og:image"
   content="https://social-card.mfaouzi.com/api/og/portfolio
@@ -202,8 +209,8 @@ Embed directly in HTML, Markdown, or any `<img>` tag.
 
 <!-- badges are SVG — rendered live -->
 
-| Preview                                                                                                                                    | Usage                                                                                                       |
-| ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Preview                                                                                                                                        | Usage                                                                                                           |
+|------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
 | ![version](https://social-card.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1&style=flat)                             | `![version](https://social-card.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1)`       |
 | ![status](https://social-card.mfaouzi.com/api/badge/status?label=API&status=online)                                                            | `![status](https://social-card.mfaouzi.com/api/badge/status?label=API&status=online)`                           |
 | ![coverage](https://social-card.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)                                        | `![coverage](https://social-card.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)`       |
@@ -259,12 +266,11 @@ sequenceDiagram
     participant UI as /seo-inspector
     participant API as POST /api/seo/inspect
     participant Target as Target Website
-
-    User->>UI: Enter URL
-    UI->>API: { "url": "https://example.com" }
-    API->>Target: Fetch HTML (server-side)
-    API-->>UI: Parsed report + findings
-    UI-->>User: Issues + recommendations + previews
+    User ->> UI: Enter URL
+    UI ->> API: { "url": "https://example.com" }
+    API ->> Target: Fetch HTML (server-side)
+    API -->> UI: Parsed report + findings
+    UI -->> User: Issues + recommendations + previews
 ```
 
 ### API usage
@@ -282,8 +288,14 @@ curl -X POST "https://social-card.mfaouzi.com/api/seo/inspect" \
   "url": "https://example.com",
   "statusCode": 200,
   "title": "Example Domain",
-  "og": {"title": "", "image": ""},
-  "twitter": {"card": "", "image": ""},
+  "og": {
+    "title": "",
+    "image": ""
+  },
+  "twitter": {
+    "card": "",
+    "image": ""
+  },
   "findings": [
     {
       "severity": "warning",
@@ -383,7 +395,7 @@ graph LR
 ### Stack
 
 | Layer            | Technology                             |
-| ---------------- | -------------------------------------- |
+|------------------|----------------------------------------|
 | Framework        | Next.js 16 (App Router)                |
 | Runtime          | Node.js (no edge runtime)              |
 | Language         | TypeScript 5                           |
@@ -495,7 +507,7 @@ GET /api/og/<template>?<params>
 #### Available Templates
 
 | Template    | Endpoint            | Best for                      |
-| ----------- | ------------------- | ----------------------------- |
+|-------------|---------------------|-------------------------------|
 | `general`   | `/api/og/general`   | Generic brand / landing page  |
 | `gradient`  | `/api/og/gradient`  | Vivid gradient headline       |
 | `blog`      | `/api/og/blog`      | Blog posts with author + tags |
@@ -511,7 +523,7 @@ GET /api/og/<template>?<params>
 #### Output Dimensions (`target`)
 
 | Value            | Width | Height | Platform             |
-| ---------------- | ----- | ------ | -------------------- |
+|------------------|-------|--------|----------------------|
 | `og` _(default)_ | 1200  | 630    | Facebook, generic OG |
 | `twitter-large`  | 1200  | 628    | Twitter large card   |
 | `twitter-small`  | 800   | 800    | Twitter small card   |
@@ -553,7 +565,7 @@ GET /api/badge/<type>?<params>
 #### Badge Types
 
 | Type           | Endpoint                  | Description                        |
-| -------------- | ------------------------- | ---------------------------------- |
+|----------------|---------------------------|------------------------------------|
 | `label`        | `/api/badge/label`        | Two-segment shields.io-style badge |
 | `stat`         | `/api/badge/stat`         | Single metric with big number      |
 | `status`       | `/api/badge/status`       | Service health indicator           |
@@ -611,7 +623,7 @@ graph LR
 Dynamically generated icon and manifest assets.
 
 | Asset            | Endpoint                    | Size     | Format |
-| ---------------- | --------------------------- | -------- | ------ |
+|------------------|-----------------------------|----------|--------|
 | Favicon          | `/api/seo/favicon`          | 32×32    | PNG    |
 | Apple touch icon | `/api/seo/apple-touch-icon` | 180×180  | PNG    |
 | Manifest icon    | `/api/seo/manifest-icon`    | 512×512  | PNG    |
@@ -624,7 +636,7 @@ Dynamically generated icon and manifest assets.
 ### Base Parameters (all templates)
 
 | Param            | Type                                               | Default         | Description                         |
-| ---------------- | -------------------------------------------------- | --------------- | ----------------------------------- |
+|------------------|----------------------------------------------------|-----------------|-------------------------------------|
 | `theme`          | `dark \| light \| auto`                            | `dark`          | Color theme                         |
 | `target`         | `og \| twitter-large \| twitter-small \| linkedin` | `og`            | Output dimensions                   |
 | `fontFamily`     | string                                             | `geist`         | Typography preset (60+ fonts)       |
@@ -642,7 +654,7 @@ Dynamically generated icon and manifest assets.
 #### `general`
 
 | Param         | Type   | Default     | Description                         |
-| ------------- | ------ | ----------- | ----------------------------------- |
+|---------------|--------|-------------|-------------------------------------|
 | `siteName`    | string | `Site Name` | Brand / website name                |
 | `title`       | string | —           | Page title (optional hero override) |
 | `description` | string | —           | Subtitle text (max 2 lines)         |
@@ -651,7 +663,7 @@ Dynamically generated icon and manifest assets.
 #### `gradient`
 
 | Param           | Type   | Default     | Description                        |
-| --------------- | ------ | ----------- | ---------------------------------- |
+|-----------------|--------|-------------|------------------------------------|
 | `siteName`      | string | `Site Name` | Lower subheading                   |
 | `title`         | string | —           | Main heading with gradient applied |
 | `description`   | string | —           | Paragraph below heading            |
@@ -662,7 +674,7 @@ Dynamically generated icon and manifest assets.
 #### `blog`
 
 | Param          | Type   | Default      | Description                     |
-| -------------- | ------ | ------------ | ------------------------------- |
+|----------------|--------|--------------|---------------------------------|
 | `title`        | string | `Blog Title` | Post title (max 3 lines)        |
 | `tags`         | string | —            | Comma-separated tags (up to 4)  |
 | `authorName`   | string | —            | Author display name             |
@@ -678,7 +690,7 @@ Dynamically generated icon and manifest assets.
 #### `minimal`
 
 | Param         | Type   | Default   | Description                          |
-| ------------- | ------ | --------- | ------------------------------------ |
+|---------------|--------|-----------|--------------------------------------|
 | `title`       | string | `Title`   | Large centered heading (max 3 lines) |
 | `description` | string | —         | Subtext below title (max 2 lines)    |
 | `eyebrow`     | string | —         | ALL-CAPS small label above title     |
@@ -689,7 +701,7 @@ Dynamically generated icon and manifest assets.
 #### `article`
 
 | Param             | Type   | Default         | Description                             |
-| ----------------- | ------ | --------------- | --------------------------------------- |
+|-------------------|--------|-----------------|-----------------------------------------|
 | `title`           | string | `Article Title` | Headline (max 3 lines)                  |
 | `excerpt`         | string | —               | 1–2 sentence teaser (max 2 lines)       |
 | `authorName`      | string | —               | Author name                             |
@@ -704,7 +716,7 @@ Dynamically generated icon and manifest assets.
 #### `product`
 
 | Param         | Type   | Default   | Description                         |
-| ------------- | ------ | --------- | ----------------------------------- |
+|---------------|--------|-----------|-------------------------------------|
 | `productName` | string | `Product` | Large product name                  |
 | `tagline`     | string | —         | One-liner value proposition         |
 | `feature1`    | string | —         | First feature bullet                |
@@ -718,7 +730,7 @@ Dynamically generated icon and manifest assets.
 #### `portfolio`
 
 | Param           | Type            | Default     | Description                              |
-| --------------- | --------------- | ----------- | ---------------------------------------- |
+|-----------------|-----------------|-------------|------------------------------------------|
 | `name`          | string          | `Your Name` | Full name — largest text element         |
 | `role`          | string          | —           | Job title e.g. `Full-Stack Developer`    |
 | `bio`           | string          | —           | One-liner personal tagline               |
@@ -734,7 +746,7 @@ Dynamically generated icon and manifest assets.
 #### `quote`
 
 | Param         | Type   | Default                   | Description                     |
-| ------------- | ------ | ------------------------- | ------------------------------- |
+|---------------|--------|---------------------------|---------------------------------|
 | `quote`       | string | `Build fast. Ship often.` | Primary quote text              |
 | `author`      | string | —                         | Quote author                    |
 | `kicker`      | string | —                         | Small category label            |
@@ -743,8 +755,8 @@ Dynamically generated icon and manifest assets.
 #### `changelog`
 
 | Param         | Type   | Default         | Description           |
-| ------------- | ------ | --------------- | --------------------- |
-| `productName` | string | `Social Card`      | Product name          |
+|---------------|--------|-----------------|-----------------------|
+| `productName` | string | `Social Card`   | Product name          |
 | `version`     | string | `v2.0.0`        | Release version       |
 | `headline`    | string | `Major upgrade` | Release headline      |
 | `change1`     | string | —               | First changelog item  |
@@ -755,7 +767,7 @@ Dynamically generated icon and manifest assets.
 #### `event`
 
 | Param         | Type   | Default      | Description                     |
-| ------------- | ------ | ------------ | ------------------------------- |
+|---------------|--------|--------------|---------------------------------|
 | `eventName`   | string | `Event Name` | Conference or event name        |
 | `tagline`     | string | —            | Short event tagline or theme    |
 | `eventDate`   | string | —            | ISO 8601 date e.g. `2026-09-15` |
@@ -767,7 +779,7 @@ Dynamically generated icon and manifest assets.
 #### `launch`
 
 | Param         | Type   | Default      | Description                             |
-| ------------- | ------ | ------------ | --------------------------------------- |
+|---------------|--------|--------------|-----------------------------------------|
 | `productName` | string | `My Product` | Product or project name                 |
 | `punchline`   | string | —            | Bold one-line value proposition         |
 | `launchDate`  | string | —            | ISO date or freeform e.g. `Coming soon` |
@@ -802,7 +814,7 @@ graph TD
 ```
 
 | `bgStyle` value           | Result                                    |
-| ------------------------- | ----------------------------------------- |
+|---------------------------|-------------------------------------------|
 | `solid`                   | Flat background                           |
 | `gradient+grid`           | Gradient + grid lines _(default)_         |
 | `aurora+dots+noise`       | Aurora effect with dots and noise texture |
@@ -852,16 +864,16 @@ graph TB
 Full-stack developer. Built Social Card as a self-hostable alternative to paid social-card services.
 
 |                |                                                                                                 |
-| -------------- | ----------------------------------------------------------------------------------------------- |
+|----------------|-------------------------------------------------------------------------------------------------|
 | 🌐 Portfolio   | [mfaouzi.com](https://mfaouzi.com) · [dev.mfaouzi.com](https://dev.mfaouzi.com) _(in progress)_ |
 | 🐙 GitHub      | [@faouziMohamed](https://github.com/faouziMohamed)                                              |
 | 💼 LinkedIn    | [mohamed-faouzi](https://linkedin.com/in/mohamed-faouzi)                                        |
 | 🐦 Twitter / X | [@fz_faouzi](https://twitter.com/fz_faouzi)                                                     |
 | 📘 Facebook    | [faouzi.mohamed.97](https://facebook.com/faouzi.mohamed.97)                                     |
 | 📸 Instagram   | [@faouzi*m*](https://instagram.com/faouzi_m_)                                                   |
-| 🚀 Live app    | [social-card.mfaouzi.com](https://social-card.mfaouzi.com)                                       |
-| 📚 Live docs   | [social-card.mfaouzi.com/docs](https://social-card.mfaouzi.com/docs)                             |
-| 📦 SDK docs    | [social-card.mfaouzi.com/docs#sdk](https://social-card.mfaouzi.com/docs#sdk)                     |
+| 🚀 Live app    | [social-card.mfaouzi.com](https://social-card.mfaouzi.com)                                      |
+| 📚 Live docs   | [social-card.mfaouzi.com/docs](https://social-card.mfaouzi.com/docs)                            |
+| 📦 SDK docs    | [social-card.mfaouzi.com/docs#sdk](https://social-card.mfaouzi.com/docs#sdk)                    |
 
 ---
 
