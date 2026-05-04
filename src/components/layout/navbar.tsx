@@ -8,8 +8,8 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import {ROUTES} from '@/lib/utils/routes';
 import {cn} from '@/lib/utils/cn';
+import {ROUTES} from '@/lib/utils/routes';
 import {
   BookOpen,
   Gauge,
@@ -42,8 +42,10 @@ export function Navbar() {
 
   const isActive = (href: string) => {
     if (href === ROUTES.builder) return pathname.startsWith(ROUTES.builder);
-    if (href === ROUTES.seoInspector) return pathname.startsWith(ROUTES.seoInspector);
-    if (href === ROUTES.docs) return pathname.startsWith(ROUTES.docs) && hash === '';
+    if (href === ROUTES.seoInspector)
+      return pathname.startsWith(ROUTES.seoInspector);
+    if (href === ROUTES.docs)
+      return pathname.startsWith(ROUTES.docs) && hash === '';
     if (href === `${ROUTES.docs}#badges`) {
       return pathname.startsWith(ROUTES.docs) && hash === '#badges';
     }
@@ -87,7 +89,7 @@ export function Navbar() {
           </div>
           <div className="flex items-center gap-1 rounded-full border border-border/55 bg-card/45 p-1">
             <Link
-              href={ROUTES.builder}
+              href={ROUTES.builderTabs.og}
               className={cn(
                 'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-semibold uppercase tracking-[0.08em] transition-colors',
                 isActive(ROUTES.builder)
@@ -115,7 +117,9 @@ export function Navbar() {
             href="https://github.com/faouziMohamed/placard"
             target="_blank"
             rel="noopener noreferrer"
-            className={buttonVariants({variant: 'ghost', size: 'icon'}) + ' rounded-full'}
+            className={
+              buttonVariants({variant: 'ghost', size: 'icon'}) + ' rounded-full'
+            }
             aria-label="GitHub"
           >
             <GitBranch className="h-4 w-4" />

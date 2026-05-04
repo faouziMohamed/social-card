@@ -40,7 +40,7 @@ export function blogRenderer(
   const tags = p.tags
     ? p.tags
         .split(',')
-        .map(t => t.trim())
+        .map((t: string) => t.trim())
         .filter(Boolean)
         .slice(0, 4)
     : [];
@@ -149,7 +149,7 @@ export function blogRenderer(
               marginBottom: 16,
             }}
           >
-            {tags.map((tag, i) => (
+            {tags.map((tag: string, i: number) => (
               <div
                 key={i}
                 style={{

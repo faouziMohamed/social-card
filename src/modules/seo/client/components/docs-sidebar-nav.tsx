@@ -67,8 +67,8 @@ export function DocsSidebarNav({
     );
 
     for (const id of ids) {
-      const node = document.getElementById(id);
-      if (node) observer.observe(node);
+      const node = document.querySelector(`#${CSS.escape(id)}`);
+      if (node) observer.observe(node as Element);
     }
 
     window.addEventListener('hashchange', pickFromHash);

@@ -147,4 +147,14 @@ export default defineConfig([
       'next-env.d.ts',
     ],
   },
+  {
+    files: [
+      'src/modules/og/server/renderers/**/*.tsx',
+      'src/modules/seo/server/renderers/**/*.tsx',
+    ],
+    rules: {
+      '@next/next/no-img-element': 'off',
+      'jsx-a11y/alt-text': 'off',
+    },
+  },
 ]);

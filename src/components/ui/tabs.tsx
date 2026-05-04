@@ -9,7 +9,9 @@ interface TabsContextValue {
 }
 const TabsContext = React.createContext<TabsContextValue>({
   value: '',
-  onValueChange: () => {},
+  onValueChange: () => {
+    // no-op default; overridden by provider
+  },
 });
 
 export function Tabs({

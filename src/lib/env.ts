@@ -1,10 +1,10 @@
 import {z} from 'zod';
 
-const envSchema = z.object({
+const _envSchema = z.object({
   NEXT_PUBLIC_DEPLOYMENT_URL: z.string().url().optional(),
 });
 
-type Env = z.infer<typeof envSchema>;
+type _Env = z.infer<typeof _envSchema>;
 
 function resolveDeploymentUrl(): string {
   // Priority 1: Explicit env var

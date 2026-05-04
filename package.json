@@ -6,9 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix --max-warnings=0",
     "format": "prettier . --write",
-    "lint:fix": "pnpm run lint -- --fix",
     "lint:format": "pnpm run lint && pnpm run format",
     "test": "node --test --import tsx"
   },

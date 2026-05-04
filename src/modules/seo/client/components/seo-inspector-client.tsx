@@ -6,6 +6,7 @@ import type {
   SeoInspectorApiResponse,
   SeoInspectorResult,
 } from '@/modules/seo/server/seo-inspector.server';
+import Image from 'next/image';
 import {useState} from 'react';
 
 export function SeoInspectorClient() {
@@ -187,14 +188,15 @@ function InspectorImagePreview({
       <p className="mb-2 text-xs font-medium text-foreground/80">{label}</p>
       {url ? (
         <div
-          className="overflow-hidden rounded border border-border/30 bg-background/30"
+          className="relative overflow-hidden rounded border border-border/30 bg-background/30"
           style={{aspectRatio: aspect}}
         >
-          <img
+          <Image
             src={url}
             alt={label}
-            className="h-full w-full object-contain"
-            loading="lazy"
+            fill
+            unoptimized
+            className="object-contain"
           />
         </div>
       ) : (

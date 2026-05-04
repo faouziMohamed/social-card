@@ -6,7 +6,6 @@ import {Badge} from '@/components/ui/badge';
 import {env} from '@/lib/env';
 import {ROUTES} from '@/lib/utils/routes';
 import {BADGE_ROUTES} from '@/modules/badge/shared/badge-routes';
-import type {BadgeName} from '@/modules/badge/shared/badge-schemas';
 import {FONT_FAMILY_OPTIONS} from '@/modules/og/shared/og-font-catalog';
 import {OG_ROUTES} from '@/modules/og/shared/og-routes';
 import type {TemplateName} from '@/modules/og/shared/og.types';
@@ -17,6 +16,7 @@ import {SEO_ROUTES} from '@/modules/seo/shared/seo-routes';
 import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 import type {Metadata} from 'next';
 import Link from 'next/link';
+import {SectionHeader} from './section-header';
 
 // general template — "API Reference" title
 const OG_QS =
@@ -50,195 +50,12 @@ export const metadata: Metadata = {
   },
 };
 
-// ─── Badge examples ───────────────────────────────────────────────────────────
-
-const BADGE_EXAMPLES: Record<
-  BadgeName,
-  {qs: string; aspect?: string; description: string}
-> = {
-  label: {
-    qs: 'label=version&message=2.1.0&color=%236366f1&style=flat',
-    aspect: '137/26',
-    description: 'Premium two-segment label/value badge.',
-  },
-  stat: {
-    qs: 'label=Stars&value=4.2k&icon=star&color=%23f59e0b',
-    aspect: '150/58',
-    description: 'Premium single-metric display card with optional icon.',
-  },
-  status: {
-    qs: 'label=API&status=online',
-    aspect: '120/30',
-    description: 'Glass-style service health indicator with semantic colors.',
-  },
-  progress: {
-    qs: 'label=Coverage&value=87&color=%2322c55e',
-    aspect: '220/46',
-    description:
-      'Premium progress bar for coverage, funding goals, completion.',
-  },
-  score: {
-    qs: 'label=Performance&value=95&color=%236366f1',
-    aspect: '104/104',
-    description: 'Premium circular score ring — Lighthouse, ratings.',
-  },
-  socials: {
-    qs: 'platform=github&handle=acme&followers=4.2k&color=%236366f1',
-    aspect: '185/34',
-    description: 'Social proof pill with platform icon and glass body.',
-  },
-  'tech-stack': {
-    qs: 'stack=React%2CTypeScript%2CGo&color=%236366f1&style=tags',
-    aspect: '340/36',
-    description: 'Premium tech tag row for README or portfolio.',
-  },
-  availability: {
-    qs: 'label=Jane+Doe&available=true&hireText=Open+to+work&color=%2322c55e',
-    aspect: '220/52',
-    description: 'Premium "Open to work" / availability status banner.',
-  },
-};
-
-// ─── SEO examples ─────────────────────────────────────────────────────────────
-
-const SEO_EXAMPLES: Record<
-  SeoTemplateName,
-  {qs: string; aspect: string; description: string}
-> = {
-  favicon: {
-    qs: 'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded',
-    aspect: '1/1',
-    description: '32×32 PNG for <link rel="icon">.',
-  },
-  'apple-touch-icon': {
-    qs: 'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded',
-    aspect: '1/1',
-    description: '180×180 PNG for <link rel="apple-touch-icon">.',
-  },
-  'manifest-icon': {
-    qs: 'initial=OG&color=%230f0f0f&accentColor=%236366f1&shape=rounded&size=512',
-    aspect: '1/1',
-    description: '192 or 512 px PNG for PWA manifest.json.',
-  },
-  'twitter-card': {
-    qs: 'title=Open+Graph+Generator&siteName=og-graph&accentColor=%236366f1&bgStyle=gradient%2Bgrid',
-    aspect: '800/418',
-    description: '800×418 PNG Twitter summary card.',
-  },
-  'json-ld': {
-    qs: 'schemaType=SoftwareApplication&name=OG+Graph&description=Generate+OG+images+and+SEO+assets&url=https%3A%2F%2Fexample.com',
-    aspect: '1/1',
-    description: 'Structured data script route (application/ld+json).',
-  },
-  'robots-txt': {
-    qs: 'userAgent=*&allow=%2F&disallow=%2Fprivate&sitemap=https%3A%2F%2Fexample.com%2Fsitemap.xml&aiCrawlerPolicy=allow',
-    aspect: '1/1',
-    description: 'Robots.txt helper route with optional AI crawler policy.',
-  },
-  'meta-pack': {
-    qs: 'title=OG+Graph&description=Generate+OG+images+and+SEO+assets&canonical=https%3A%2F%2Fexample.com&ogType=website',
-    aspect: '1/1',
-    description:
-      'Copy-ready HTML meta snippet route for canonical + OG + Twitter.',
-  },
-  'image-workflow': {
-    qs: 'sourceImage=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475&siteName=OG+Graph&title=Open+Graph+Generator&description=Generate+SEO+image+variants+from+one+source',
-    aspect: '1/1',
-    description:
-      'Workflow helper that generates OG + favicon + Apple + manifest + Twitter image URLs from one source image.',
-  },
-};
-
-const OG_RESPONSE_SPEC = {
-  contentType: 'image/png',
-  bodyShape: `Binary PNG image bytes (1200x630 by default; target override supported).`,
-};
-
-const BADGE_RESPONSE_SPEC = {
-  contentType: 'image/svg+xml; charset=utf-8',
-  bodyShape: `UTF-8 SVG markup string.`,
-};
-
-const SEO_RESPONSE_SPECS: Partial<
-  Record<SeoTemplateName, {contentType: string; bodyShape: string}>
-> = {
-  favicon: {
-    contentType: 'image/png',
-    bodyShape: `Binary PNG image bytes (32x32).`,
-  },
-  'apple-touch-icon': {
-    contentType: 'image/png',
-    bodyShape: `Binary PNG image bytes (180x180).`,
-  },
-  'manifest-icon': {
-    contentType: 'image/png',
-    bodyShape: `Binary PNG image bytes (192x192 or 512x512 via ?size=192|512).`,
-  },
-  'twitter-card': {
-    contentType: 'image/png',
-    bodyShape: `Binary PNG image bytes (800x418).`,
-  },
-  'json-ld': {
-    contentType: 'application/ld+json; charset=utf-8',
-    bodyShape: `JSON object payload (or script body in raw response). Example:
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "OG Graph"
-}`,
-  },
-  'robots-txt': {
-    contentType: 'text/plain; charset=utf-8',
-    bodyShape: `Plain text robots.txt content.`,
-  },
-  'meta-pack': {
-    contentType: 'text/plain; charset=utf-8',
-    bodyShape: `Plain text HTML tags snippet (<title>, <meta>, <link>).`,
-  },
-  'image-workflow': {
-    contentType: 'text/plain; charset=utf-8',
-    bodyShape: `Plain text snippet containing generated OG/Twitter/icon URLs.`,
-  },
-};
-
-// ─── Section header ───────────────────────────────────────────────────────────
-
-function SectionHeader({
-  icon,
-  title,
-  subtitle,
-  count,
-  id,
-}: {
-  icon: string;
-  title: string;
-  subtitle: string;
-  count: number;
-  id: string;
-}) {
-  return (
-    <div id={id} className="mb-8">
-      <div className="flex items-center gap-3 mb-2">
-        <span className="text-2xl">{icon}</span>
-        <h2 className="font-bold uppercase tracking-widest text-sm text-muted-fg">
-          {title}
-        </h2>
-        <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-xs font-mono text-primary">
-          {count}
-        </span>
-      </div>
-      <p className="text-sm text-muted-fg mb-3">{subtitle}</p>
-      <div className="section-divider" />
-    </div>
-  );
-}
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// ─── Page ─────────────────────────────────────────────────────────────
 
 export default function DocsPage() {
   const base = env.deploymentURL;
   const templates = Object.keys(OG_ROUTES) as TemplateName[];
-  const badges = Object.keys(BADGE_ROUTES) as BadgeName[];
+  const badges = Object.keys(BADGE_ROUTES) as any[];
   const seoAssets = Object.keys(SEO_ROUTES) as SeoTemplateName[];
   const ogNavItems = templates.map(t => ({href: `#${t}`, name: t}));
   const badgeNavItems = badges.map(b => ({href: `#badge-${b}`, name: b}));
@@ -330,7 +147,7 @@ export default function DocsPage() {
           <h1 className="text-3xl font-bold mb-2 glow-primary inline-block">
             OG Graph API
           </h1>
-          <p className="text-muted-fg text-sm max-w-xl">
+          <p className="text-muted-foreground text-sm max-w-xl">
             Three services: OG images (PNG), SVG badges, and SEO assets. Base
             URL: <code className="terminal-prompt text-xs">{base}</code>
           </p>
@@ -398,18 +215,18 @@ export default function DocsPage() {
               </div>
               <Link
                 href={ROUTES.seoInspector}
-                className="text-xs text-muted-fg hover:text-primary transition-colors"
+                className="text-xs text-muted-foreground hover:text-primary transition-colors"
               >
                 Open Inspector UI
               </Link>
             </div>
-            <div className="px-6 py-4 text-sm text-muted-fg">
+            <div className="px-6 py-4 text-sm text-muted-foreground">
               Submit a URL and receive core SEO tags, Open Graph/Twitter data,
               heading/image checks, JSON-LD info, and actionable findings.
             </div>
             <div className="border-t border-border/50 bg-background/30 px-6 py-4 space-y-4">
               <div>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                   Request
                 </p>
                 <pre className="rounded-md border border-border bg-muted/30 px-3 py-2 font-mono text-xs text-foreground/80 whitespace-pre-wrap">{`POST ${base}/api/seo/inspect
@@ -420,7 +237,7 @@ Content-Type: application/json
 }`}</pre>
               </div>
               <div>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                   cURL
                 </p>
                 <pre className="rounded-md border border-border bg-muted/30 px-3 py-2 font-mono text-xs text-foreground/80 whitespace-pre-wrap">{String.raw`curl -X POST "${base}/api/seo/inspect" \
@@ -428,7 +245,7 @@ Content-Type: application/json
   -d '{"url":"https://example.com"}'`}</pre>
               </div>
               <div>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                   Response JSON (shape)
                 </p>
                 <CollapsibleJson data={inspectorResponseExample} />
@@ -437,7 +254,7 @@ Content-Type: application/json
           </section>
 
           {/* Response codes */}
-          <div className="mechanical-corners rounded-lg border border-border builder-panel p-6 text-sm text-muted-fg">
+          <div className="mechanical-corners rounded-lg border border-border builder-panel p-6 text-sm text-muted-foreground">
             <p className="font-semibold mb-3 uppercase tracking-widest text-xs flex items-center gap-2">
               <span className="status-indicator status-info" />
               Response Codes

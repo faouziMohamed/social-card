@@ -1,0 +1,77 @@
+import type {OgFontDefinition} from './og-font-types';
+import {createGoogleFont} from './og-font-types';
+
+export const DISPLAY_FONTS: readonly OgFontDefinition[] = [
+  createGoogleFont(
+    'dancing-script',
+    'Dancing Script',
+    'Dancing Script',
+    'display',
+    [400, 700],
+  ),
+  createGoogleFont('pacifico', 'Pacifico', 'Pacifico', 'display', [400]),
+  createGoogleFont('caveat', 'Caveat', 'Caveat', 'display', [400, 700]),
+  createGoogleFont('satisfy', 'Satisfy', 'Satisfy', 'display', [400]),
+  createGoogleFont(
+    'kaushan-script',
+    'Kaushan Script',
+    'Kaushan Script',
+    'display',
+    [400],
+  ),
+  createGoogleFont('sacramento', 'Sacramento', 'Sacramento', 'display', [400]),
+  createGoogleFont(
+    'great-vibes',
+    'Great Vibes',
+    'Great Vibes',
+    'display',
+    [400],
+  ),
+  createGoogleFont('righteous', 'Righteous', 'Righteous', 'display', [400]),
+  createGoogleFont(
+    'dela-gothic',
+    'Dela Gothic One',
+    'Dela Gothic One',
+    'display',
+    [400],
+  ),
+  createGoogleFont('bungee', 'Bungee', 'Bungee', 'display', [400]),
+  createGoogleFont(
+    'abril-fatface',
+    'Abril Fatface',
+    'Abril Fatface',
+    'display',
+    [400],
+  ),
+  createGoogleFont('anton', 'Anton', 'Anton', 'display', [400]),
+  createGoogleFont(
+    'permanent-marker',
+    'Permanent Marker',
+    'Permanent Marker',
+    'display',
+    [400],
+  ),
+  createGoogleFont(
+    'architects-daughter',
+    'Architects Daughter',
+    'Architects Daughter',
+    'display',
+    [400],
+  ),
+  createGoogleFont(
+    'indie-flower',
+    'Indie Flower',
+    'Indie Flower',
+    'display',
+    [400],
+  ),
+  createGoogleFont(
+    'gloria-hallelujah',
+    'Gloria Hallelujah',
+    'Gloria Hallelujah',
+    'display',
+    [400],
+  ),
+  createGoogleFont('lobster', 'Lobster', 'Lobster', 'display', [400]),
+  createGoogleFont('bebas-neue', 'Bebas Neue', 'Bebas Neue', 'display', [400]),
+];

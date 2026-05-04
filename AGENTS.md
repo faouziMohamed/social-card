@@ -337,3 +337,21 @@ import { CalendarIcon } from "lucide-react";
 ```
 
 <!-- END:nextjs-agent-rules -->
+
+### 11. Max File Size — 300 Lines
+
+**No `.ts` or `.tsx` file may exceed 300 lines.** When a file grows beyond 300 lines, split it immediately.
+
+**Strategy:**
+
+- Extract logical groups (types, constants, helpers, sections) into separate files
+- Keep the original as a barrel file with re-exports if needed for backwards compatibility
+- Name split files descriptively: `*-types.ts`, `*-sections.ts`, `*-constants.ts`, `*-helpers.ts`, `*-utils.ts`
+- For large data/constants, split by category: `*-sans.ts`, `*-serif.ts`, etc.
+
+**Exceptions (up to 400 lines):**
+
+- Satori renderers (`*.renderer.tsx`) — visual markup is inherently verbose
+- shadcn/ui component files — auto-generated from Radix primitives
+
+**Do NOT use token-intensive skills** for refactoring — just split the code directly. You can use sub-agents for parallel work on independent files.
