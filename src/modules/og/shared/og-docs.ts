@@ -1,7 +1,7 @@
 // Docs param descriptors derived from Zod schemas.
 // Replaces the fragile raw ._def / .isOptional() introspection in the docs page.
-import {TEMPLATE_SCHEMAS} from './og-schemas';
-import type {TemplateName} from './og.types';
+import {TEMPLATE_SCHEMAS} from '@/modules/og/shared/og-schemas';
+import type {TemplateName} from '@/modules/og/shared/og.types';
 
 export interface ParamDescriptor {
   name: string;

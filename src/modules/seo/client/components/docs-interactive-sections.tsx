@@ -13,6 +13,14 @@ import {
   TEMPLATE_META,
 } from '@/modules/og/shared/og-template-registry';
 import type {TemplateName} from '@/modules/og/shared/og.types';
+import {
+  BADGE_EXAMPLES,
+  BADGE_RESPONSE_SPEC,
+  OG_RESPONSE_SPEC,
+  SEO_EXAMPLES,
+  SEO_RESPONSE_SPECS,
+} from '@/modules/seo/client/components/docs-interactive-sections-constants';
+import {Section} from '@/modules/seo/client/components/docs-interactive-sections-section';
 import {getSeoParamDescriptors} from '@/modules/seo/shared/seo-docs';
 import {SEO_ROUTES} from '@/modules/seo/shared/seo-routes';
 import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
@@ -21,14 +29,6 @@ import {
   isImageSeoTemplate,
 } from '@/modules/seo/shared/seo-snippets';
 import {startTransition, useState} from 'react';
-import {
-  BADGE_EXAMPLES,
-  BADGE_RESPONSE_SPEC,
-  OG_RESPONSE_SPEC,
-  SEO_EXAMPLES,
-  SEO_RESPONSE_SPECS,
-} from './docs-interactive-sections-constants';
-import {Section} from './docs-interactive-sections-section';
 
 export function DocsInteractiveSections({base}: {base: string}) {
   const [collapsed, setCollapsed] = useState({

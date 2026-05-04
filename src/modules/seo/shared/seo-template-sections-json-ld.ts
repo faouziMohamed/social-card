@@ -1,5 +1,5 @@
 import type {FormSection} from '@/modules/og/shared/og-template-registry';
-import type {SeoTemplateName} from './seo-schemas';
+import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 
 export const JSON_LD_TEMPLATE_SECTIONS: Record<
   Extract<SeoTemplateName, 'json-ld'>,

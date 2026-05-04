@@ -1,11 +1,11 @@
-import React from 'react';
-import type {LaunchParams} from '../../shared/og-schemas';
-import type {OgRendererContext} from '../og-handler.server';
-import {hexToRgba} from '../og-render.server';
+import type {OgRendererContext} from '@/modules/og/server/og-handler.server';
+import {hexToRgba} from '@/modules/og/server/og-render.server';
 import {
   composeBackgroundStyleWithTone,
   resolveTypographyStyle,
-} from '../og-visuals.server';
+} from '@/modules/og/server/og-visuals.server';
+import type {LaunchParams} from '@/modules/og/shared/og-schemas';
+import React from 'react';
 
 export function launchRenderer(
   p: LaunchParams,

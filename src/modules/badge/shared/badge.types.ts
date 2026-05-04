@@ -8,4 +8,4 @@ export type {
   StatParams,
   StatusParams,
   TechStackParams,
-} from './badge-schemas';
+} from '@/modules/badge/shared/badge-schemas';

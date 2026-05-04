@@ -1,4 +1,3 @@
-import {z} from 'zod';
 import {
   decodeHtml,
   getLinkHref,
@@ -8,12 +7,13 @@ import {
   getMetaProperty,
   getTagContent,
   stripHtml,
-} from './seo-inspector-html-parser.server';
+} from '@/modules/seo/server/seo-inspector-html-parser.server';
 import type {
   SeoInspectorApiResponse,
   SeoInspectorFinding,
   SeoInspectorResult,
-} from './seo-inspector.types';
+} from '@/modules/seo/server/seo-inspector.types';
+import {z} from 'zod';
 
 export {
   decodeHtml,
@@ -24,12 +24,12 @@ export {
   getMetaProperty,
   getTagContent,
   stripHtml,
-} from './seo-inspector-html-parser.server';
+} from '@/modules/seo/server/seo-inspector-html-parser.server';
 export {
   type SeoInspectorApiResponse,
   type SeoInspectorFinding,
   type SeoInspectorResult,
-} from './seo-inspector.types';
+} from '@/modules/seo/server/seo-inspector.types';
 
 export const seoInspectRequestSchema = z.object({
   url: z.string().url(),

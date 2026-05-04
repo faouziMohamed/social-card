@@ -6,7 +6,7 @@ const _envSchema = z.object({
 
 type _Env = z.infer<typeof _envSchema>;
 
-function resolveDeploymentUrl(): string {
+export function resolveDeploymentUrl(): string {
   // Priority 1: Explicit env var
   if (process.env.NEXT_PUBLIC_DEPLOYMENT_URL) {
     return process.env.NEXT_PUBLIC_DEPLOYMENT_URL.replace(/\/$/, '');

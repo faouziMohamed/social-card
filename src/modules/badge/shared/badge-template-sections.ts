@@ -1,5 +1,5 @@
+import type {BadgeName} from '@/modules/badge/shared/badge-schemas';
 import type {FormSection} from '@/modules/og/shared/og-template-registry';
-import type {BadgeName} from './badge-schemas';
 
 const SHARED_THEME: FormSection = {
   title: 'Theme',

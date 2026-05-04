@@ -1,5 +1,5 @@
-import type {OgFontDefinition} from './og-font-types';
-import {createGoogleFont} from './og-font-types';
+import type {OgFontDefinition} from '@/modules/og/shared/og-font-types';
+import {createGoogleFont} from '@/modules/og/shared/og-font-types';
 
 export const SERIF_FONTS: readonly OgFontDefinition[] = [
   createGoogleFont(

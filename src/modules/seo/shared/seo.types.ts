@@ -10,4 +10,4 @@ export type {
   SeoSizeKey,
   SeoTemplateName,
   TwitterCardParams,
-} from './seo-schemas';
+} from '@/modules/seo/shared/seo-schemas';

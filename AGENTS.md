@@ -308,17 +308,20 @@ gains are marginal and the compatibility cost is high.
 | `<dialog>`, `window.alert`, `window.confirm` | `Dialog`, `AlertDialog`, `Sheet` from shadcn/ui            |
 | `<label>`                                    | `Label` from `src/components/ui/label.tsx`                 |
 
-**Icons:** use `lucide-react` (already installed) or `react-icons` — never inline SVG or emoji substitutes for interactive icons.
+**Icons:** use `lucide-react` (already installed) or `react-icons` — never inline SVG or emoji substitutes for
+interactive icons.
 
-**When a needed component does not exist** in `src/components/ui/`, scaffold it from [@radix-ui](https://www.radix-ui.com/) primitives or react-day-picker following the existing shadcn pattern, then import it.
+**When a needed component does not exist** in `src/components/ui/`, scaffold it
+from [@radix-ui](https://www.radix-ui.com/) primitives or react-day-picker following the existing shadcn pattern, then
+import it.
 
 **Good:**
 
 ```typescript jsx
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Calendar} from "@/components/ui/calendar";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {CalendarIcon} from "lucide-react";
 
 <Popover>
   <PopoverTrigger asChild>
@@ -332,7 +335,9 @@ import { CalendarIcon } from "lucide-react";
 
 ```typescript jsx
 <input type="date" onChange={...} />
-<select onChange={...}><option>...</option></select>
+<select onChange={...}>
+  <option>...</option>
+</select>
 <button onClick={...}>Click</button>
 ```
 
@@ -354,4 +359,25 @@ import { CalendarIcon } from "lucide-react";
 - Satori renderers (`*.renderer.tsx`) — visual markup is inherently verbose
 - shadcn/ui component files — auto-generated from Radix primitives
 
-**Do NOT use token-intensive skills** for refactoring — just split the code directly. You can use sub-agents for parallel work on independent files.
+**Do NOT use token-intensive skills** for refactoring — just split the code directly. You can use sub-agents for
+parallel work on independent files.
+
+### 12. Always Use Absolute Imports with `@/` Alias
+
+**All imports must use the `@/` absolute alias — never use relative imports (`'./'` or `'../'`) for files within `src/`.
+**
+
+The project is configured with `@/*` → `./src/*` in `tsconfig.json`.
+
+| Situation        | Use                                                         | Never use                                              |
+| ---------------- | ----------------------------------------------------------- | ------------------------------------------------------ |
+| Same directory   | `import { X } from '@/modules/og/server/og-handler.server'` | `import { X } from './og-handler.server'`              |
+| Parent directory | `import { X } from '@/modules/og/shared/og-schemas'`        | `import { X } from '../shared/og-schemas'`             |
+| Cross-module     | `import { X } from '@/modules/badge/shared/badge-schemas'`  | `import { X } from '../../badge/shared/badge-schemas'` |
+| Already absolute | `import { X } from '@/lib/env'`                             | —                                                      |
+
+**Exception:** Third-party package imports (`react`, `next`, `zod`, etc.) and Node.js built-ins (`fs`, `path`, etc.)
+remain as-is.
+
+When refactoring or writing new code, convert any relative import pointing inside `src/` to its `@/` equivalent
+immediately.

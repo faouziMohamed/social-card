@@ -1,6 +1,9 @@
-import {SHARED_MEDIA, SHARED_STYLE} from './og-shared-sections';
-import type {FormSection} from './og-template-registry';
-import type {TemplateName} from './og.types';
+import {
+  SHARED_MEDIA,
+  SHARED_STYLE,
+} from '@/modules/og/shared/og-shared-sections';
+import type {FormSection} from '@/modules/og/shared/og-template-registry';
+import type {TemplateName} from '@/modules/og/shared/og.types';
 
 export const TEMPLATE_SECTIONS_C: Partial<Record<TemplateName, FormSection[]>> =
   {

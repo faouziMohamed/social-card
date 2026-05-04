@@ -1,22 +1,28 @@
-import type {SeoTemplateName} from './seo-schemas';
+import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 import {
   buildImageWorkflowSnippet,
   IMAGE_SEO_TEMPLATES,
-} from './seo-snippets-image-workflow';
-import {buildJsonLdScript} from './seo-snippets-json-ld';
-import {buildMetaPackSnippet, buildRobotsTxt} from './seo-snippets-text';
+} from '@/modules/seo/shared/seo-snippets-image-workflow';
+import {buildJsonLdScript} from '@/modules/seo/shared/seo-snippets-json-ld';
+import {
+  buildMetaPackSnippet,
+  buildRobotsTxt,
+} from '@/modules/seo/shared/seo-snippets-text';
 
 export {
   buildImageWorkflowSnippet,
   buildImageWorkflowUrls,
   IMAGE_SEO_TEMPLATES,
-} from './seo-snippets-image-workflow';
-export {buildJsonLdObject, buildJsonLdScript} from './seo-snippets-json-ld';
+} from '@/modules/seo/shared/seo-snippets-image-workflow';
+export {
+  buildJsonLdObject,
+  buildJsonLdScript,
+} from '@/modules/seo/shared/seo-snippets-json-ld';
 export {
   buildMetaPackSnippet,
   buildRobotsTxt,
   TEXT_SEO_TEMPLATES,
-} from './seo-snippets-text';
+} from '@/modules/seo/shared/seo-snippets-text';
 
 export function isImageSeoTemplate(template: SeoTemplateName): boolean {
   return IMAGE_SEO_TEMPLATES.includes(

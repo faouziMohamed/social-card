@@ -1,5 +1,5 @@
-import {FONT_FAMILY_OPTIONS} from './og-font-catalog';
-import type {FormSection} from './og-template-registry';
+import {FONT_FAMILY_OPTIONS} from '@/modules/og/shared/og-font-catalog';
+import type {FormSection} from '@/modules/og/shared/og-template-registry';
 
 export const SHARED_STYLE: FormSection = {
   title: 'Global Style',

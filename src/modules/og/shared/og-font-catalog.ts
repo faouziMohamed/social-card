@@ -1,20 +1,12 @@
-import {DISPLAY_FONTS} from './og-font-display';
-import {MONO_FONTS} from './og-font-mono';
-import {SANS_FONTS} from './og-font-sans';
-import {SERIF_FONTS} from './og-font-serif';
-import type {OgFontCategory, OgFontDefinition} from './og-font-types';
-import {createCatalog} from './og-font-utils';
-
-export {
-  CATEGORY_FALLBACK_KEYS,
-  createGoogleFont,
-  createLocalFont,
+import {DISPLAY_FONTS} from '@/modules/og/shared/og-font-display';
+import {MONO_FONTS} from '@/modules/og/shared/og-font-mono';
+import {SANS_FONTS} from '@/modules/og/shared/og-font-sans';
+import {SERIF_FONTS} from '@/modules/og/shared/og-font-serif';
+import {
   type OgFontCategory,
   type OgFontDefinition,
-  type OgFontFile,
-  type OgFontSource,
-  type OgFontStyle,
-} from './og-font-types';
+} from '@/modules/og/shared/og-font-types';
+import {createCatalog} from '@/modules/og/shared/og-font-utils';
 
 export const OG_FONT_CATALOG = createCatalog([
   ...SANS_FONTS,

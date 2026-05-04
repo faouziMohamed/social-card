@@ -1,5 +1,5 @@
-import type {TargetKey} from '../hooks/use-builder-state';
-import type {ModuleTab} from './builder-island';
+import type {ModuleTab} from '@/modules/og/client/components/builder-island';
+import type {TargetKey} from '@/modules/og/client/hooks/use-builder-state';
 
 export const MODULE_TABS: {value: ModuleTab; label: string}[] = [
   {value: 'og', label: 'OG Images'},

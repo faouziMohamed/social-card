@@ -1,4 +1,4 @@
-import type {TemplateName} from './og.types';
+import type {TemplateName} from '@/modules/og/shared/og.types';
 
 export interface TemplateMeta {
   name: TemplateName;
@@ -121,6 +121,12 @@ export interface FormSection {
   fields: FieldDef[];
 }
 
-export {SHARED_MEDIA, SHARED_STYLE} from './og-shared-sections';
-export {DEMO_PARAMS, EXAMPLE_PARAMS} from './og-template-examples';
-export {TEMPLATE_SECTIONS} from './og-template-sections';
+export {
+  SHARED_MEDIA,
+  SHARED_STYLE,
+} from '@/modules/og/shared/og-shared-sections';
+export {
+  DEMO_PARAMS,
+  EXAMPLE_PARAMS,
+} from '@/modules/og/shared/og-template-examples';
+export {TEMPLATE_SECTIONS} from '@/modules/og/shared/og-template-sections';

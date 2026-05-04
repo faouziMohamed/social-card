@@ -2,7 +2,10 @@
 
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
-import {getChangelogEntries, getFaqEntries} from './builder-form.utils';
+import {
+  getChangelogEntries,
+  getFaqEntries,
+} from '@/modules/og/client/components/builder-form.utils';
 
 export function ChangelogFieldList({
   params,

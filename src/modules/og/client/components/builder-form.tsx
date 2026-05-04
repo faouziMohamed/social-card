@@ -1,8 +1,10 @@
 'use client';
 
-import type {FormSection} from '@/modules/og/shared/og-template-registry';
-import {ChangelogFieldList, FaqFieldList} from './builder-form-dynamic-lists';
-import {FieldCell} from './builder-form-field-cell';
+import {
+  ChangelogFieldList,
+  FaqFieldList,
+} from '@/modules/og/client/components/builder-form-dynamic-lists';
+import {FieldCell} from '@/modules/og/client/components/builder-form-field-cell';
 import {
   computeFullWidthSet,
   isChangelogChangeField,
@@ -10,7 +12,8 @@ import {
   normalizeJsonLdSchemaType,
   parseBgStyle,
   shouldShowJsonLdField,
-} from './builder-form.utils';
+} from '@/modules/og/client/components/builder-form.utils';
+import type {FormSection} from '@/modules/og/shared/og-template-registry';
 
 export interface BuilderFormProps {
   sections: FormSection[];

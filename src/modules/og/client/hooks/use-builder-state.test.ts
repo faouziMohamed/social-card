@@ -1,22 +1,23 @@
-import assert from 'node:assert/strict';
-import test from 'node:test';
+import {describe, expect, it} from 'vitest';
 
-import {resolveInitialTemplateName} from './use-builder-state';
+import {resolveInitialTemplateName} from '@/modules/og/client/hooks/use-builder-state';
 
-test('resolveInitialTemplateName prefers URL template over persisted current template', () => {
-  const resolved = resolveInitialTemplateName('portfolio', {
-    current: 'blog',
-    templates: {},
+describe('resolveInitialTemplateName', () => {
+  it('prefers URL template over persisted current template', () => {
+    const resolved = resolveInitialTemplateName('portfolio', {
+      current: 'blog',
+      templates: {},
+    });
+
+    expect(resolved).toBe('portfolio');
   });
 
-  assert.equal(resolved, 'portfolio');
-});
+  it('falls back to persisted template when URL template is missing', () => {
+    const resolved = resolveInitialTemplateName(null, {
+      current: 'launch',
+      templates: {},
+    });
 
-test('resolveInitialTemplateName falls back to persisted template when URL template is missing', () => {
-  const resolved = resolveInitialTemplateName(null, {
-    current: 'launch',
-    templates: {},
+    expect(resolved).toBe('launch');
   });
-
-  assert.equal(resolved, 'launch');
 });

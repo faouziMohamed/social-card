@@ -38,6 +38,9 @@ export function clampStyle(lines: number): React.CSSProperties {
 // Hex color → rgba(r,g,b,alpha) string (supports 3 and 6 digit hex)
 export function hexToRgba(hex: string, alpha: number): string {
   const h = hex.replace('#', '');
+  if (!/^([\da-f]{3}|[\da-f]{6})$/i.test(h)) {
+    throw new Error(`Invalid hex color: ${hex}`);
+  }
   const r = Number.parseInt(h.length === 3 ? h[0] + h[0] : h.slice(0, 2), 16);
   const g = Number.parseInt(h.length === 3 ? h[1] + h[1] : h.slice(2, 4), 16);
   const b = Number.parseInt(h.length === 3 ? h[2] + h[2] : h.slice(4, 6), 16);
@@ -51,6 +54,9 @@ const toLinear = (c: number) =>
 // WCAG relative luminance → returns '#111111' for light backgrounds, '#ffffff' for dark
 export function getContrastColor(hex: string): '#111111' | '#ffffff' {
   const h = hex.replace('#', '');
+  if (!/^([\da-f]{3}|[\da-f]{6})$/i.test(h)) {
+    throw new Error(`Invalid hex color: ${hex}`);
+  }
   const r = toLinear(
     Number.parseInt(h.length === 3 ? h[0] + h[0] : h.slice(0, 2), 16) / 255,
   );

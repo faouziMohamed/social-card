@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-import {baseSchema} from './og-schemas.base';
+import {baseSchema} from '@/modules/og/shared/og-schemas.base';
 
 const imageUrl = z.string().url().describe('Absolute URL of image').optional();
 

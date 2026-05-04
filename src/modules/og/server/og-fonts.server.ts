@@ -1,12 +1,10 @@
 import {readFile} from 'node:fs/promises';
 import path from 'node:path';
 
-import {
-  type OgFontDefinition,
-  resolveOgFontDefinition,
-} from '../shared/og-font-catalog';
+import {resolveOgFontDefinition} from '@/modules/og/shared/og-font-catalog';
+import {type OgFontDefinition} from '@/modules/og/shared/og-font-types';
 
-export {resolveOgFontDefinition} from '../shared/og-font-catalog';
+export {resolveOgFontDefinition} from '@/modules/og/shared/og-font-catalog';
 
 export type OgFontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 

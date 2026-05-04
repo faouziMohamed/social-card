@@ -1,4 +1,7 @@
-import {SEO_SCHEMAS, type SeoTemplateName} from './seo-schemas';
+import {
+  SEO_SCHEMAS,
+  type SeoTemplateName,
+} from '@/modules/seo/shared/seo-schemas';
 
 export interface SeoParamDescriptor {
   name: string;

@@ -2,11 +2,11 @@
 
 import {cn} from '@/lib/utils/cn';
 import {ROUTES} from '@/lib/utils/routes';
+import {MODULE_TABS} from '@/modules/og/client/components/builder-island.constants';
+import {BadgeBuilder} from '@/modules/og/client/components/builders/badge-builder';
+import {OgBuilder} from '@/modules/og/client/components/builders/og-builder';
+import {SeoBuilder} from '@/modules/og/client/components/builders/seo-builder';
 import Link from 'next/link';
-import {MODULE_TABS} from './builder-island.constants';
-import {BadgeBuilder} from './builders/badge-builder';
-import {OgBuilder} from './builders/og-builder';
-import {SeoBuilder} from './builders/seo-builder';
 
 export type ModuleTab = 'og' | 'badge' | 'seo';
 

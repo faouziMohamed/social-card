@@ -1,8 +1,8 @@
 'use client';
 
+import {STYLES} from '@/app/global-error-styles';
 import Link from 'next/link';
 import {useEffect} from 'react';
-import {STYLES} from './global-error-styles';
 
 // global-error replaces the root layout — must be fully standalone with <html><body>
 

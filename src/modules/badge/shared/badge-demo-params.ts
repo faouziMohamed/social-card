@@ -1,4 +1,4 @@
-import type {BadgeName} from './badge-schemas';
+import type {BadgeName} from '@/modules/badge/shared/badge-schemas';
 
 export const DEMO_PARAMS: {template: BadgeName; params: string}[] = [
   {

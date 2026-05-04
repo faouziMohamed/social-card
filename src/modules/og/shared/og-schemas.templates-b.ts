@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-import {baseSchema} from './og-schemas.base';
+import {baseSchema} from '@/modules/og/shared/og-schemas.base';
 import {
   articleSchema,
   blogSchema,
@@ -8,7 +8,7 @@ import {
   gradientSchema,
   minimalSchema,
   productSchema,
-} from './og-schemas.templates-a';
+} from '@/modules/og/shared/og-schemas.templates-a';
 
 const imageUrl = z.string().url().describe('Absolute URL of image').optional();
 

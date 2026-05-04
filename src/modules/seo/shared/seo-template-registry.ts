@@ -1,4 +1,4 @@
-import type {SeoTemplateName} from './seo-schemas';
+import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 
 export type {
   FieldDef,
@@ -74,6 +74,9 @@ export const TEMPLATE_META: SeoTemplateMeta[] = [
   },
 ];
 
-export {ICON_BASE_SECTIONS, SHARED_THEME} from './seo-shared-sections';
-export {DEMO_PARAMS} from './seo-template-examples';
-export {TEMPLATE_SECTIONS} from './seo-template-sections';
+export {
+  ICON_BASE_SECTIONS,
+  SHARED_THEME,
+} from '@/modules/seo/shared/seo-shared-sections';
+export {DEMO_PARAMS} from '@/modules/seo/shared/seo-template-examples';
+export {TEMPLATE_SECTIONS} from '@/modules/seo/shared/seo-template-sections';

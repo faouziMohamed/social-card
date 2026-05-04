@@ -1,10 +1,13 @@
 import type {CSSProperties} from 'react';
 
 import {
+  getContrastColor,
+  hexToRgba,
+} from '@/modules/og/server/og-render.server';
+import {
   resolveFontFamilyName,
   supportsOgLigatures,
-} from '../shared/og-font-catalog';
-import {getContrastColor, hexToRgba} from './og-render.server';
+} from '@/modules/og/shared/og-font-catalog';
 
 export const BG_BASE_OPTIONS = ['solid', 'gradient', 'aurora', 'mesh'] as const;
 export const BG_OVERLAY_OPTIONS = [

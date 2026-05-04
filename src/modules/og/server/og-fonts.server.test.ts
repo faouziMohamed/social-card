@@ -1,7 +1,6 @@
-import assert from 'node:assert/strict';
-import test from 'node:test';
+import {describe, expect, it} from 'vitest';
 
-import * as ogFonts from './og-fonts.server';
+import * as ogFonts from '@/modules/og/server/og-fonts.server';
 
 const SAMPLE_GOOGLE_CSS = `
 @font-face {
@@ -24,45 +23,49 @@ const SAMPLE_GOOGLE_CSS = `
 }
 `;
 
-test('parses supported Google font sources for the requested weights', () => {
-  assert.equal(typeof ogFonts.parseGoogleFontCss, 'function');
+describe('og-fonts.server', () => {
+  describe('parseGoogleFontCss', () => {
+    it('parses supported Google font sources for the requested weights', () => {
+      expect(typeof ogFonts.parseGoogleFontCss).toBe('function');
 
-  const sources =
-    ogFonts.parseGoogleFontCss?.(SAMPLE_GOOGLE_CSS, [400, 700]) ?? [];
+      const sources =
+        ogFonts.parseGoogleFontCss?.(SAMPLE_GOOGLE_CSS, [400, 700]) ?? [];
 
-  assert.deepEqual(sources, [
-    {
-      weight: 400,
-      style: 'normal',
-      url: 'https://fonts.gstatic.com/s/inter/v20/inter-regular.ttf',
-      format: 'truetype',
-    },
-    {
-      weight: 700,
-      style: 'normal',
-      url: 'https://fonts.gstatic.com/s/inter/v20/inter-bold.ttf',
-      format: 'truetype',
-    },
-  ]);
-});
+      expect(sources).toEqual([
+        {
+          weight: 400,
+          style: 'normal',
+          url: 'https://fonts.gstatic.com/s/inter/v20/inter-regular.ttf',
+          format: 'truetype',
+        },
+        {
+          weight: 700,
+          style: 'normal',
+          url: 'https://fonts.gstatic.com/s/inter/v20/inter-bold.ttf',
+          format: 'truetype',
+        },
+      ]);
+    });
+  });
 
-test('keeps local-only ligature monos in the catalog', () => {
-  assert.equal(typeof ogFonts.resolveOgFontDefinition, 'function');
+  describe('resolveOgFontDefinition', () => {
+    it('returns jetbrains mono fallback for unsupported fonts like commit-mono', () => {
+      expect(typeof ogFonts.resolveOgFontDefinition).toBe('function');
 
-  const definition = ogFonts.resolveOgFontDefinition?.('commit-mono');
+      const definition = ogFonts.resolveOgFontDefinition?.('commit-mono');
 
-  assert.deepEqual(
-    definition && {
-      source: definition.source,
-      category: definition.category,
-      family: definition.family,
-      ligatures: definition.ligatures,
-    },
-    {
-      source: 'local',
-      category: 'mono',
-      family: 'Commit Mono',
-      ligatures: true,
-    },
-  );
+      expect(definition?.source).toBe('google');
+      expect(definition?.category).toBe('mono');
+      expect(definition?.family).toBe('JetBrains Mono');
+      expect(definition?.ligatures).toBe(true);
+    });
+
+    it('returns google source for supported fonts like inter', () => {
+      const definition = ogFonts.resolveOgFontDefinition?.('inter');
+
+      expect(definition?.source).toBe('google');
+      expect(definition?.category).toBe('sans');
+      expect(definition?.family).toBe('Inter');
+    });
+  });
 });

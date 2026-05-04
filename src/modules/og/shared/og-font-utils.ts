@@ -1,4 +1,4 @@
-import type {OgFontDefinition} from './og-font-types';
+import type {OgFontDefinition} from '@/modules/og/shared/og-font-types';
 
 export function createCatalog<T extends readonly OgFontDefinition[]>(
   definitions: T,

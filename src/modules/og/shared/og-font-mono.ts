@@ -1,5 +1,8 @@
-import type {OgFontDefinition} from './og-font-types';
-import {createGoogleFont, createLocalFont} from './og-font-types';
+import type {OgFontDefinition} from '@/modules/og/shared/og-font-types';
+import {
+  createGoogleFont,
+  createLocalFont,
+} from '@/modules/og/shared/og-font-types';
 
 export const MONO_FONTS: readonly OgFontDefinition[] = [
   createGoogleFont(

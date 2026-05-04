@@ -1,5 +1,5 @@
 import {OG_ROUTES} from '@/modules/og/shared/og-routes';
-import type {SeoTemplateName} from './seo-schemas';
+import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 
 export const IMAGE_SEO_TEMPLATES = [
   'favicon',

@@ -4,10 +4,13 @@ import React from 'react';
 import type {ZodSchema} from 'zod';
 
 import {createClientLogger} from '@/lib/logger';
-import {TARGET_SIZES} from '../shared/og-schemas';
-import {resolveOgFonts} from './og-fonts.server';
-import {resolveCacheControl} from './og-render.server';
-import {resolveTheme, type ThemePalette} from './og-themes.server';
+import {resolveOgFonts} from '@/modules/og/server/og-fonts.server';
+import {resolveCacheControl} from '@/modules/og/server/og-render.server';
+import {
+  resolveTheme,
+  type ThemePalette,
+} from '@/modules/og/server/og-themes.server';
+import {TARGET_SIZES} from '@/modules/og/shared/og-schemas';
 
 const log = createClientLogger('og/handler');
 
@@ -101,7 +104,7 @@ const IMAGE_KEYS = new Set([
  * Non-image params are passed through unchanged. Fetch failures keep the
  * original URL so the renderer can handle the fallback.
  */
-async function resolveImageParams(
+export async function resolveImageParams(
   params: Record<string, unknown>,
 ): Promise<Record<string, unknown>> {
   const entries = Object.entries(params);

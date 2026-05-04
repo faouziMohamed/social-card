@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-import {FONT_FAMILY_VALUES} from './og-font-catalog';
+import {FONT_FAMILY_VALUES} from '@/modules/og/shared/og-font-catalog';
 
 export const TARGET_SIZES = {
   og: {width: 1200, height: 630},

@@ -71,7 +71,7 @@ export function createSeoHandler<TParams>(
   };
 }
 
-async function resolveLogoParam(
+export async function resolveLogoParam(
   params: Record<string, unknown>,
 ): Promise<Record<string, unknown>> {
   const logo = params['logo'];

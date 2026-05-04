@@ -1,4 +1,4 @@
-import type {TemplateName} from './og.types';
+import type {TemplateName} from '@/modules/og/shared/og.types';
 
 export const EXAMPLE_PARAMS: Record<TemplateName, string> = {
   general:

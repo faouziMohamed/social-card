@@ -1,7 +1,7 @@
 // URL builder for OG API endpoints.
 // Safe to import in both client and server code.
-import {OG_ROUTES} from './og-routes';
-import type {TemplateName} from './og.types';
+import {OG_ROUTES} from '@/modules/og/shared/og-routes';
+import type {TemplateName} from '@/modules/og/shared/og.types';
 
 export type OGQueryOptions = {
   template?: TemplateName;

@@ -1,6 +1,6 @@
 import type {FormSection} from '@/modules/og/shared/og-template-registry';
-import type {SeoTemplateName} from './seo-schemas';
-import {ICON_BASE_SECTIONS} from './seo-shared-sections';
+import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
+import {ICON_BASE_SECTIONS} from '@/modules/seo/shared/seo-shared-sections';
 
 export const ICON_TEMPLATE_SECTIONS: Record<
   Extract<SeoTemplateName, 'favicon' | 'apple-touch-icon' | 'manifest-icon'>,

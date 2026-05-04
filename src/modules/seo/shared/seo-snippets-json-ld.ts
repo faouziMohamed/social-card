@@ -1,3 +1,4 @@
+import type {JsonLdParams, JsonLdType} from '@/modules/seo/shared/seo-schemas';
 import type {
   Article,
   FAQPage,
@@ -8,7 +9,6 @@ import type {
   Thing,
   WithContext,
 } from 'schema-dts';
-import type {JsonLdParams, JsonLdType} from './seo-schemas';
 
 export function buildJsonLdScript(params: Record<string, string>): string {
   const jsonLdObject = buildJsonLdObject(params);

@@ -1,8 +1,8 @@
+import {BrokenOgCard} from '@/app/broken-og-card';
+import {STYLES} from '@/app/not-found.styles';
 import {Footer} from '@/components/layout/footer';
 import {Navbar} from '@/components/layout/navbar';
 import Link from 'next/link';
-import {BrokenOgCard} from './broken-og-card';
-import {STYLES} from './not-found.styles';
 
 export default function NotFound() {
   return (

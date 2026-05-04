@@ -1,12 +1,12 @@
-import React from 'react';
-import type {BlogParams} from '../../shared/og-schemas';
-import {detectSocialIcon} from '../og-brand-icons.server';
-import type {OgRendererContext} from '../og-handler.server';
-import {clampStyle} from '../og-render.server';
+import {detectSocialIcon} from '@/modules/og/server/og-brand-icons.server';
+import type {OgRendererContext} from '@/modules/og/server/og-handler.server';
+import {clampStyle} from '@/modules/og/server/og-render.server';
 import {
   composeBackgroundStyleWithTone,
   resolveTypographyStyle,
-} from '../og-visuals.server';
+} from '@/modules/og/server/og-visuals.server';
+import type {BlogParams} from '@/modules/og/shared/og-schemas';
+import React from 'react';
 
 function formatDate(iso: string, locale = 'en-US'): string {
   try {

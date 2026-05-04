@@ -1,5 +1,5 @@
 // OG API route paths. Import TemplateName + route helpers from here.
-import type {TemplateName} from './og.types';
+import type {TemplateName} from '@/modules/og/shared/og.types';
 
 export const OG_ROUTES: Record<TemplateName, string> = {
   general: '/api/og/general',

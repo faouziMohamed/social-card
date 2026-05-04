@@ -1,3 +1,4 @@
+import {SectionHeader} from '@/app/docs/section-header';
 import {Footer} from '@/components/layout/footer';
 import {Navbar} from '@/components/layout/navbar';
 import {CollapsibleJson} from '@/components/shared/collapsible-json';
@@ -16,7 +17,6 @@ import {SEO_ROUTES} from '@/modules/seo/shared/seo-routes';
 import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 import type {Metadata} from 'next';
 import Link from 'next/link';
-import {SectionHeader} from './section-header';
 
 // general template — "API Reference" title
 const OG_QS =

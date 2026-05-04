@@ -1,4 +1,7 @@
-import {BADGE_SCHEMAS, type BadgeName} from './badge-schemas';
+import {
+  BADGE_SCHEMAS,
+  type BadgeName,
+} from '@/modules/badge/shared/badge-schemas';
 
 export interface BadgeParamDescriptor {
   name: string;

@@ -1,4 +1,4 @@
-import type {SeoTemplateName} from './seo-schemas';
+import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 
 export const SEO_ROUTES: Partial<Record<SeoTemplateName, string>> = {
   favicon: '/api/seo/favicon',

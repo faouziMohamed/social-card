@@ -1,7 +1,7 @@
 // Central type exports for the OG module.
 // All consumers import from here, never from og-schemas directly.
 
-export type {OgFontKey} from './og-font-catalog';
+export type {OgFontKey} from '@/modules/og/shared/og-font-catalog';
 export type {
   ArticleParams,
   BlogParams,
@@ -16,9 +16,12 @@ export type {
   ProductParams,
   QuoteParams,
   TargetPlatform,
-} from './og-schemas';
+} from '@/modules/og/shared/og-schemas';
 
-export type {ThemeName, ThemePalette} from '../server/og-themes.server';
+export type {
+  ThemeName,
+  ThemePalette,
+} from '@/modules/og/server/og-themes.server';
 
 /** Union of all template identifiers */
 export type TemplateName =

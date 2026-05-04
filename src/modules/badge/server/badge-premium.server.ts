@@ -1,6 +1,6 @@
 // Premium badge primitives — palette, defs, panels, chips.
 
-import {darken, lighten} from './badge-color.server';
+import {darken, lighten} from '@/modules/badge/server/badge-color.server';
 
 export type BadgeTheme = 'dark' | 'light';
 

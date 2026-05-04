@@ -1,4 +1,4 @@
-import type {SeoTemplateName} from './seo-schemas';
+import type {SeoTemplateName} from '@/modules/seo/shared/seo-schemas';
 
 export const DEMO_PARAMS: {template: SeoTemplateName; params: string}[] = [
   {

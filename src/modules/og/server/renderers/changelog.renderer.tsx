@@ -1,10 +1,10 @@
-import React from 'react';
-import type {ChangelogParams} from '../../shared/og-schemas';
-import type {OgRendererContext} from '../og-handler.server';
+import type {OgRendererContext} from '@/modules/og/server/og-handler.server';
 import {
   composeBackgroundStyleWithTone,
   resolveTypographyStyle,
-} from '../og-visuals.server';
+} from '@/modules/og/server/og-visuals.server';
+import type {ChangelogParams} from '@/modules/og/shared/og-schemas';
+import React from 'react';
 
 export function changelogRenderer(
   p: ChangelogParams,

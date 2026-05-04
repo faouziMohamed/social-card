@@ -1,4 +1,4 @@
-import type {BadgeName} from './badge-schemas';
+import type {BadgeName} from '@/modules/badge/shared/badge-schemas';
 
 export interface BadgeTemplateMeta {
   name: BadgeName;

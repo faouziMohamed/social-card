@@ -1,11 +1,11 @@
-export type {TargetPlatform} from './og-schemas.base';
+export type {TargetPlatform} from '@/modules/og/shared/og-schemas.base';
 
 export {
   BG_STYLE_TOKENS,
   FONT_FAMILIES,
   TARGET_SIZES,
   baseSchema,
-} from './og-schemas.base';
+} from '@/modules/og/shared/og-schemas.base';
 
 export type {
   ArticleParams,
@@ -14,7 +14,7 @@ export type {
   GradientParams,
   MinimalParams,
   ProductParams,
-} from './og-schemas.templates-a';
+} from '@/modules/og/shared/og-schemas.templates-a';
 
 export {
   articleSchema,
@@ -23,7 +23,7 @@ export {
   gradientSchema,
   minimalSchema,
   productSchema,
-} from './og-schemas.templates-a';
+} from '@/modules/og/shared/og-schemas.templates-a';
 
 export type {
   ChangelogParams,
@@ -31,7 +31,7 @@ export type {
   LaunchParams,
   PortfolioParams,
   QuoteParams,
-} from './og-schemas.templates-b';
+} from '@/modules/og/shared/og-schemas.templates-b';
 
 export {
   TEMPLATE_SCHEMAS,
@@ -40,4 +40,4 @@ export {
   launchSchema,
   portfolioSchema,
   quoteSchema,
-} from './og-schemas.templates-b';
+} from '@/modules/og/shared/og-schemas.templates-b';

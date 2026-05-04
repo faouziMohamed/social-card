@@ -4,6 +4,7 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import type {
   SeoInspectorApiResponse,
+  SeoInspectorFinding,
   SeoInspectorResult,
 } from '@/modules/seo/server/seo-inspector.server';
 import Image from 'next/image';
@@ -132,7 +133,7 @@ export function SeoInspectorClient() {
               Findings
             </p>
             <div className="flex flex-col gap-2">
-              {result.findings.map(finding => (
+              {result.findings.map((finding: SeoInspectorFinding) => (
                 <div
                   key={finding.id}
                   className="rounded-lg border border-border/40 bg-card/40 p-3"

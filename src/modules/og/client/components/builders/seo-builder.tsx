@@ -3,6 +3,10 @@
 import {Button} from '@/components/ui/button';
 import {cn} from '@/lib/utils/cn';
 import {ROUTES} from '@/lib/utils/routes';
+import {BuilderForm} from '@/modules/og/client/components/builder-form';
+import {SEO_ASPECTS} from '@/modules/og/client/components/builder-island.constants';
+import {PreviewPanel} from '@/modules/og/client/components/preview-panel';
+import {TemplateSelector} from '@/modules/og/client/components/template-selector';
 import {ImageWorkflowPreview} from '@/modules/seo/client/components/image-workflow-preview';
 import {JsonLdEditor} from '@/modules/seo/client/components/json-ld-editor';
 import {SeoSnippetPanel} from '@/modules/seo/client/components/seo-snippet-panel';
@@ -19,10 +23,6 @@ import {
 } from '@/modules/seo/shared/seo-template-registry';
 import {Code2, RotateCcw} from 'lucide-react';
 import {useMemo} from 'react';
-import {BuilderForm} from '../builder-form';
-import {SEO_ASPECTS} from '../builder-island.constants';
-import {PreviewPanel} from '../preview-panel';
-import {TemplateSelector} from '../template-selector';
 
 export function SeoBuilder() {
   const {
