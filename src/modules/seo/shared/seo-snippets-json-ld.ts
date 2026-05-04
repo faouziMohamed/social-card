@@ -35,7 +35,7 @@ export function buildJsonLdObject(
     const obj: WithContext<Product> = {
       ...base,
       '@type': 'Product',
-      name: typed.name || 'OG Graph Pro',
+      name: typed.name || 'Social Card Pro',
       description: typed.description,
       image: typed.image,
       url: typed.url,
@@ -87,7 +87,7 @@ export function buildJsonLdObject(
     const obj: WithContext<Organization> = {
       ...base,
       '@type': 'Organization',
-      name: typed.name || 'OG Graph',
+      name: typed.name || 'Social Card',
       url: typed.url,
       logo: typed.image,
       description: typed.description,
@@ -100,7 +100,7 @@ export function buildJsonLdObject(
     const obj: WithContext<LocalBusiness> = {
       ...base,
       '@type': 'LocalBusiness',
-      name: typed.name || 'OG Graph Studio',
+      name: typed.name || 'Social Card Studio',
       url: typed.url,
       image: typed.image,
       description: typed.description,
@@ -113,7 +113,7 @@ export function buildJsonLdObject(
     const obj: WithContext<SoftwareApplication> = {
       ...base,
       '@type': 'SoftwareApplication',
-      name: typed.name || 'OG Graph',
+      name: typed.name || 'Social Card',
       applicationCategory: typed.applicationCategory || 'DeveloperApplication',
       operatingSystem: typed.operatingSystem || 'Web',
       offers: typed.price
@@ -139,7 +139,7 @@ export function buildJsonLdObject(
         '@type': 'Article',
         headline:
           typed.headline || typed.name || 'How to ship social previews fast',
-        name: typed.name || typed.headline || 'OG Graph Guide',
+        name: typed.name || typed.headline || 'Social Card Guide',
         description: typed.description,
         image: typed.image,
         url: typed.url,
@@ -161,7 +161,7 @@ export function buildJsonLdObject(
     : ({
         ...base,
         '@type': rawSchemaType,
-        name: typed.name || typed.headline || 'OG Graph',
+        name: typed.name || typed.headline || 'Social Card',
         description: typed.description,
         image: typed.image,
         url: typed.url,

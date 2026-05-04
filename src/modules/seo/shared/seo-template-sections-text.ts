@@ -89,7 +89,7 @@ export const TEXT_TEMPLATE_SECTIONS: Record<
           key: 'title',
           label: 'Title',
           type: 'text',
-          placeholder: 'OG Graph',
+          placeholder: 'Social Card',
         },
         {
           key: 'description',
@@ -124,7 +124,7 @@ export const TEXT_TEMPLATE_SECTIONS: Record<
           key: 'siteName',
           label: 'Site name',
           type: 'text',
-          placeholder: 'OG Graph',
+          placeholder: 'Social Card',
         },
         {
           key: 'locale',

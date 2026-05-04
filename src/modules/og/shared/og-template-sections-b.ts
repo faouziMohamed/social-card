@@ -182,7 +182,7 @@ export const TEMPLATE_SECTIONS_B: Partial<
           key: 'productName',
           label: 'Product',
           type: 'text',
-          placeholder: 'OG Graph',
+          placeholder: 'Social Card',
         },
         {key: 'version', label: 'Version', type: 'text', placeholder: 'v2.0.0'},
         {

@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="border-t border-border py-8 mt-auto">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-sm text-muted-fg sm:flex-row sm:px-6 lg:px-8">
         <span className="font-mono">
-          <span className="text-terminal-green">▶</span> og-graph
+          <span className="text-terminal-green">▶</span> social-card
         </span>
 
         <div className="flex items-center gap-6">

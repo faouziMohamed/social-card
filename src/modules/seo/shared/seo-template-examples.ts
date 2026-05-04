@@ -19,12 +19,12 @@ export const DEMO_PARAMS: {template: SeoTemplateName; params: string}[] = [
   {
     template: 'twitter-card',
     params:
-      'title=Open+Graph+Generator&description=Self-hostable+social+card+generator&siteName=og-graph&accentColor=%236366f1&bgStyle=gradient%2Bgrid&theme=dark',
+      'title=Open+Graph+Generator&description=Self-hostable+social+card+generator&siteName=social-card&accentColor=%236366f1&bgStyle=gradient%2Bgrid&theme=dark',
   },
   {
     template: 'json-ld',
     params:
-      'schemaType=SoftwareApplication&name=OG+Graph&description=Generate+OG+images%2C+badges%2C+and+SEO+assets&url=https%3A%2F%2Fog-graph.dev&applicationCategory=DeveloperApplication&operatingSystem=Web',
+      'schemaType=SoftwareApplication&name=OG+Graph&description=Generate+OG+images%2C+badges%2C+and+SEO+assets&url=https%3A%2F%2Fsocial-card.mfaouzi.com&applicationCategory=DeveloperApplication&operatingSystem=Web',
   },
   {
     template: 'robots-txt',

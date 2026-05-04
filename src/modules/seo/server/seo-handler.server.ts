@@ -1,19 +1,13 @@
 import {createClientLogger} from '@/lib/logger';
 import {resolveOgFonts} from '@/modules/og/server/og-fonts.server';
-import type {
-  OgRenderer,
-  OgRendererContext,
-} from '@/modules/og/server/og-handler.server';
+import type {OgRenderer, OgRendererContext} from '@/modules/og/server/og-handler.server';
 import {resolveCacheControl} from '@/modules/og/server/og-render.server';
 import {resolveTheme} from '@/modules/og/server/og-themes.server';
 import {ImageResponse} from 'next/og';
 import {type NextRequest} from 'next/server';
 import type {ZodSchema} from 'zod';
 
-export type {
-  OgRenderer,
-  OgRendererContext,
-} from '@/modules/og/server/og-handler.server';
+export type {OgRenderer, OgRendererContext} from '@/modules/og/server/og-handler.server';
 
 const log = createClientLogger('seo/handler');
 
@@ -71,7 +65,7 @@ export function createSeoHandler<TParams>(
   };
 }
 
-export async function resolveLogoParam(
+async function resolveLogoParam(
   params: Record<string, unknown>,
 ): Promise<Record<string, unknown>> {
   const logo = params['logo'];

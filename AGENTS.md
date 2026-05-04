@@ -8,7 +8,7 @@ the relevant guide in `node_modules/next/dist/docs/` before writing any code. He
 ## Project structure
 
 | Path                      | What it is                                                                                          |
-| ------------------------- | --------------------------------------------------------------------------------------------------- |
+|---------------------------|---------------------------------------------------------------------------------------------------|
 | `src/app/`                | App Router entry points and global UI shell: `layout.tsx`, `page.tsx`, `globals.css`, `favicon.ico` |
 | `src/app/api/`            | API route handlers (`og/`, `badge/`, `seo/`)                                                        |
 | `src/app/builder/`        | Interactive OG/badge/SEO builder UI (`/builder` page)                                               |
@@ -22,6 +22,7 @@ the relevant guide in `node_modules/next/dist/docs/` before writing any code. He
 | `src/components/ui/`      | shadcn/ui component library — add/modify components here                                            |
 | `src/components/shared/`  | Cross-module reusable React components                                                              |
 | `public/`                 | Static assets used by the app                                                                       |
+| `sdk/`                   | **Social Card TypeScript SDK** — npm package for programmatic API access (`sdk/`)                |
 | `ops/scripts/`            | Repo automation scripts (`bootstrap.sh`, `download-fonts.py`)                                       |
 | `package.json`            | Project scripts and dependency manifest                                                             |
 | `next.config.ts`          | Next.js config; currently only `reactCompiler: true`                                                |
@@ -53,7 +54,7 @@ All feature code lives in `src/modules/<domain>/` with a strict three-layer
 split (no `server-actions/` layer in this project):
 
 | Sub-folder | Runs in | Contents                                                                       |
-| ---------- | ------- | ------------------------------------------------------------------------------ |
+|------------|---------|--------------------------------------------------------------------------------|
 | `client/`  | Browser | React Query hooks (`use-*.queries.ts`), client components, client repos        |
 | `server/`  | Server  | Server-side renderers, handler factories, API repositories                     |
 | `shared/`  | Both    | Types, schemas (Zod), routes, registries — no runtime imports from either side |
@@ -300,7 +301,7 @@ gains are marginal and the compatibility cost is high.
 **All interactive UI must use library components — never raw HTML elements.**
 
 | Element                                      | Use instead                                                |
-| -------------------------------------------- | ---------------------------------------------------------- |
+|----------------------------------------------|------------------------------------------------------------|
 | `<input>`, `<textarea>`                      | `Input`, `Textarea` from `src/components/ui/`              |
 | `<select>`, `<option>`                       | `Select` / `SelectContent` / `SelectItem` from shadcn/ui   |
 | `<input type="date">`                        | `Calendar` + `Popover` from shadcn/ui (`react-day-picker`) |
@@ -341,8 +342,6 @@ import {CalendarIcon} from "lucide-react";
 <button onClick={...}>Click</button>
 ```
 
-<!-- END:nextjs-agent-rules -->
-
 ### 11. Max File Size — 300 Lines
 
 **No `.ts` or `.tsx` file may exceed 300 lines.** When a file grows beyond 300 lines, split it immediately.
@@ -370,7 +369,7 @@ parallel work on independent files.
 The project is configured with `@/*` → `./src/*` in `tsconfig.json`.
 
 | Situation        | Use                                                         | Never use                                              |
-| ---------------- | ----------------------------------------------------------- | ------------------------------------------------------ |
+|------------------|-------------------------------------------------------------|--------------------------------------------------------|
 | Same directory   | `import { X } from '@/modules/og/server/og-handler.server'` | `import { X } from './og-handler.server'`              |
 | Parent directory | `import { X } from '@/modules/og/shared/og-schemas'`        | `import { X } from '../shared/og-schemas'`             |
 | Cross-module     | `import { X } from '@/modules/badge/shared/badge-schemas'`  | `import { X } from '../../badge/shared/badge-schemas'` |
@@ -381,3 +380,4 @@ remain as-is.
 
 When refactoring or writing new code, convert any relative import pointing inside `src/` to its `@/` equivalent
 immediately.
+<!-- END:nextjs-agent-rules -->

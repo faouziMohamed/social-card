@@ -68,7 +68,7 @@ export const SEO_EXAMPLES: Record<
     description: '192 or 512 px PNG for PWA manifest.json.',
   },
   'twitter-card': {
-    qs: 'title=Open+Graph+Generator&siteName=og-graph&accentColor=%236366f1&bgStyle=gradient%2Bgrid',
+    qs: 'title=Open+Graph+Generator&siteName=social-card&accentColor=%236366f1&bgStyle=gradient%2Bgrid',
     aspect: '800/418',
     description: '800×418 PNG Twitter summary card.',
   },

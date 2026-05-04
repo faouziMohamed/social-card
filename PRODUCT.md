@@ -10,7 +10,7 @@ Developers building web apps, SaaS tools, or blogs who need beautiful social pre
 
 ## Product Purpose
 
-OG Graph is a self-hostable OG image generator that exposes 7 template variants as a REST API (edge-runtime, zero cold start). Developers drop a URL into their meta tags and get a 1200×630 PNG instantly. The builder UI lets them visually configure parameters and copy the final URL. Success = developer pastes one URL and ships.
+Social Card is a self-hostable OG image generator that exposes 7 template variants as a REST API (edge-runtime, zero cold start). Developers drop a URL into their meta tags and get a 1200×630 PNG instantly. The builder UI lets them visually configure parameters and copy the final URL. Success = developer pastes one URL and ships.
 
 ## Brand Personality
 

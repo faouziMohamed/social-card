@@ -65,7 +65,7 @@ export function Navbar() {
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-primary/30 bg-primary/12">
             <Sparkles className="h-3.5 w-3.5" />
           </span>
-          <span className="text-lg tracking-tight">OG Graph</span>
+          <span className="text-lg tracking-tight">Social Card</span>
           <span className="status-indicator status-success" />
         </Link>
 
@@ -114,7 +114,7 @@ export function Navbar() {
             </Link>
           </div>
           <a
-            href="https://github.com/faouziMohamed/placard"
+            href="https://github.com/faouziMohamed/social-card"
             target="_blank"
             rel="noopener noreferrer"
             className={
@@ -211,7 +211,7 @@ export function Navbar() {
                 </p>
                 <SheetClose asChild>
                   <a
-                    href="https://github.com/faouziMohamed/placard"
+                    href="https://github.com/faouziMohamed/social-card"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex min-h-12 items-center gap-2 rounded-xl border border-border/55 bg-card/60 px-4 text-sm font-medium transition-colors hover:border-primary/35 hover:bg-primary/8"

@@ -210,7 +210,7 @@ describe('OG Schemas Validation', () => {
   describe('changelogSchema', () => {
     it('has default values', () => {
       const result = changelogSchema.parse({});
-      expect(result.productName).toBe('OG Graph');
+      expect(result.productName).toBe('Social Card');
       expect(result.version).toBe('v2.0.0');
     });
 

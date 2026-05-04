@@ -14,11 +14,13 @@ export function DocsSidebarNav({
   ogItems,
   badgeItems,
   seoItems,
+  sdkItems,
   inspectorItems,
 }: {
   ogItems: NavItem[];
   badgeItems: NavItem[];
   seoItems: NavItem[];
+  sdkItems: NavItem[];
   inspectorItems: NavItem[];
 }) {
   const groups = useMemo(
@@ -26,9 +28,10 @@ export function DocsSidebarNav({
       {label: 'OG Templates', items: ogItems},
       {label: 'SVG Badges', items: badgeItems},
       {label: 'SEO Assets', items: seoItems},
+      {label: 'SDK', items: sdkItems},
       {label: 'Inspector', items: inspectorItems},
     ],
-    [badgeItems, inspectorItems, ogItems, seoItems],
+    [badgeItems, inspectorItems, ogItems, sdkItems, seoItems],
   );
   const ids = useMemo(
     () =>

@@ -1,19 +1,23 @@
-# OG Graph
+# Social Card
 
 **Self-hostable Open Graph image & badge generator — drop a URL, get a 1200×630 PNG.**
 
-OG Graph is a Next.js application that exposes a REST API for generating social card images across 11 templates, 8 SVG
+Social Card is a Next.js application that exposes a REST API for generating social card images across 11 templates, 8 SVG
 badge types, and SEO asset variants. Developers paste one URL into their `<meta>` tags and ship.
 
-🌐 **Live demo:** [placard.mfaouzi.com](https://placard.mfaouzi.com)
+🌐 **Live website:** [social-card.mfaouzi.com](https://social-card.mfaouzi.com)  
+📚 **Live docs:** [social-card.mfaouzi.com/docs](https://social-card.mfaouzi.com/docs)
+📦 **TypeScript SDK:** [`social-card-sdk`](https://www.npmjs.com/package/social-card-sdk) · [SDK README](./sdk/README.md) · [Live SDK docs](https://social-card.mfaouzi.com/docs#sdk)
 
 ---
 
 ## Table of Contents
 
+- [Getting Started](#getting-started)
 - [Overview](#overview)
 - [Live Examples](#live-examples)
 - [Architecture](#architecture)
+- [Development](#development)
 - [Project Structure](#project-structure)
 - [API Reference](#api-reference)
   - [OG Image Templates](#og-image-templates)
@@ -22,10 +26,60 @@ badge types, and SEO asset variants. Developers paste one URL into their `<meta>
 - [Template Parameters](#template-parameters)
 - [Background Styles](#background-styles)
 - [SEO Inspector](#seo-inspector)
-- [Getting Started](#getting-started)
-- [Development](#development)
 - [Module Architecture](#module-architecture)
 - [Author](#author)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm 9+
+
+### Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/faouziMohamed/social-card.git
+cd social-card
+
+# Install dependencies
+pnpm install
+
+# (Optional) set deployment URL
+cp .env.example .env
+```
+
+### Install the npm SDK
+
+```bash
+npm install social-card-sdk
+# or
+pnpm add social-card-sdk
+# or
+yarn add social-card-sdk
+```
+
+### Environment Variables
+
+Only one variable is supported — everything else works out of the box.
+
+| Variable                     | Required    | Description                                                                                                 |
+| ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_DEPLOYMENT_URL` | ❌ optional | Canonical app URL. Falls back to `NEXT_PUBLIC_VERCEL_URL` (auto-set by Vercel) then `http://localhost:3000` |
+
+### Running
+
+```bash
+pnpm dev        # Development server at http://localhost:3000
+pnpm build      # Production build
+pnpm start      # Start production server
+pnpm lint       # Lint
+pnpm lint:fix   # Lint + auto-fix
+pnpm test       # Run tests
+```
 
 ---
 
@@ -33,13 +87,13 @@ badge types, and SEO asset variants. Developers paste one URL into their `<meta>
 
 ```mermaid
 graph LR
-    DEV["Developer"] -->|" ?title=…&bgStyle=gradient+grid "| API["OG Graph API"]
+    DEV["Developer"] -->|" ?title=…&bgStyle=gradient+grid "| API["Social Card API"]
     API -->|" 1200×630 PNG "| META["<meta og:image>"]
     DEV -->|" Visual config "| BUILDER["/builder UI"]
     BUILDER -->|" Copies URL "| META
 ```
 
-OG Graph solves the social preview problem in one HTTP request:
+Social Card solves the social preview problem in one HTTP request:
 
 | What you get          | How                                       |
 | --------------------- | ----------------------------------------- |
@@ -53,7 +107,7 @@ OG Graph solves the social preview problem in one HTTP request:
 
 ## Live Examples
 
-All previews below are generated live from **[placard.mfaouzi.com](https://placard.mfaouzi.com)** — no static assets,
+All previews below are generated live from **[social-card.mfaouzi.com](https://social-card.mfaouzi.com)** — no static assets,
 just URLs.
 
 ---
@@ -62,12 +116,12 @@ just URLs.
 
 #### General — brand / landing page
 
-[![OG General](https://placard.mfaouzi.com/api/og/general?siteName=OG+Graph&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)](https://placard.mfaouzi.com/api/og/general?siteName=OG+Graph&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)
+[![OG General](https://social-card.mfaouzi.com/api/og/general?siteName=Social+Card&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)](https://social-card.mfaouzi.com/api/og/general?siteName=Social+Card&title=Social+Assets+on+Demand&description=Self-hostable+image+generator+for+OG+cards%2C+badges+%26+SEO+icons&theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid)
 
 ```html
 <meta
   property="og:image"
-  content="https://placard.mfaouzi.com/api/og/general
+  content="https://social-card.mfaouzi.com/api/og/general
            ?siteName=My+App&title=Page+Title
            &description=A+short+description
            &theme=dark&accentColor=%236366f1&bgStyle=gradient%2Bgrid"
@@ -93,12 +147,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 #### Blog — post with author & tags
 
-[![OG Blog](https://placard.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)](https://placard.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)
+[![OG Blog](https://social-card.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)](https://social-card.mfaouzi.com/api/og/blog?title=Building+a+Self-Hostable+OG+Image+Generator&authorName=Faouzi+Mohamed&authorHandle=%40fz_faouzi&tags=Next.js%2COpen+Graph%2CAPI&readingTime=6+min+read&publishDate=2026-05-01&accentColor=%236366f1&bgStyle=aurora%2Bgrid)
 
 ```html
 <meta
   property="og:image"
-  content="https://placard.mfaouzi.com/api/og/blog
+  content="https://social-card.mfaouzi.com/api/og/blog
            ?title=My+Post+Title
            &authorName=Jane+Doe&authorHandle=%40janedoe
            &tags=Next.js%2CReact&readingTime=5+min+read
@@ -110,12 +164,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 #### Product — SaaS / tool launch
 
-[![OG Product](https://placard.mfaouzi.com/api/og/product?productName=OG+Graph&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)](https://placard.mfaouzi.com/api/og/product?productName=OG+Graph&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)
+[![OG Product](https://social-card.mfaouzi.com/api/og/product?productName=Social+Card&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)](https://social-card.mfaouzi.com/api/og/product?productName=Social+Card&tagline=Drop+a+URL%2C+get+a+social+card&feature1=11+OG+templates&feature2=8+SVG+badges&feature3=Zero+signup&cta=Try+it+free&accentColor=%236366f1&bgStyle=mesh%2Bspotlight%2Bnoise)
 
 ```html
 <meta
   property="og:image"
-  content="https://placard.mfaouzi.com/api/og/product
+  content="https://social-card.mfaouzi.com/api/og/product
            ?productName=My+Product&tagline=Your+One-Liner+Here
            &feature1=Feature+A&feature2=Feature+B&feature3=Feature+C
            &cta=Get+Started&accentColor=%238b5cf6
@@ -127,12 +181,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 #### Portfolio — developer profile
 
-[![OG Portfolio](https://placard.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)](https://placard.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)
+[![OG Portfolio](https://social-card.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)](https://social-card.mfaouzi.com/api/og/portfolio?name=Faouzi+Mohamed&role=Full-Stack+Developer&bio=Building+tools+that+make+developers%27+lives+easier&skills=TypeScript%2CNext.js%2CReact%2CNode.js%2CDocker&githubHandle=faouziMohamed&websiteUrl=mfaouzi.com&available=true&accentColor=%236366f1&bgStyle=aurora%2Bvignette)
 
 ```html
 <meta
   property="og:image"
-  content="https://placard.mfaouzi.com/api/og/portfolio
+  content="https://social-card.mfaouzi.com/api/og/portfolio
            ?name=Your+Name&role=Your+Role
            &skills=TypeScript%2CReact%2CNode.js%2CDocker&websiteUrl=yourwebsite.com
            &githubHandle=yourhandle&available=true
@@ -150,13 +204,13 @@ Embed directly in HTML, Markdown, or any `<img>` tag.
 
 | Preview                                                                                                                                    | Usage                                                                                                       |
 | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
-| ![version](https://placard.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1&style=flat)                             | `![version](https://placard.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1)`       |
-| ![status](https://placard.mfaouzi.com/api/badge/status?label=API&status=online)                                                            | `![status](https://placard.mfaouzi.com/api/badge/status?label=API&status=online)`                           |
-| ![coverage](https://placard.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)                                        | `![coverage](https://placard.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)`       |
-| ![score](https://placard.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1)                                           | `![score](https://placard.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1)`          |
-| ![stack](https://placard.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&color=%236366f1&style=tags)                  | `![stack](https://placard.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&style=tags)` |
-| ![github](https://placard.mfaouzi.com/api/badge/socials?platform=github&handle=faouziMohamed&followers=128&color=%236366f1)                | `![github](https://placard.mfaouzi.com/api/badge/socials?platform=github&handle=yourhandle&followers=1.2k)` |
-| ![available](https://placard.mfaouzi.com/api/badge/availability?label=Faouzi+Mohamed&available=true&hireText=Open+to+work&color=%2322c55e) | `![available](https://placard.mfaouzi.com/api/badge/availability?label=Your+Name&available=true)`           |
+| ![version](https://social-card.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1&style=flat)                             | `![version](https://social-card.mfaouzi.com/api/badge/label?label=version&message=1.0.0&color=%236366f1)`       |
+| ![status](https://social-card.mfaouzi.com/api/badge/status?label=API&status=online)                                                            | `![status](https://social-card.mfaouzi.com/api/badge/status?label=API&status=online)`                           |
+| ![coverage](https://social-card.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)                                        | `![coverage](https://social-card.mfaouzi.com/api/badge/progress?label=Coverage&value=94&color=%2322c55e)`       |
+| ![score](https://social-card.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1)                                           | `![score](https://social-card.mfaouzi.com/api/badge/score?label=Performance&value=98&color=%236366f1)`          |
+| ![stack](https://social-card.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&color=%236366f1&style=tags)                  | `![stack](https://social-card.mfaouzi.com/api/badge/tech-stack?stack=TypeScript%2CNext.js%2CDocker&style=tags)` |
+| ![github](https://social-card.mfaouzi.com/api/badge/socials?platform=github&handle=faouziMohamed&followers=128&color=%236366f1)                | `![github](https://social-card.mfaouzi.com/api/badge/socials?platform=github&handle=yourhandle&followers=1.2k)` |
+| ![available](https://social-card.mfaouzi.com/api/badge/availability?label=Faouzi+Mohamed&available=true&hireText=Open+to+work&color=%2322c55e) | `![available](https://social-card.mfaouzi.com/api/badge/availability?label=Your+Name&available=true)`           |
 
 ---
 
@@ -167,31 +221,31 @@ Embed directly in HTML, Markdown, or any `<img>` tag.
 <link
   rel="icon"
   type="image/png"
-  href="https://placard.mfaouzi.com/api/seo/favicon?initial=A&color=%230f0f0f&accentColor=%236366f1&shape=rounded"
+  href="https://social-card.mfaouzi.com/api/seo/favicon?initial=A&color=%230f0f0f&accentColor=%236366f1&shape=rounded"
 />
 
 <!-- Apple touch icon (180×180) -->
 <link
   rel="apple-touch-icon"
-  href="https://placard.mfaouzi.com/api/seo/apple-touch-icon?initial=A&color=%230f0f0f&accentColor=%236366f1"
+  href="https://social-card.mfaouzi.com/api/seo/apple-touch-icon?initial=A&color=%230f0f0f&accentColor=%236366f1"
 />
 
 <!-- PWA manifest icons -->
 { "icons": [ { "src":
-"https://placard.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=192",
+"https://social-card.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=192",
 "sizes": "192x192", "type": "image/png", "purpose": "maskable" }, { "src":
-"https://placard.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=512",
+"https://social-card.mfaouzi.com/api/seo/manifest-icon?initial=A&color=%230f0f0f&accentColor=%236366f1&size=512",
 "sizes": "512x512", "type": "image/png", "purpose": "maskable" } ] }
 ```
 
-> **Tip:** use the [visual builder](https://placard.mfaouzi.com/builder) to configure any template and copy the
+> **Tip:** use the [visual builder](https://social-card.mfaouzi.com/builder) to configure any template and copy the
 > ready-made URL — no guessing query params.
 
 ---
 
 ## SEO Inspector
 
-OG Graph now includes a server-side SEO inspector:
+Social Card now includes a server-side SEO inspector:
 
 - UI: `/seo-inspector`
 - API: `POST /api/seo/inspect`
@@ -216,7 +270,7 @@ sequenceDiagram
 ### API usage
 
 ```bash
-curl -X POST "https://placard.mfaouzi.com/api/seo/inspect" \
+curl -X POST "https://social-card.mfaouzi.com/api/seo/inspect" \
   -H "content-type: application/json" \
   -d '{"url":"https://example.com"}'
 ```
@@ -324,12 +378,70 @@ graph LR
     SERVER -.->|" never imports "| CLIENT
 ```
 
+## Development
+
+### Stack
+
+| Layer            | Technology                             |
+| ---------------- | -------------------------------------- |
+| Framework        | Next.js 16 (App Router)                |
+| Runtime          | Node.js (no edge runtime)              |
+| Language         | TypeScript 5                           |
+| Styling          | Tailwind CSS 4                         |
+| UI components    | shadcn/ui + Radix UI                   |
+| Forms            | React Hook Form + Zod                  |
+| Data fetching    | TanStack Query v5                      |
+| Image generation | `@vercel/og`                           |
+| HTTP client      | Axios                                  |
+| URL state        | nuqs                                   |
+| Logging          | Pino                                   |
+| Compiler         | React Compiler (`reactCompiler: true`) |
+
+### Builder → Preview Data Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Builder as /builder (Client)
+    participant RHF as React Hook Form
+    participant RQ as TanStack Query
+    participant API as /api/og/<template>
+    User ->> Builder: Select template + fill params
+    Builder ->> RHF: Form field change
+    RHF ->> RQ: Trigger query (debounced)
+    RQ ->> API: GET /api/og/blog?title=…
+    API -->> RQ: 1200×630 PNG
+    RQ -->> Builder: Render preview <img>
+    User ->> Builder: Click "Copy URL"
+    Builder -->> User: URL in clipboard
+```
+
+### Adding a New OG Template
+
+```mermaid
+flowchart LR
+    A["1. og-schemas.ts\nadd Zod schema"] --> B["2. og-template-registry.ts\nadd TEMPLATE_META +\nTEMPLATE_SECTIONS +\nEXAMPLE_PARAMS"]
+    B --> C["3. og-routes.ts + routes.ts\nadd route constant"]
+    C --> D["4. src/app/api/og/<name>/route.ts\nimplement GET handler"]
+```
+
+### Font Catalog
+
+60+ fonts are pre-bundled in `src/assets/fonts/`. Font catalog is defined in `src/lib/fonts.ts` and
+`src/modules/og/shared/og-font-catalog.ts`.
+
+To download additional fonts:
+
+```bash
+python ops/scripts/download-fonts.py
+```
+
 ---
 
 ## Project Structure
 
 ```
-og-graph/
+social-card/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx          # Root layout, fonts, metadata
@@ -632,7 +744,7 @@ Dynamically generated icon and manifest assets.
 
 | Param         | Type   | Default         | Description           |
 | ------------- | ------ | --------------- | --------------------- |
-| `productName` | string | `OG Graph`      | Product name          |
+| `productName` | string | `Social Card`      | Product name          |
 | `version`     | string | `v2.0.0`        | Release version       |
 | `headline`    | string | `Major upgrade` | Release headline      |
 | `change1`     | string | —               | First changelog item  |
@@ -699,108 +811,6 @@ graph TD
 
 ---
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 20+
-- pnpm 9+
-
-### Installation
-
-```bash
-# Clone the repo
-git clone https://github.com/faouziMohamed/og-graph.git
-cd og-graph
-
-# Install dependencies
-pnpm install
-
-# (Optional) set deployment URL
-cp .env.example .env
-```
-
-### Environment Variables
-
-Only one variable is supported — everything else works out of the box.
-
-| Variable                     | Required    | Description                                                                                                 |
-| ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_DEPLOYMENT_URL` | ❌ optional | Canonical app URL. Falls back to `NEXT_PUBLIC_VERCEL_URL` (auto-set by Vercel) then `http://localhost:3000` |
-
-### Running
-
-```bash
-pnpm dev        # Development server at http://localhost:3000
-pnpm build      # Production build
-pnpm start      # Start production server
-pnpm lint       # Lint
-pnpm lint:fix   # Lint + auto-fix
-pnpm test       # Run tests
-```
-
----
-
-## Development
-
-### Stack
-
-| Layer            | Technology                             |
-| ---------------- | -------------------------------------- |
-| Framework        | Next.js 16 (App Router)                |
-| Runtime          | Node.js (no edge runtime)              |
-| Language         | TypeScript 5                           |
-| Styling          | Tailwind CSS 4                         |
-| UI components    | shadcn/ui + Radix UI                   |
-| Forms            | React Hook Form + Zod                  |
-| Data fetching    | TanStack Query v5                      |
-| Image generation | `@vercel/og`                           |
-| HTTP client      | Axios                                  |
-| URL state        | nuqs                                   |
-| Logging          | Pino                                   |
-| Compiler         | React Compiler (`reactCompiler: true`) |
-
-### Builder → Preview Data Flow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Builder as /builder (Client)
-    participant RHF as React Hook Form
-    participant RQ as TanStack Query
-    participant API as /api/og/<template>
-    User ->> Builder: Select template + fill params
-    Builder ->> RHF: Form field change
-    RHF ->> RQ: Trigger query (debounced)
-    RQ ->> API: GET /api/og/blog?title=…
-    API -->> RQ: 1200×630 PNG
-    RQ -->> Builder: Render preview <img>
-    User ->> Builder: Click "Copy URL"
-    Builder -->> User: URL in clipboard
-```
-
-### Adding a New OG Template
-
-```mermaid
-flowchart LR
-    A["1. og-schemas.ts\nadd Zod schema"] --> B["2. og-template-registry.ts\nadd TEMPLATE_META +\nTEMPLATE_SECTIONS +\nEXAMPLE_PARAMS"]
-    B --> C["3. og-routes.ts + routes.ts\nadd route constant"]
-    C --> D["4. src/app/api/og/<name>/route.ts\nimplement GET handler"]
-```
-
-### Font Catalog
-
-60+ fonts are pre-bundled in `src/assets/fonts/`. Font catalog is defined in `src/lib/fonts.ts` and
-`src/modules/og/shared/og-font-catalog.ts`.
-
-To download additional fonts:
-
-```bash
-python ops/scripts/download-fonts.py
-```
-
----
-
 ## Module Architecture
 
 ```mermaid
@@ -839,7 +849,7 @@ graph TB
 
 **Faouzi Mohamed**
 
-Full-stack developer. Built OG Graph as a self-hostable alternative to paid social-card services.
+Full-stack developer. Built Social Card as a self-hostable alternative to paid social-card services.
 
 |                |                                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------------- |
@@ -849,7 +859,9 @@ Full-stack developer. Built OG Graph as a self-hostable alternative to paid soci
 | 🐦 Twitter / X | [@fz_faouzi](https://twitter.com/fz_faouzi)                                                     |
 | 📘 Facebook    | [faouzi.mohamed.97](https://facebook.com/faouzi.mohamed.97)                                     |
 | 📸 Instagram   | [@faouzi*m*](https://instagram.com/faouzi_m_)                                                   |
-| 🚀 Live app    | [placard.mfaouzi.com](https://placard.mfaouzi.com)                                              |
+| 🚀 Live app    | [social-card.mfaouzi.com](https://social-card.mfaouzi.com)                                       |
+| 📚 Live docs   | [social-card.mfaouzi.com/docs](https://social-card.mfaouzi.com/docs)                             |
+| 📦 SDK docs    | [social-card.mfaouzi.com/docs#sdk](https://social-card.mfaouzi.com/docs#sdk)                     |
 
 ---
 

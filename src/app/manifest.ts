@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
   const base = env.deploymentURL;
 
   return {
-    name: 'OG Graph',
-    short_name: 'OG Graph',
+    name: 'Social Card',
+    short_name: 'Social Card',
     description:
       'Self-hostable, API-first Open Graph image generator. 11 templates, 8 SVG badges, 4 SEO assets.',
     start_url: '/',

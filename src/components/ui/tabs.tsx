@@ -9,9 +9,7 @@ interface TabsContextValue {
 }
 const TabsContext = React.createContext<TabsContextValue>({
   value: '',
-  onValueChange: () => {
-    // no-op default; overridden by provider
-  },
+  onValueChange: () => {},
 });
 
 export function Tabs({
@@ -73,7 +71,6 @@ export function TabsTrigger({
   const active = ctx.value === value;
   return (
     <button
-      type="button"
       role="tab"
       aria-selected={active}
       onClick={() => ctx.onValueChange(value)}

@@ -43,7 +43,7 @@ export function buildImageWorkflowUrls(
   const title = params.title || 'Open Graph Generator';
   const description =
     params.description || 'Generate SEO image variants from one source image.';
-  const siteName = params.siteName || 'OG Graph';
+  const siteName = params.siteName || 'Social Card';
   const accentColor = params.accentColor || '#6366f1';
   const theme = params.theme || 'dark';
   const bgStyle = params.bgStyle || 'gradient+grid';

@@ -1,4 +1,5 @@
 import {SectionHeader} from '@/app/docs/section-header';
+import {SdkDocsSection} from '@/app/docs/sdk-docs-section';
 import {Footer} from '@/components/layout/footer';
 import {Navbar} from '@/components/layout/navbar';
 import {CollapsibleJson} from '@/components/shared/collapsible-json';
@@ -20,15 +21,15 @@ import Link from 'next/link';
 
 // general template — "API Reference" title
 const OG_QS =
-  'siteName=OG+Graph&title=API+Reference&description=11+OG+templates+%C2%B7+8+badges+%C2%B7+7+SEO+assets&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid';
+  'siteName=Social+Card&title=API+Reference&description=11+OG+templates+%C2%B7+8+badges+%C2%B7+7+SEO+assets&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid';
 
 export const metadata: Metadata = {
   title: 'API Docs',
   description:
-    'Full API reference for OG Graph: 11 Open Graph image templates, 8 SVG badges, and 7 SEO endpoints. Query parameters, examples, and live previews.',
+    'Full API reference for Social Card: 11 Open Graph image templates, 8 SVG badges, and 7 SEO endpoints. Query parameters, examples, and live previews.',
   alternates: {canonical: '/docs'},
   openGraph: {
-    title: 'API Docs — OG Graph',
+    title: 'API Docs — Social Card',
     description:
       'Full API reference: 11 OG image templates, 8 SVG badges, and 7 SEO endpoints with live examples.',
     url: '/docs',
@@ -37,13 +38,13 @@ export const metadata: Metadata = {
         url: `/api/og/general?${OG_QS}`,
         width: 1200,
         height: 630,
-        alt: 'OG Graph API Reference',
+        alt: 'Social Card API Reference',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'API Docs — OG Graph',
+    title: 'API Docs — Social Card',
     description:
       'Full API reference: 11 OG image templates, 8 SVG badges, and 7 SEO endpoints.',
     images: [`/api/og/general?${OG_QS}`],
@@ -60,14 +61,15 @@ export default function DocsPage() {
   const ogNavItems = templates.map(t => ({href: `#${t}`, name: t}));
   const badgeNavItems = badges.map(b => ({href: `#badge-${b}`, name: b}));
   const seoNavItems = seoAssets.map(s => ({href: `#seo-${s}`, name: s}));
+  const sdkNavItems = [{href: '#sdk', name: 'social-card-sdk'}];
   const inspectorNavItems = [{href: '#seo-inspector', name: 'inspect'}];
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
-    headline: 'OG Graph API Reference',
+    headline: 'Social Card API Reference',
     description:
-      'Full API reference for OG Graph: 11 Open Graph image templates, 8 SVG badges, and 7 SEO endpoints.',
+      'Full API reference for Social Card: 11 Open Graph image templates, 8 SVG badges, and 7 SEO endpoints.',
     url: `${base}/docs`,
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -145,7 +147,7 @@ export default function DocsPage() {
             <span className="terminal-prompt text-xs">API REFERENCE</span>
           </div>
           <h1 className="text-3xl font-bold mb-2 glow-primary inline-block">
-            OG Graph API
+            Social Card API
           </h1>
           <p className="text-muted-foreground text-sm max-w-xl">
             Three services: OG images (PNG), SVG badges, and SEO assets. Base
@@ -157,6 +159,7 @@ export default function DocsPage() {
               ogItems={ogNavItems}
               badgeItems={badgeNavItems}
               seoItems={seoNavItems}
+              sdkItems={sdkNavItems}
             />
           </div>
         </div>
@@ -169,6 +172,7 @@ export default function DocsPage() {
             ogItems={ogNavItems}
             badgeItems={badgeNavItems}
             seoItems={seoNavItems}
+            sdkItems={sdkNavItems}
             inspectorItems={inspectorNavItems}
           />
         </aside>
@@ -195,6 +199,8 @@ export default function DocsPage() {
           </div>
 
           <DocsInteractiveSections base={base} />
+
+          <SdkDocsSection />
 
           <SectionHeader
             id="seo-inspector"

@@ -23,8 +23,8 @@ const OG_IMAGE_QS =
 export const metadata: Metadata = {
   metadataBase: new URL(env.deploymentURL),
   title: {
-    default: 'OG Graph — Open Graph Image Generator',
-    template: '%s — OG Graph',
+    default: 'Social Card — Open Graph Image Generator',
+    template: '%s — Social Card',
   },
   description:
     'Self-hostable, API-first Open Graph image generator. 11 templates, 8 SVG badges, 4 SEO assets. Drop a URL, get a social card.',
@@ -61,8 +61,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    siteName: 'OG Graph',
-    title: 'OG Graph — Open Graph Image Generator',
+    siteName: 'Social Card',
+    title: 'Social Card — Open Graph Image Generator',
     description:
       'Self-hostable, API-first Open Graph image generator. 11 templates, 8 SVG badges, 4 SEO assets.',
     images: [
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
         url: `/api/og/general?${OG_IMAGE_QS}`,
         width: 1200,
         height: 630,
-        alt: 'OG Graph — Open Graph Image Generator',
+        alt: 'Social Card — Open Graph Image Generator',
       },
     ],
   },
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@fz_faouzi',
     creator: '@fz_faouzi',
-    title: 'OG Graph — Open Graph Image Generator',
+    title: 'Social Card — Open Graph Image Generator',
     description:
       'Self-hostable, API-first Open Graph image generator. 11 templates, 8 SVG badges, 4 SEO assets.',
     images: [`/api/og/general?${OG_IMAGE_QS}`],
@@ -110,7 +110,7 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          storageKey="og-graph-theme"
+          storageKey="social-card-theme"
         >
           {children}
           <Analytics />

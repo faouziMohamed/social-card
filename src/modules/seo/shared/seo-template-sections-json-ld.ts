@@ -32,7 +32,7 @@ export const JSON_LD_TEMPLATE_SECTIONS: Record<
           key: 'name',
           label: 'Name',
           type: 'text',
-          placeholder: 'OG Graph',
+          placeholder: 'Social Card',
         },
         {
           key: 'headline',

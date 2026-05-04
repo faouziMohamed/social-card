@@ -4,7 +4,7 @@ export const EXAMPLE_PARAMS: Record<TemplateName, string> = {
   general:
     'siteName=OG+Graph&title=Open+Graph+Generator&description=Self-hostable+social+card+generator&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid',
   gradient:
-    'title=Beautiful+Images&siteName=og-graph&gradientFrom=%2300e887&gradientTo=%2300e0f3&theme=dark&fontFamily=space&bgStyle=aurora%2Bdots',
+    'title=Beautiful+Images&siteName=social-card&gradientFrom=%2300e887&gradientTo=%2300e0f3&theme=dark&fontFamily=space&bgStyle=aurora%2Bdots',
   blog: 'title=How+to+Build+a+Blog&tags=Next.js%2CTypeScript&authorName=Jane+Doe&siteDomain=myblog.com&theme=dark&fontFamily=inter&bgStyle=mesh%2Bnoise',
   minimal:
     'title=Clean+Design&eyebrow=TUTORIAL&theme=dark&accentColor=%236366f1&fontFamily=serif&bgStyle=solid%2Bvignette',
@@ -28,7 +28,7 @@ export const DEMO_PARAMS: {template: TemplateName; params: string}[] = [
   {
     template: 'general',
     params:
-      'title=Open+Graph+Generator&siteName=og-graph&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid',
+      'title=Open+Graph+Generator&siteName=social-card&theme=dark&accentColor=%236366f1&fontFamily=geist&bgStyle=gradient%2Bgrid',
   },
   {
     template: 'gradient',

@@ -45,12 +45,12 @@ const BUILDER_STEPS = [
 
 export default function HomePage() {
   const base = env.deploymentURL;
-  const heroImage = `${base}/api/og/product?productName=OG+Graph&tagline=Production+ready+social+visuals&feature1=11+OG+templates&feature2=8+badge+endpoints&cta=API-first+and+self-hostable&theme=dark&fontFamily=space&accentColor=%2322d3ee&bgStyle=aurora%2Bgrid`;
+  const heroImage = `${base}/api/og/product?productName=Social+Card&tagline=Production+ready+social+visuals&feature1=11+OG+templates&feature2=8+badge+endpoints&cta=API-first+and+self-hostable&theme=dark&fontFamily=space&accentColor=%2322d3ee&bgStyle=aurora%2Bgrid`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'OG Graph',
+    name: 'Social Card',
     url: base,
     applicationCategory: 'DeveloperApplication',
     description:
@@ -83,7 +83,7 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-fg sm:text-lg">
-              OG Graph is a production-grade endpoint layer for Open Graph
+              Social Card is a production-grade endpoint layer for Open Graph
               cards, SVG badges, and SEO visuals. It helps engineering teams
               ship consistent brand presentation without design bottlenecks.
             </p>
@@ -126,7 +126,7 @@ export default function HomePage() {
             </div>
             <Image
               src={heroImage}
-              alt="OG Graph generated product template preview"
+              alt="Social Card generated product template preview"
               width={1200}
               height={630}
               className="w-full rounded-2xl border border-border/50"
@@ -246,7 +246,8 @@ export default function HomePage() {
               Give every shared link a premium finish
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-fg sm:text-lg">
-              OG Graph helps your content look intentional everywhere it appears
+              Social Card helps your content look intentional everywhere it
+              appears
               so launches, docs, and posts feel cohesive and high quality.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">

@@ -23,12 +23,14 @@ export interface DocsMobileNavProps {
   ogItems: NavItem[];
   badgeItems: NavItem[];
   seoItems: NavItem[];
+  sdkItems: NavItem[];
 }
 
 export function DocsMobileNav({
   ogItems,
   badgeItems,
   seoItems,
+  sdkItems,
 }: DocsMobileNavProps) {
   return (
     <Sheet>
@@ -54,10 +56,11 @@ export function DocsMobileNav({
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto p-4">
-          <NavSection label="OG Templates" items={ogItems} />
-          <NavSection label="SVG Badges" items={badgeItems} />
-          <NavSection label="SEO Assets" items={seoItems} />
-        </div>
+            <NavSection label="OG Templates" items={ogItems} />
+            <NavSection label="SVG Badges" items={badgeItems} />
+            <NavSection label="SEO Assets" items={seoItems} />
+            <NavSection label="SDK" items={sdkItems} />
+          </div>
 
         <div className="border-t border-border/40 p-4">
           <SheetClose asChild>

@@ -9,14 +9,14 @@ export const metadata: Metadata = {
     'Inspect a page URL server-side and get SEO diagnostics, previews, and recommendations.',
   alternates: {canonical: '/seo-inspector'},
   openGraph: {
-    title: 'SEO Inspector — OG Graph',
+    title: 'SEO Inspector — Social Card',
     description:
       'Inspect any page URL server-side for SEO tags, previews, and actionable fixes.',
     url: '/seo-inspector',
   },
   twitter: {
     card: 'summary',
-    title: 'SEO Inspector — OG Graph',
+    title: 'SEO Inspector — Social Card',
     description:
       'Inspect any page URL server-side for SEO tags, previews, and actionable fixes.',
   },

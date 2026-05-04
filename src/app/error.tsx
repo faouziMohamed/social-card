@@ -101,7 +101,7 @@ interface ErrorProps {
 
 export default function ErrorPage({error, reset}: ErrorProps) {
   useEffect(() => {
-    console.error('[OG Graph] Runtime error:', error);
+    console.error('[Social Card] Runtime error:', error);
   }, [error]);
 
   return (
@@ -243,7 +243,7 @@ export default function ErrorPage({error, reset}: ErrorProps) {
           </div>
 
           <p className="mt-12 font-mono text-xs text-muted-fg/30">
-            placard.mfaouzi.com
+            social-card.mfaouzi.com
           </p>
         </div>
       </div>

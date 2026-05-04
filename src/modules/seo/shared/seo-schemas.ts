@@ -97,7 +97,7 @@ export const jsonLdSchema = z
       ),
     name: z
       .string()
-      .default('OG Graph')
+      .default('Social Card')
       .describe('Primary entity or page name'),
     headline: z.string().optional().describe('Headline for article/content'),
     description: z.string().optional().describe('Short summary (1-2 lines)'),
@@ -156,7 +156,7 @@ export const robotsTxtSchema = z.object({
 });
 
 export const metaPackSchema = z.object({
-  title: z.string().default('OG Graph').describe('Page title'),
+  title: z.string().default('Social Card').describe('Page title'),
   description: z
     .string()
     .default('Generate OG images, badges, and SEO assets in one place.')

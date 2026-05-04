@@ -60,7 +60,7 @@ export const quoteSchema = z
 
 export const changelogSchema = z
   .object({
-    productName: z.string().default('OG Graph').describe('Product name'),
+    productName: z.string().default('Social Card').describe('Product name'),
     version: z.string().default('v2.0.0').describe('Release version'),
     headline: z.string().default('Major upgrade').describe('Release headline'),
     change1: z.string().optional().describe('First changelog item'),
