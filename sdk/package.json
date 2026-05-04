@@ -1,6 +1,6 @@
 {
   "name": "social-card-sdk",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "TypeScript SDK for Social Card — generate OG images, badges, and SEO assets via API",
   "homepage": "https://social-card.mfaouzi.com",
   "repository": {
